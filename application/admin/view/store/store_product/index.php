@@ -4,22 +4,22 @@
     <div class="layui-tab layui-tab-brief" lay-filter="tab">
         <ul class="layui-tab-title">
             <li lay-id="list" {eq name='type' value='1'}class="layui-this" {/eq} >
-                <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">出售中产品({$onsale})</a>
+                <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">出售中房间({$onsale})</a>
             </li>
             <li lay-id="list" {eq name='type' value='2'}class="layui-this" {/eq}>
-                <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">待上架产品({$forsale})</a>
+                <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">待上架房间({$forsale})</a>
             </li>
-            <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq}>
-                <a href="{eq name='type' value='3'}javascript:;{else}{:Url('index',['type'=>3])}{/eq}">仓库中产品({$warehouse})</a>
-            </li>
+            <!-- <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq}>
+                <a href="{eq name='type' value='3'}javascript:;{else}{:Url('index',['type'=>3])}{/eq}">仓库中房间({$warehouse})</a>
+            </li> -->
             <li lay-id="list" {eq name='type' value='4'}class="layui-this" {/eq}>
-                <a href="{eq name='type' value='4'}javascript:;{else}{:Url('index',['type'=>4])}{/eq}">已经售馨产品({$outofstock})</a>
+                <a href="{eq name='type' value='4'}javascript:;{else}{:Url('index',['type'=>4])}{/eq}">已经售馨房间({$outofstock})</a>
             </li>
-            <li lay-id="list" {eq name='type' value='5'}class="layui-this" {/eq}>
+            <!-- <li lay-id="list" {eq name='type' value='5'}class="layui-this" {/eq}>
                 <a href="{eq name='type' value='5'}javascript:;{else}{:Url('index',['type'=>5])}{/eq}">警戒库存({$policeforce})</a>
-            </li>
+            </li> -->
             <li lay-id="list" {eq name='type' value='6'}class="layui-this" {/eq}>
-                <a href="{eq name='type' value='6'}javascript:;{else}{:Url('index',['type'=>6])}{/eq}">产品回收站({$recycle})</a>
+                <a href="{eq name='type' value='6'}javascript:;{else}{:Url('index',['type'=>6])}{/eq}">房间回收站({$recycle})</a>
             </li>
         </ul>
     </div>
@@ -30,7 +30,7 @@
                     <form class="layui-form layui-form-pane" action="">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">所有分类</label>
+                                <label class="layui-form-label">筛选项:</label>
                                 <div class="layui-input-block">
                                     <select name="cate_id">
                                         <option value=" ">全部</option>
@@ -41,9 +41,9 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">产品名称</label>
+                                <label class="layui-form-label">房间名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="store_name" class="layui-input" placeholder="请输入产品名称,关键字,编号">
+                                    <input type="text" name="store_name" class="layui-input" placeholder="请输入房间名称,关键字,编号">
                                     <input type="hidden" name="type" value="{$type}">
                                 </div>
                             </div>
@@ -60,18 +60,18 @@
                 </div>
             </div>
         </div>
-        <!--产品列表-->
+        <!--房间列表-->
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div class="alert alert-info" role="alert">
-                        列表[产品价格],[虚拟销量],[库存]可进行快速修改,双击或者单击进入编辑模式,失去焦点可进行自动保存
+                        列表[房间价格],[虚拟销量],[库存]可进行快速修改,双击或者单击进入编辑模式,失去焦点可进行自动保存
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="layui-btn-container">
                         {switch name='type'}
                             {case value="1"}
-                                <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加产品</button>
+                                <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加房间</button>
                             {/case}
                             {case value="2"}
                                 <button class="layui-btn layui-btn-sm" data-type="show">批量上架</button>
@@ -95,7 +95,7 @@
                     <script type="text/html" id="collect">
                         <span><i class="layui-icon layui-icon-star"></i> {{d.collect}}</span>
                     </script>
-                    <!--产品名称-->
+                    <!--房间名称-->
                     <script type="text/html" id="store_name">
                         <h4>{{d.store_name}}</h4>
                         <p>价格:<font color="red">{{d.price}}</font> </p>
@@ -107,9 +107,9 @@
                     </script>
                     <!--操作-->
                     <script type="text/html" id="act">
-                        <button type="button" class="layui-btn layui-btn-xs btn-success" onclick="$eb.createModalFrame('{{d.store_name}}-属性','{:Url('attr')}?id={{d.id}}',{h:600,w:800})">
+                        <!-- <button type="button" class="layui-btn layui-btn-xs btn-success" onclick="$eb.createModalFrame('{{d.store_name}}-属性','{:Url('attr')}?id={{d.id}}',{h:600,w:800})">
                             属性
-                        </button>
+                        </button> -->
                         <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.store_name}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
                             编辑
                         </button>
@@ -117,9 +117,9 @@
                         <ul class="layui-nav-child layui-anim layui-anim-upbit">
                             <li>
                                 <a href="javascript:void(0);" class="" onclick="$eb.createModalFrame(this.innerText,'{:Url('edit_content')}?id={{d.id}}')">
-                                    <i class="fa fa-pencil"></i> 产品详情</a>
+                                    <i class="fa fa-pencil"></i> 房间详情</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="javascript:void(0);" onclick="$eb.createModalFrame(this.innerText,'{:Url('ump.store_seckill/seckill')}?id={{d.id}}')"">
                                 <i class="fa fa-gavel"></i> 开启秒杀</a>
                             </li>
@@ -130,11 +130,11 @@
                             <li>
                                 <a href="javascript:void(0);" onclick="$eb.createModalFrame(this.innerText,'{:Url('ump.store_combination/combination')}?id={{d.id}}')">
                                     <i class="fa fa-hand-lizard-o"></i> 开启拼团</a>
-                            </li>
+                            </li> -->
                             {{# if(d.is_del){ }}
                             <li>
                                 <a href="javascript:void(0);" lay-event='delstor'>
-                                    <i class="fa fa-trash"></i> 恢复产品
+                                    <i class="fa fa-trash"></i> 恢复房间
                                 </a>
                             </li>
                             {{# }else{ }}
@@ -168,14 +168,14 @@
             case 1:case 3:case 4:case 5:
                 join=[
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
-                    {field: 'image', title: '产品图片',templet:'#image',width:'10%'},
-                    {field: 'store_name', title: '产品名称',templet:'#store_name'},
-                    {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
-                    {field: 'stock', title: '库存',edit:'stock',width:'8%'},
+                    {field: 'image', title: '房间图片',templet:'#image',width:'10%'},
+                    {field: 'store_name', title: '房间名称',templet:'#store_name'},
+                    // {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
+                    // {field: 'stock', title: '库存',edit:'stock',width:'8%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
-                    {field: 'sales', title: '销量',sort: true,event:'sales',width:'8%'},
-                    {field: 'collect', title: '点赞',templet:'#like',width:'6%'},
-                    {field: 'like', title: '收藏',templet:'#collect',width:'6%'},
+                    // {field: 'sales', title: '销量',sort: true,event:'sales',width:'8%'},
+                    // {field: 'collect', title: '点赞',templet:'#like',width:'6%'},
+                    // {field: 'like', title: '收藏',templet:'#collect',width:'6%'},
                     {field: 'status', title: '状态',templet:"#checkboxstatus",width:'8%'},
                     {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
                 ];
@@ -184,27 +184,27 @@
                 join=[
                     {type:'checkbox'},
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
-                    {field: 'image', title: '产品图片',templet:'#image',width:'10%'},
-                    {field: 'store_name', title: '产品名称',templet:'#store_name'},
+                    {field: 'image', title: '房间图片',templet:'#image',width:'10%'},
+                    {field: 'store_name', title: '房间名称',templet:'#store_name'},
                     {field: 'price', title: '价格',edit:'price',width:'8%'},
-                    {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
-                    {field: 'stock', title: '库存',edit:'stock',width:'6%'},
+                    // {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
+                    // {field: 'stock', title: '库存',edit:'stock',width:'6%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
-                    {field: 'sales', title: '销量',sort: true,event:'sales',width:'6%'},
+                    // {field: 'sales', title: '销量',sort: true,event:'sales',width:'6%'},
                     {field: 'status', title: '状态',templet:"#checkboxstatus",width:'8%'},
                     {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
                 ];
                 break;
             case 6:
                 join=[
-                    {field: 'id', title: '产品ID', sort: true,event:'id'},
-                    {field: 'image', title: '产品图片',templet:'#image'},
-                    {field: 'store_name', title: '产品名称',templet:'#store_name'},
-                    {field: 'price', title: '产品价格',edit:'price'},
-                    {field: 'ficti', title: '虚拟销量',edit:'ficti'},
-                    {field: 'stock', title: '库存',edit:'stock'},
+                    {field: 'id', title: '房间ID', sort: true,event:'id'},
+                    {field: 'image', title: '房间图片',templet:'#image'},
+                    {field: 'store_name', title: '房间名称',templet:'#store_name'},
+                    {field: 'price', title: '房间价格',edit:'price'},
+                    // {field: 'ficti', title: '虚拟销量',edit:'ficti'},
+                    // {field: 'stock', title: '库存',edit:'stock'},
                     {field: 'sort', title: '排序',edit:'sort'},
-                    {field: 'sales', title: '销量',sort: true,event:'sales'},
+                    // {field: 'sales', title: '销量',sort: true,event:'sales'},
 //                    {field: 'status', title: '状态',templet:"#checkboxstatus"},
                     {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
                 ];
@@ -270,7 +270,7 @@
                 break;
         }
     });
-    //上下加产品
+    //上下加房间
     layList.switch('is_show',function (odj,value) {
         if(odj.elem.checked==true){
             layList.baseGet(layList.Url({c:'store.store_product',a:'set_show',p:{is_show:1,id:value}}),function (res) {
@@ -287,8 +287,8 @@
         switch (event) {
             case 'delstor':
                 var url=layList.U({c:'store.store_product',a:'delete',q:{id:data.id}});
-                if(data.is_del) var code = {title:"操作提示",text:"确定恢复产品操作吗？",type:'info',confirm:'是的，恢复该产品'};
-                else var code = {title:"操作提示",text:"确定将该产品移入回收站吗？",type:'info',confirm:'是的，移入回收站'};
+                if(data.is_del) var code = {title:"操作提示",text:"确定恢复房间操作吗？",type:'info',confirm:'是的，恢复该房间'};
+                else var code = {title:"操作提示",text:"确定将该房间移入回收站吗？",type:'info',confirm:'是的，移入回收站'};
                 $eb.$swal('delete',function(){
                     $eb.axios.get(url).then(function(res){
                         if(res.status == 200 && res.data.code == 200) {
@@ -337,7 +337,7 @@
                     layList.reload();
                 });
             }else{
-                layList.msg('请选择要上架的产品');
+                layList.msg('请选择要上架的房间');
             }
         }
     };

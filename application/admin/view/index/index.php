@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>CRMEB管理系统</title>
+    <title>园区后台 - 登录管理系统</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -40,8 +40,7 @@
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="J_menuItem admin_close" href="{:Url('setting.systemAdmin/adminInfo')}">个人资料</a>
                             </li>
-                            <li><a class="admin_close" target="_blank" href="http://www.crmeb.com/">联系我们</a>
-                            </li>
+                            <!-- <li><a class="admin_close" target="_blank" href="http://www.crmeb.com/">联系我们</a></li> -->
                             <li class="divider"></li>
                             <li><a href="{:Url('Login/logout')}">安全退出</a>
                             </li>

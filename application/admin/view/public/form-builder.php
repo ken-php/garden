@@ -26,7 +26,7 @@
 //        var index = parent.layer.getFrameIndex(window.name);
 //        parent.layer.close(index);
         //提交成功后按钮恢复
-        $r.btn.finish();
+        // $r.btn.finish();
     };
 
     (function () {
@@ -84,6 +84,7 @@
                                 if (res.code == 200) {
                                     vm.$Message.success(res.msg);
                                     $f.submitStatus({loading: false});
+                                    $f.btn.disabled();
                                     formCreate.formSuccess && formCreate.formSuccess(res, $f, formData);
                                     callback && callback(0, res, $f, formData);
                                     //TODO 表单提交成功!

@@ -10,6 +10,7 @@ use service\UploadService as Upload;
 use service\JsonService as Json;
 use service\UtilService as Util;
 use service\FormBuilder as Form;
+use function GuzzleHttp\json_encode;
 
 /**
  * 文件校验控制器
@@ -49,6 +50,9 @@ class Images extends AuthController
     {
         $pid = input('pid')!= NULL ?input('pid'):session('pid');
         $res = Upload::image('file','attach'.DS.date('Y').DS.date('m').DS.date('d'));
+        if(!isset($res->dir) && $res->status === false){
+            return json(['msg'=>$res->error.'上传文件失败，请重新上传!','code'=>-1]);
+        }
         $thumbPath = Upload::thumb($res->dir);
         //产品图片上传记录
         $fileInfo = $res->fileInfo->getinfo();

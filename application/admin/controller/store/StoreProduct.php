@@ -130,40 +130,39 @@ class StoreProduct extends AuthController
      */
     public function create()
     {
-//        $this->assign(['title'=>'添加产品','action'=>Url::build('save'),'rules'=>$this->rules()->getContent()]);
-//        return $this->fetch('public/common_form');
         $field = [
-            Form::select('cate_id','产品分类')->setOptions(function(){
+            Form::select('cate_id','房间归属')->setOptions(function(){
                 $list = CategoryModel::getTierList();
                 $menus=[];
                 foreach ($list as $menu){
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1)->multiple(1),
-            Form::input('store_name','产品名称')->col(Form::col(24)),
-            Form::input('store_info','产品简介')->type('textarea'),
-            Form::input('keyword','产品关键字')->placeholder('多个用英文状态下的逗号隔开'),
-            Form::input('unit_name','产品单位','件'),
-            Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image')->width('100%')->height('500px'),
-            Form::frameImages('slider_image','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')))->maxLength(5)->icon('images')->width('100%')->height('500px')->spin(0),
-            Form::number('price','产品售价')->min(0)->col(8),
-            Form::number('ot_price','产品市场价')->min(0)->col(8),
-            Form::number('give_integral','赠送积分')->min(0)->precision(0)->col(8),
-            Form::number('postage','邮费')->min(0)->col(Form::col(8)),
-            Form::number('sales','销量',0)->min(0)->precision(0)->col(8)->readonly(1),
-            Form::number('ficti','虚拟销量')->min(0)->precision(0)->col(8),
-            Form::number('stock','库存')->min(0)->precision(0)->col(8),
-            Form::number('cost','产品成本价')->min(0)->col(8),
+            })->filterable(1),
+            // ->multiple(1),
+            Form::input('store_name','房间名称')->col(Form::col(24)),
+            Form::input('store_info','房间简介')->type('textarea'),
+            // Form::input('keyword','产品关键字')->placeholder('多个用英文状态下的逗号隔开'),
+            // Form::input('unit_name','产品单位','件'),
+            Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image')->width('100%')->height('500px'),
+            Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')))->maxLength(5)->icon('images')->width('100%')->height('500px')->spin(0),
+            Form::number('price','房间售价')->min(0)->col(8),
+            // Form::number('ot_price','产品市场价')->min(0)->col(8),
+            // Form::number('give_integral','赠送积分')->min(0)->precision(0)->col(8),
+            // Form::number('postage','邮费')->min(0)->col(Form::col(8)),
+            // Form::number('sales','销量',0)->min(0)->precision(0)->col(8)->readonly(1),
+            // Form::number('ficti','虚拟销量')->min(0)->precision(0)->col(8),
+            // Form::number('stock','库存')->min(0)->precision(0)->col(8),
+            // Form::number('cost','产品成本价')->min(0)->col(8),
             Form::number('sort','排序')->col(8),
-            Form::radio('is_show','产品状态',0)->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-            Form::radio('is_hot','热卖单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_benefit','促销单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_best','精品推荐',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_new','首发新品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_postage','是否包邮',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
+            Form::radio('is_show','房间状态',0)->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
+            // Form::radio('is_hot','热卖单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_benefit','促销单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_best','精品推荐',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_new','首发新品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_postage','是否包邮',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
         ];
-        $form = Form::make_post_form('添加产品',$field,Url::build('save'),2);
+        $form = Form::make_post_form('添加房间',$field,Url::build('save'),2);
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
@@ -175,6 +174,9 @@ class StoreProduct extends AuthController
     public function upload()
     {
         $res = Upload::image('file','store/product/'.date('Ymd'));
+        if(!isset($res->dir) && $res->status === false){
+            return json(['msg'=>$res->error.'上传文件失败，请重新上传!','code'=>-1]);
+        }
         $thumbPath = Upload::thumb($res->dir);
         //产品图片上传记录
         $fileInfo = $res->fileInfo->getinfo();
@@ -197,16 +199,16 @@ class StoreProduct extends AuthController
             ['cate_id',[]],
             'store_name',
             'store_info',
-            'keyword',
+            // 'keyword',
             ['unit_name','件'],
             ['image',[]],
             ['slider_image',[]],
             ['postage',0],
             ['ot_price',0],
             ['price',0],
-            ['sort',0],
-            ['stock',100],
-            'sales',
+            ['sort',1],
+            ['stock',1],
+            // 'sales',
             ['ficti',100],
             ['give_integral',0],
             ['is_show',0],
@@ -218,15 +220,16 @@ class StoreProduct extends AuthController
             ['mer_use',0],
             ['is_postage',0],
         ],$request);
-        if(count($data['cate_id']) < 1) return Json::fail('请选择产品分类');
+        if(count($data['cate_id']) < 1 || empty($data['cate_id'][0])) return Json::fail('请选择房间归属');
         $cate_id=$data['cate_id'];
-        $data['cate_id'] = implode(',',$data['cate_id']);
-        if(!$data['store_name']) return Json::fail('请输入产品名称');
-        if(count($data['image'])<1) return Json::fail('请上传产品图片');
-        if(count($data['slider_image'])<1) return Json::fail('请上传产品轮播图');
-        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入产品售价');
-        if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
-        if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
+        // $data['cate_id'] = implode(',',$data['cate_id']);
+        $data['cate_id'] = $data['cate_id'][0];
+        if(!$data['store_name']) return Json::fail('请输入房间名称');
+        if(count($data['image'])<1) return Json::fail('请上传房间图片');
+        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
+        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
+        // if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
+        // if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         $data['add_time'] = time();
@@ -235,7 +238,7 @@ class StoreProduct extends AuthController
         foreach ($cate_id as $cid){
             Db::name('store_product_cate')->insert(['product_id'=>$res['id'],'cate_id'=>$cid,'add_time'=>time()]);
         }
-        return Json::successful('添加产品成功!');
+        return Json::successful('添加房间成功!');
     }
 
 
@@ -263,37 +266,39 @@ class StoreProduct extends AuthController
         $product = ProductModel::get($id);
         if(!$product) return Json::fail('数据不存在!');
         $field = [
-            Form::select('cate_id','产品分类',explode(',',$product->getData('cate_id')))->setOptions(function(){
+            Form::select('cate_id','房间归属',explode(',',$product->getData('cate_id')))->setOptions(function(){
                 $list = CategoryModel::getTierList();
                 $menus=[];
                 foreach ($list as $menu){
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1)->multiple(1),
-            Form::input('store_name','产品名称',$product->getData('store_name')),
-            Form::input('store_info','产品简介',$product->getData('store_info'))->type('textarea'),
-            Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
-            Form::input('unit_name','产品单位',$product->getData('unit_name')),
-            Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image')->width('100%')->height('500px'),
-            Form::frameImages('slider_image','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')),json_decode($product->getData('slider_image'),1) ? : [])->maxLength(5)->icon('images')->width('100%')->height('500px'),
-            Form::number('price','产品售价',$product->getData('price'))->min(0)->precision(2)->col(8),
-            Form::number('ot_price','产品市场价',$product->getData('ot_price'))->min(0)->col(8),
-            Form::number('give_integral','赠送积分',$product->getData('give_integral'))->min(0)->precision(0)->col(8),
-            Form::number('postage','邮费',$product->getData('postage'))->min(0)->col(8),
-            Form::number('sales','销量',$product->getData('sales'))->min(0)->precision(0)->col(8)->readonly(1),
-            Form::number('ficti','虚拟销量',$product->getData('ficti'))->min(0)->precision(0)->col(8),
-            Form::number('stock','库存',ProductModel::getStock($id)>0?ProductModel::getStock($id):$product->getData('stock'))->min(0)->precision(0)->col(8),
-            Form::number('cost','产品成本价',$product->getData('cost'))->min(0)->col(8),
+            })->filterable(1),
+            // ->multiple(1),
+            Form::input('store_name','房间名称',$product->getData('store_name')),
+            Form::input('store_info','房间简介',$product->getData('store_info'))->type('textarea'),
+            // Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
+            // Form::input('unit_name','产品单位',$product->getData('unit_name')),
+            Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image')->width('100%')->height('500px'),
+            Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')),json_decode($product->getData('slider_image'),1) ? : [])->maxLength(5)->icon('images')->width('100%')->height('500px'),
+            Form::number('price','房间售价',$product->getData('price'))->min(0)->precision(2)->col(8),
+            // Form::number('ot_price','产品市场价',$product->getData('ot_price'))->min(0)->col(8),
+            // Form::number('give_integral','赠送积分',$product->getData('give_integral'))->min(0)->precision(0)->col(8),
+            // Form::number('postage','邮费',$product->getData('postage'))->min(0)->col(8),
+            // Form::number('sales','销量',$product->getData('sales'))->min(0)->precision(0)->col(8)->readonly(1),
+            // Form::number('ficti','虚拟销量',$product->getData('ficti'))->min(0)->precision(0)->col(8),
+            // Form::number('stock','库存',ProductModel::getStock($id)>0?ProductModel::getStock($id):$product->getData('stock'))->min(0)->precision(0)->col(8),
+            // Form::number('cost','产品成本价',$product->getData('cost'))->min(0)->col(8),
             Form::number('sort','排序',$product->getData('sort'))->col(8),
-            Form::radio('is_show','产品状态',$product->getData('is_show'))->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-            Form::radio('is_hot','热卖单品',$product->getData('is_hot'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_benefit','促销单品',$product->getData('is_benefit'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_best','精品推荐',$product->getData('is_best'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_new','首发新品',$product->getData('is_new'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_postage','是否包邮',$product->getData('is_postage'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
+            Form::radio('is_show','房间状态',$product->getData('is_show'))->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
+            Form::radio('is_show_qing','是否售罄',$product->getData('stock'))->options([['label'=>'是','value'=>0],['label'=>'否','value'=>1]])->col(8),
+            // Form::radio('is_hot','热卖单品',$product->getData('is_hot'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_benefit','促销单品',$product->getData('is_benefit'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_best','精品推荐',$product->getData('is_best'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_new','首发新品',$product->getData('is_new'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            // Form::radio('is_postage','是否包邮',$product->getData('is_postage'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
         ];
-        $form = Form::make_post_form('编辑产品',$field,Url::build('update',array('id'=>$id)),2);
+        $form = Form::make_post_form('编辑房间',$field,Url::build('update',array('id'=>$id)),2);
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
@@ -322,6 +327,7 @@ class StoreProduct extends AuthController
             ['price',0],
             ['sort',0],
             ['stock',0],
+            'is_show_qing',
             ['ficti',100],
             ['give_integral',0],
             ['is_show',0],
@@ -333,16 +339,22 @@ class StoreProduct extends AuthController
             ['mer_use',0],
             ['is_postage',0],
         ],$request);
-        if(count($data['cate_id']) < 1) return Json::fail('请选择产品分类');
+        if(count($data['cate_id']) < 1 || empty($data['cate_id'][0])) return Json::fail('请选择房间归属');
         $cate_id=$data['cate_id'];
-        $data['cate_id'] = implode(',',$data['cate_id']);
-        if(!$data['store_name']) return Json::fail('请输入产品名称');
-        if(count($data['image'])<1) return Json::fail('请上传产品图片');
-        if(count($data['slider_image'])<1) return Json::fail('请上传产品轮播图');
+        // $data['cate_id'] = implode(',',$data['cate_id']);
+        $data['cate_id'] = $data['cate_id'][0];
+        if(!$data['store_name']) return Json::fail('请输入房间名称');
+        if(count($data['image'])<1) return Json::fail('请上传房间图片');
+        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
         if(count($data['slider_image'])>5) return Json::fail('轮播图最多5张图');
-        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入产品售价');
-        if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
-        if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
+        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
+        // if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
+        // if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
+        if($data['is_show_qing']){
+            $data['stock'] = 1;
+        }else{
+            $data['stock'] = 0;
+        }
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         ProductModel::edit($data,$id);

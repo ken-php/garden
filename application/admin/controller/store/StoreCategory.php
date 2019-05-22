@@ -27,6 +27,7 @@ class StoreCategory extends AuthController
      */
     public function index()
     {
+        $this->assign('type',$this->request->get('type',1));
         $this->assign('pid',$this->request->get('pid',0));
         $this->assign('cate',CategoryModel::getTierList());
         return $this->fetch();
@@ -37,7 +38,7 @@ class StoreCategory extends AuthController
      */
     public function category_list(){
         $where = Util::getMore([
-            ['is_show',''],
+            ['is_show','1'],
             ['pid',$this->request->param('pid','')],
             ['cate_name',''],
             ['page',1],
@@ -77,23 +78,37 @@ class StoreCategory extends AuthController
      *
      * @return \think\Response
      */
-    public function create()
+    public function create($type=1)
     {
-        $field = [
-            Form::select('pid','父级')->setOptions(function(){
-                $list = CategoryModel::getTierList();
-                $menus = [['value'=>0,'label'=>'顶级菜单']];
-                foreach ($list as $menu){
-                    $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name']];
-                }
-                return $menus;
-            })->filterable(1),
-            Form::input('cate_name','分类名称'),
-            Form::frameImageOne('pic','分类图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')))->icon('image'),
-            Form::number('sort','排序'),
-            Form::radio('is_show','状态',1)->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])
-        ];
-        $form = Form::make_post_form('添加分类',$field,Url::build('save'),2);
+        if($type==1){
+            $add_name = '园区';
+            $field = [
+                Form::input('cate_name','园区名称'),
+                Form::number('sort','排序'),
+                Form::hidden('type','1')
+            ];
+        }else{
+            $add_name = '楼栋';
+            $field = [
+                Form::select('pid','归属园区')->setOptions(function(){
+                    $list = CategoryModel::getTierList();
+                    // $menus = [['value'=>0,'label'=>'全部']];
+                    $menus = [];
+                    foreach ($list as $menu){
+                        if($menu['pid'] == 0){
+                            $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name']];
+                        }
+                    }
+                    return $menus;
+                })->filterable(1),
+                Form::input('cate_name','楼栋名称'),
+                // Form::frameImageOne('pic','楼栋图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')))->icon('image'),
+                Form::number('sort','排序'),
+                // Form::radio('is_show','状态',1)->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])
+                Form::hidden('type','2')
+            ];
+        }
+        $form = Form::make_post_form('添加'.$add_name,$field,Url::build('save'),2);
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
@@ -126,20 +141,22 @@ class StoreCategory extends AuthController
     public function save(Request $request)
     {
         $data = Util::postMore([
-            'pid',
+            ['pid',0],
             'cate_name',
             ['pic',[]],
             'sort',
-            ['is_show',0]
+            ['is_show',1]
         ],$request);
-        if($data['pid'] == '') return Json::fail('请选择父类');
-        if(!$data['cate_name']) return Json::fail('请输入分类名称');
-        if(count($data['pic'])<1) return Json::fail('请上传分类图标');
+        if($data['pid'] == '' && $request->post('type') == 2) return Json::fail('请选择父类');
+        $name = '园区';
+        if($request->post('type') == 2) $name = '楼栋';
+        if(!$data['cate_name']) return Json::fail('请输入'.$name.'名称');
+        // if(count($data['pic'])<1) return Json::fail('请上传分类图标');
         if($data['sort'] <0 ) $data['sort'] = 0;
-        $data['pic'] = $data['pic'][0];
+        // $data['pic'] = $data['pic'][0];
         $data['add_time'] = time();
         CategoryModel::set($data);
-        return Json::successful('添加分类成功!');
+        return Json::successful('添加'.$name.'成功!');
     }
 
     /**
@@ -152,23 +169,35 @@ class StoreCategory extends AuthController
     {
         $c = CategoryModel::get($id);
         if(!$c) return Json::fail('数据不存在!');
-        $field = [
-            Form::select('pid','父级',(string)$c->getData('pid'))->setOptions(function() use($id){
-                $list = CategoryModel::getTierList(CategoryModel::where('id','<>',$id));
-//                $list = (Util::sortListTier(CategoryModel::where('id','<>',$id)->select()->toArray(),'顶级','pid','cate_name'));
-                $menus = [['value'=>0,'label'=>'顶级菜单']];
-                foreach ($list as $menu){
-                    $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name']];
-                }
-                return $menus;
-            })->filterable(1),
-            Form::input('cate_name','分类名称',$c->getData('cate_name')),
-            Form::frameImageOne('pic','分类图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')),$c->getData('pic'))->icon('image'),
-            Form::number('sort','排序',$c->getData('sort')),
-            Form::radio('is_show','状态',$c->getData('is_show'))->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])
-        ];
-        $form = Form::make_post_form('编辑分类',$field,Url::build('update',array('id'=>$id)),2);
-
+        if($c['pid'] == 0){
+            $edit_name = '园区';
+            $field = [
+                Form::input('cate_name','园区名称',$c->getData('cate_name')),
+                Form::number('sort','排序',$c->getData('sort')),
+                Form::hidden('type','1')
+            ];
+        }else{
+            $edit_name = '楼栋';
+            $field = [
+                Form::select('pid','归属园区',(string)$c->getData('pid'))->setOptions(function() use($id){
+                    $list = CategoryModel::getTierList(CategoryModel::where('id','<>',$id));
+                    $menus = [];
+                    foreach ($list as $menu){
+                        if($menu['pid'] == 0){
+                            $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name']];
+                        }
+                    }
+                    return $menus;
+                })->filterable(1),
+                Form::input('cate_name','楼栋名称',$c->getData('cate_name')),
+                // Form::frameImageOne('pic','分类图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')),$c->getData('pic'))->icon('image'),
+                Form::number('sort','排序',$c->getData('sort')),
+                // Form::radio('is_show','状态',$c->getData('is_show'))->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])
+                Form::hidden('type','2')
+            ];
+    
+        }        
+        $form = Form::make_post_form('编辑'.$edit_name,$field,Url::build('update',array('id'=>$id)),2);
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
@@ -185,17 +214,19 @@ class StoreCategory extends AuthController
         $data = Util::postMore([
             'pid',
             'cate_name',
-            ['pic',[]],
+            // ['pic',[]],
             'sort',
-            ['is_show',0]
+            // 'is_show'
         ],$request);
-        if($data['pid'] == '') return Json::fail('请选择父类');
-        if(!$data['cate_name']) return Json::fail('请输入分类名称');
-        if(count($data['pic'])<1) return Json::fail('请上传分类图标');
+        if($data['pid'] == '' && $request->post('type') == 2) return Json::fail('请选择父类');
+        $name = '园区';
+        if($request->post('type') == 2) $name = '楼栋';
+        if(!$data['cate_name']) return Json::fail('请输入'.$name.'名称');
+        // if(count($data['pic'])<1) return Json::fail('请上传图标');
         if($data['sort'] <0 ) $data['sort'] = 0;
-        $data['pic'] = $data['pic'][0];
+        // $data['pic'] = $data['pic'][0];
         CategoryModel::edit($data,$id);
-        return Json::successful('修改成功!');
+        return Json::successful('修改'.$name.'成功!');
     }
 
     /**
@@ -207,7 +238,7 @@ class StoreCategory extends AuthController
     public function delete($id)
     {
         if(!CategoryModel::delCategory($id))
-            return Json::fail(CategoryModel::getErrorInfo('删除失败,请稍候再试!'));
+            return Json::fail(CategoryModel::getErrorInfo('包含楼栋不允许删除!'));
         else
             return Json::successful('删除成功!');
     }
