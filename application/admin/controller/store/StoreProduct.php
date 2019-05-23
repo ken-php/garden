@@ -138,8 +138,7 @@ class StoreProduct extends AuthController
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1),
-            // ->multiple(1),
+            })->filterable(1)->multiple(0),
             Form::input('store_name','房间名称')->col(Form::col(24)),
             Form::input('store_info','房间简介')->type('textarea'),
             // Form::input('keyword','产品关键字')->placeholder('多个用英文状态下的逗号隔开'),
@@ -220,11 +219,15 @@ class StoreProduct extends AuthController
             ['mer_use',0],
             ['is_postage',0],
         ],$request);
-        if(count($data['cate_id']) < 1 || empty($data['cate_id'][0])) return Json::fail('请选择房间归属');
+        // 数据校验
         $cate_id=$data['cate_id'];
         // $data['cate_id'] = implode(',',$data['cate_id']);
         $data['cate_id'] = $data['cate_id'][0];
+        if(!$data['cate_id']) return Json::fail('请选择房间归属');
         if(!$data['store_name']) return Json::fail('请输入房间名称');
+        // 唯一性验证
+        $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
+        if($onlyT) return Json::fail('同一栋楼里房间名称不能重复');
         if(count($data['image'])<1) return Json::fail('请上传房间图片');
         if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
         if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
@@ -273,8 +276,7 @@ class StoreProduct extends AuthController
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1),
-            // ->multiple(1),
+            })->filterable(1)->multiple(0),
             Form::input('store_name','房间名称',$product->getData('store_name')),
             Form::input('store_info','房间简介',$product->getData('store_info'))->type('textarea'),
             // Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
@@ -339,11 +341,14 @@ class StoreProduct extends AuthController
             ['mer_use',0],
             ['is_postage',0],
         ],$request);
-        if(count($data['cate_id']) < 1 || empty($data['cate_id'][0])) return Json::fail('请选择房间归属');
+        if(count($data['cate_id']) == 0 || empty($data['cate_id'][0])) return Json::fail('请选择房间归属');
         $cate_id=$data['cate_id'];
         // $data['cate_id'] = implode(',',$data['cate_id']);
-        $data['cate_id'] = $data['cate_id'][0];
+        $data['cate_id'] = $cate_id[0];
         if(!$data['store_name']) return Json::fail('请输入房间名称');
+        // 唯一性验证
+        $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
+        if($onlyT && $onlyT != $id) return Json::fail('同一栋楼里房间名称不能重复');
         if(count($data['image'])<1) return Json::fail('请上传房间图片');
         if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
         if(count($data['slider_image'])>5) return Json::fail('轮播图最多5张图');

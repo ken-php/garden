@@ -590,4 +590,12 @@ class StoreProduct extends ModelBasic
             ->page((int)$where['page'],(int)$where['limit'])
             ->select();
     }
+
+    /**
+     * 房间的唯一性
+     */
+    public static function getUniqueness($cate_id,$store_name){
+        return self::where(['cate_id'=>$cate_id,'store_name'=>$store_name])->value('id');
+    }
+
 }
