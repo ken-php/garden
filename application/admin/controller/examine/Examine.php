@@ -4,23 +4,16 @@ namespace app\admin\controller\examine;
 
 use app\admin\controller\AuthController;
 use service\FormBuilder as Form;
-use app\admin\model\store\StoreProductAttr;
-use app\admin\model\store\StoreProductAttrResult;
-use app\admin\model\store\StoreProductRelation;
-use app\admin\model\system\SystemConfig;
 use service\JsonService;
 use think\Db;
 use traits\CurdControllerTrait;
 use service\UtilService as Util;
 use service\JsonService as Json;
-use service\UploadService as Upload;
 use think\Request;
 use app\admin\model\store\StoreCategory as CategoryModel;
 use app\admin\model\examine\ExamineModel;
 use think\Url;
-
-use app\admin\model\system\SystemAttachment;
-
+use think\Session;
 
 /**
  * 审核
@@ -206,6 +199,8 @@ class Examine extends AuthController
 
         // 新增
         $data['create_time'] = time();
+        // 获取当前用户的uid
+        $data['uid'] = getUidByAdminId(Session::get('adminId'));
         $res=ExamineModel::set($data);
         return Json::successful('添加申请成功!');
     }

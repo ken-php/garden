@@ -1,4 +1,6 @@
 <?php
+use think\Db;
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -116,4 +118,10 @@ function get_this_class_methods($class,$array4 = []) {
     }
     $array5 = array_diff($array3, $array4);//去除无用的
     return $array5;
+}
+
+
+function getUidByAdminId($admin_id)
+{
+    return Db::name('user')->where('admin_id',$admin_id)->value('uid');
 }

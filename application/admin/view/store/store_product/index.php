@@ -51,8 +51,8 @@
                                 <div class="layui-input-inline">
                                     <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="search" lay-filter="search">
                                         <i class="layui-icon layui-icon-search"></i>搜索</button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm export"  lay-submit="export" lay-filter="export">
-                                        <i class="fa fa-floppy-o" style="margin-right: 3px;"></i>导出</button>
+                                    <!-- <button class="layui-btn layui-btn-primary layui-btn-sm export"  lay-submit="export" lay-filter="export">
+                                        <i class="fa fa-floppy-o" style="margin-right: 3px;"></i>导出</button> -->
                                 </div>
                             </div>
                         </div>

@@ -11,6 +11,7 @@ use think\Request;
 use app\admin\model\system\SystemRole;
 use think\Url;
 use app\admin\model\system\SystemAdmin as AdminModel;
+use think\Db;
 
 /**
  * 管理员列表控制器
@@ -52,6 +53,7 @@ class SystemAdmin extends AuthController
         $f[] = Form::input('pwd','管理员密码')->type('password');
         $f[] = Form::input('conf_pwd','确认密码')->type('password');
         $f[] = Form::input('real_name','管理员姓名');
+        $f[] = Form::input('phone','管理员手机号');
         $f[] = Form::select('roles','管理员身份')->setOptions(function ()use($admin){
                     $list = SystemRole::getRole(bcadd($admin->level,1,0));
                     $options = [];
@@ -79,18 +81,32 @@ class SystemAdmin extends AuthController
             'conf_pwd',
             'pwd',
             'real_name',
+            'phone',
             ['roles',[]],
             ['status',0]
         ],$request);
         if(!$data['account']) return Json::fail('请输入管理员账号');
+        if(!$data['phone']) return Json::fail('请输入管理员手机号');
         if(!$data['roles']) return Json::fail('请选择至少一个管理员身份');
         if(!$data['pwd']) return Json::fail('请输入管理员登陆密码');
         if($data['pwd'] != $data['conf_pwd']) return Json::fail('两次输入密码不想同');
-        if(AdminModel::be($data['account'],'account')) return Json::fail('管理员账号已存在');
+        if(AdminModel::where('account',$data['account'])->where('status',1)->count()) return Json::fail('管理员账号已存在');
+        if($data['phone'] && !preg_match("/^1[34578]\d{9}$/",$data['phone'])) return Json::fail('管理员手机号格式有误');
+        if(AdminModel::where('phone',$data['phone'])->where('status',1)->count()) return Json::fail('管理员手机号已存在');
         $data['pwd'] = md5($data['pwd']);
         unset($data['conf_pwd']);
         $data['level'] = $this->adminInfo['level'] + 1;
-        AdminModel::set($data);
+        // AdminModel::set($data);
+        $adminId = Db::name('system_admin')->insertGetId($data);
+
+        // 关联新增手机端用户
+        $uid = Db::name('user')->where('phone',$data['phone'])->value('uid');
+        if($uid){
+            Db::name('user')->where('uid',$uid)->update(['admin_id',$adminId]);
+        }else{
+            $uDa = ['admin_id'=>$adminId,'account'=>$data['phone'],'phone'=>$data['phone'],'pwd'=>$data['pwd']];
+            Db::name('user')->insert($uDa);
+        }
         return Json::successful('添加管理员成功!');
     }
 
@@ -110,6 +126,7 @@ class SystemAdmin extends AuthController
         $f[] = Form::input('pwd','管理员密码')->type('password');
         $f[] = Form::input('conf_pwd','确认密码')->type('password');
         $f[] = Form::input('real_name','管理员姓名',$admin->real_name);
+        $f[] = Form::input('phone','管理员手机号',$admin->phone);
         $f[] = Form::select('roles','管理员身份',explode(',',$admin->roles))->setOptions(function ()use($admin){
             $list = SystemRole::getRole($admin->level);
             $options = [];
@@ -138,10 +155,12 @@ class SystemAdmin extends AuthController
             'conf_pwd',
             'pwd',
             'real_name',
+            'phone',
             ['roles',[]],
             ['status',0]
         ],$request);
         if(!$data['account']) return Json::fail('请输入管理员账号');
+        if(!$data['phone']) return Json::fail('请输入管理员手机号');
         if(!$data['roles']) return Json::fail('请选择至少一个管理员身份');
         if(!$data['pwd'])
             unset($data['pwd']);
@@ -149,7 +168,22 @@ class SystemAdmin extends AuthController
             if(isset($data['pwd']) && $data['pwd'] != $data['conf_pwd']) return Json::fail('两次输入密码不想同');
             $data['pwd'] = md5($data['pwd']);
         }
-        if(AdminModel::where('account',$data['account'])->where('id','<>',$id)->count()) return Json::fail('管理员账号已存在');
+        if(AdminModel::where('account',$data['account'])->where('id','<>',$id)->where('status',1)->count()) return Json::fail('管理员账号已存在');
+        if(!preg_match("/^1[34578]\d{9}$/",$data['phone'])) return Json::fail('管理员手机号格式有误');
+        if(AdminModel::where('phone',$data['phone'])->where('id','<>',$id)->where('status',1)->count()) return Json::fail('管理员手机号已存在');
+
+        // 关联新增手机端用户
+        $uid = getUidByAdminId($id);
+        if($uid){
+            if(Db::name('user')->where('phone',$data['phone'])->where('uid','<>',$uid)->count()) return Json::fail('用户手机号已存在');
+            Db::name('user')->where('uid',$uid)->update(['phone'=>$data['phone']]);
+        }else{
+            if(Db::name('user')->where('phone',$data['phone'])->count()) return Json::fail('用户手机号已存在');
+            $u_pwd = isset($data['pwd']) ? $data['pwd'] : md5('123456');
+            $uDa = ['admin_id'=>$id,'account'=>$data['phone'],'phone'=>$data['phone'],'pwd'=>$u_pwd];
+            Db::name('user')->insert($uDa);
+        }
+
         unset($data['conf_pwd']);
         AdminModel::edit($data,$id);
         return Json::successful('修改成功!');
@@ -163,12 +197,19 @@ class SystemAdmin extends AuthController
      */
     public function delete($id)
     {
-        if(!$id)
+        if(!$id){
             return JsonService::fail('删除失败!');
-        if(AdminModel::edit(['is_del'=>1,'status'=>0],$id,'id'))
+        }
+        if(AdminModel::edit(['is_del'=>1,'status'=>0],$id,'id')){
+            // 关联删除手机端用户
+            $uid = getUidByAdminId($id);
+            if($uid){
+                Db::name('user')->where('uid',$uid)->update(['is_del'=>1,'status'=>0]);
+            }
             return JsonService::successful('删除成功!');
-        else
+        }else{
             return JsonService::fail('删除失败!');
+        }
     }
 
     /**
