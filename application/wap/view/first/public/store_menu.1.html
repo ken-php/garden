@@ -3,9 +3,10 @@
 $request = \think\Request::instance();
 $now_c = $request->controller();$now_a = $request->action();
 $menu = [
-    ['c'=>'Index','a'=>'index','name'=>'首页','class'=>'home'],
-    ['c'=>'Index','a'=>'project','name'=>'申请项目','class'=>'sort'],
-    ['c'=>'Store','a'=>'category','name'=>'月报','class'=>'sort'],
+    ['c'=>'Index','a'=>'index','name'=>'店铺主页','class'=>'home'],
+    ['c'=>'Store','a'=>'category','name'=>'商品分类','class'=>'sort'],
+    ['c'=>'Store','a'=>'cart','name'=>'购物车','class'=>'car'],
+    ['c'=>'Service','a'=>'service_list','name'=>'联系卖家','class'=>'server'],
     ['c'=>'My','a'=>'index','name'=>'我的','class'=>'user'],
 ];
 ?>

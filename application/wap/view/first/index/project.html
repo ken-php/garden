@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>申请公司/项目</title>
+    <script src="{__PLUG_PATH}vue/dist/vue.min.js"></script>
+    <link href="{__PLUG_PATH}iview/dist/styles/iview.css" rel="stylesheet">
+    <script src="{__PLUG_PATH}iview/dist/iview.min.js"></script>
+    <script src="{__PLUG_PATH}jquery/jquery.min.js"></script>
+    <script src="{__PLUG_PATH}form-create/province_city.js"></script>
+    <script src="{__PLUG_PATH}form-create/form-create.min.js"></script>
+    <style>
+        /*弹框样式修改*/
+        .ivu-modal-body{padding: 5;}
+        .ivu-modal-confirm-footer{display: none;}
+        .ivu-date-picker {display: inline-block;line-height: normal;width: 280px;}
+
+        .ivu-input{height: 80px;font-size: 30px;}
+        .ivu-form .ivu-form-item-label{font-size: 30px;width:198px !important;height: 80px;line-height: 70px;text-align: left;position: absolute;}
+
+        .ivu-select-single .ivu-select-selection{height: 80px;line-height: 80px;}
+        .ivu-select-single .ivu-select-input{font-size: 30px;}
+        .ivu-select-item{font-size: 30px !important;}
+
+        .ivu-form-item-content:nth-child(3){margin-left: 200px !important;}
+
+        .ivu-radio-wrapper{font-size: 30px !important;}
+        .ivu-radio-inner{width: 30px;height: 30px;}
+        .ivu-radio-inner:after{left: 10px;top: 10px;}
+
+        .ivu-input-number{height: 80px;line-height: 80px;width: 280px;font-size: 30px !important;}
+        .ivu-input-number-input-wrap{overflow: initial;}
+        .ivu-input-number-handler-wrap{padding-top: 30px;}
+        .ivu-btn-primary {height: 80px;line-height: 80px;font-size: 30px;margin-bottom: 30px;}
+        .ivu-message{font-size: 35px;}
+    </style>
+<!-- 底部样式 -->
+<link rel="stylesheet" type="text/css" href="{__STATIC_PATH}css/reset.css"/>
+<link rel="stylesheet" type="text/css" href="{__WAP_PATH}crmeb/font/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="{__WAP_PATH}crmeb/css/style.css?2"/>
+<script type="text/javascript" src="{__STATIC_PATH}js/media.js"></script>
+</head>
+<body>
+<script>
+$(function(){
+    $('.ivu-form-item-label').each(function(i,item){
+        switch(i){
+            case 16:
+                item.style = 'width:300px !important;';
+            break;
+            case 23:case 24:case 35:
+                item.style = 'width:300px !important;';
+            break;
+            case 27:case 28:case 29:case 30:case 31:case 40:case 41:
+                item.style = 'width:350px !important;';
+            break;
+            case 34:
+                item.style = 'width:450px !important;';
+            break;
+            case 42:
+                item.style = 'width:500px !important;';
+            break;
+            case 43:
+                item.style = 'width:515px !important;';
+            break;
+        }
+    });
+    $('.ivu-form-item-content').each(function(i,item){
+        switch(i){
+            case 2:case 10:
+                item.style = 'margin-left:200px !important;line-height:80px;';
+            break;
+            case 3:case 11:case 19:case 25:case 31:case 36:case 41:
+                item.style = 'margin-left:0px !important;';
+            break;
+            case 5:
+                item.style = 'margin-left:205px !important;';
+            break;
+            case 18:
+                item.style = 'margin-left:300px !important;line-height:80px;';
+            break;
+            case 26:case 29:case 30:case 39:
+                item.style = 'margin-left:200px !important;';
+            break;
+            case 27:case 28:
+                item.style = 'margin-left:230px !important;';
+            break;
+            case 32:case 33:case 34:case 35:case 47:case 48:
+                item.style = 'margin-left:330px !important;';
+            break;
+            case 37:case 38:
+                item.style = 'margin-left:260px !important;';
+            break;
+            case 40:
+                item.style = 'margin-left:450px !important;';
+            break;
+            case 42:case 43:
+                item.getElementsByTagName('textarea')[0].rows = 10;
+                item.getElementsByTagName('textarea')[0].style = 'font-size:30px;';
+                item.style = 'margin-left:290px !important;';
+            break;
+            case 49:
+                item.style = 'margin-left:500px !important;';
+            break;
+            case 50:
+                item.style = 'margin-left:515px !important;';
+            break;
+        }
+    });
+});
+
+    formCreate.formSuccess = function(form,$r){
+        console.log("{:Url('project')}");
+        window.location.href = "{:Url('project')}";
+    };
+
+    (function () {
+        var create = (function () {
+            var getRule = function () {
+                var rule = <?=json_encode($form->getRules())?>;
+                rule.forEach(function (c) {
+                    if ((c.type == 'cascader' || c.type == 'tree') && Object.prototype.toString.call(c.props.data) == '[object String]') {
+                        if (c.props.data.indexOf('js.') === 0) {
+                            c.props.data = window[c.props.data.replace('js.', '')];
+                        }
+                    }
+                });
+                return rule;
+            }, vm = new Vue,name = 'formBuilderExec<?= !$form->getId() ? '' : '_'.$form->getId() ?>';
+            var _b = false;
+            window[name] =  function create(el, callback) {
+                if(_b) return ;
+                _b = true;
+                if (!el) el = document.body;
+                var $f = formCreate.create(getRule(), {
+                    el: el,
+                    form:<?=json_encode($form->getConfig('form'))?>,
+                    row:<?=json_encode($form->getConfig('row'))?>,
+                    submitBtn:<?=$form->isSubmitBtn() ? '{}' : 'false'?>,
+                    resetBtn:<?=$form->isResetBtn() ? 'true' : '{}'?>,
+                    iframeHelper:true,
+                    upload: {
+                        onExceededSize: function (file) {
+                            vm.$Message.error(file.name + '超出指定大小限制');
+                        },
+                        onFormatError: function () {
+                            vm.$Message.error(file.name + '格式验证失败');
+                        },
+                        onError: function (error) {
+                            vm.$Message.error(file.name + '上传失败,(' + error + ')');
+                        },
+                        onSuccess: function (res) {
+                            if (res.code == 200) {
+                                return res.data.filePath;
+                            } else {
+                                vm.$Message.error(res.msg);
+                            }
+                        }
+                    },
+                    //表单提交事件
+                    onSubmit: function (formData) {
+                        $f.submitStatus({loading: true});
+                        $.ajax({
+                            url: '<?=$form->getAction()?>',
+                            type: '<?=$form->getMethod()?>',
+                            dataType: 'json',
+                            data: formData,
+                            success: function (res) {
+                                if (res.code == 200) {
+                                    vm.$Message.success(res.msg);
+                                    $f.submitStatus({loading: false});
+                                    $f.btn.disabled();
+                                    formCreate.formSuccess && formCreate.formSuccess(res, $f, formData);
+                                    callback && callback(0, res, $f, formData);
+                                    //TODO 表单提交成功!
+                                } else {
+                                    vm.$Message.error(res.msg || '表单提交失败');
+                                    $f.btn.finish();
+                                    callback && callback(1, res, $f, formData);
+                                    //TODO 表单提交失败
+                                }
+                            },
+                            error: function () {
+                                vm.$Message.error('表单提交失败');
+                                $f.btn.finish();
+                            }
+                        });
+                    }
+                });
+                return $f;
+            };
+            return window[name];
+        }());
+        window.$f = create();
+    })();
+</script>
+{include file="public/store_menu"}
+</body>
+</html>

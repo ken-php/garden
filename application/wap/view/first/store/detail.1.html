@@ -14,12 +14,9 @@
         <div class="product-info">
             <div class="title">{$storeInfo.store_name}</div>
             <div class="price">￥{$storeInfo.price|floatval}</div>
-            <!-- <div class="oldprice">原价:￥{$storeInfo.ot_price|floatval}</div> -->
-            <div class="info-amount flex">
-                <!-- <span class="current">商品编号：{$storeInfo.id}</span> -->
-                <!-- <span class="">库存:{$storeInfo.stock}{$storeInfo.unit_name}</span> -->
-                <!-- <span class="fr">销量:{$storeInfo.ficti+$storeInfo.sales}{$storeInfo.unit_name}</span> -->
-            </div>
+            <div class="oldprice">原价:￥{$storeInfo.ot_price|floatval}</div>
+            <div class="info-amount flex"><span class="current">商品编号：{$storeInfo.id}</span> <span class="">库存:{$storeInfo.stock}{$storeInfo.unit_name}</span>
+                <span class="fr">销量:{$storeInfo.ficti+$storeInfo.sales}{$storeInfo.unit_name}</span></div>
             {gt name="storeInfo['give_integral']" value="0"}
             <div class="integral">积分:{$storeInfo.give_integral|floatval} <span>赠送</span></div>
             {/gt}
@@ -54,14 +51,13 @@
             <div class="item-tit"><i class="line"></i><i class="iconfont icon-icon-tupian"></i><span>详情</span><i class="line"></i></div>
             <div class="con-box" ref="store_desc"></div>
         </div>
-        <!-- <div class="footer-bar flex">
+        <div class="footer-bar flex">
             <a href="{:Url('Service/service_list',array('mer_id'=>$mer_id))}"> <span class="iconfont icon-kefu"></span><p>客服</p></a>
             <a class="collect-btn iconfont icon-xing1" :class="{'icon-xing2':product.userCollect == true}" @click="collect" href="javascript:void(0)"><p>收藏</p></a>
             <a href="{:Url('store/cart')}"> <span class="iconfont icon-icon-shoppingcart-02"></span> <p>购物车</p> <span class="cart_num" v-show="cartNum > 0" v-cloak="" v-text="cartNum"></span> </a>
             <div class="big-btn buy-car" @click="cardUp">加入购物车</div>
             <div class="big-btn confirm" @click="cardUp">立即购买</div>
-        </div> -->
-        {include file="public/store_menu"}
+        </div>
     </section>
     {notempty name="similarity"}
     <section class="template-piclist">
