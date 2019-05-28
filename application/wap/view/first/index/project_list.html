@@ -60,8 +60,13 @@ td{padding-bottom: 10px;}
                     <td>{$vo.create_time}</td>
                 </tr>
                 <tr style="border-bottom: lightgray 1px solid;">
-                        <td colspan="2"><button class="btnn">编辑</button></td>
+                    <td colspan="2"><a href="{:Url('project')}?type=2&id={$vo.id}" style="float:right;margin-right: 5px;color: darksalmon;">--> 编辑</a></td>
+                    <!-- <td colspan="2"><button class="btnn">编辑</button></td> -->
                     </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
                 {/volist}
             </table>
             {/empty}
