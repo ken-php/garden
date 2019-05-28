@@ -31,6 +31,7 @@ use service\CacheService;
 use app\core\util\SystemConfigService;
 use think\Request;
 use think\Url;
+use think\Db;
 
 class My extends AuthController
 {
@@ -48,12 +49,15 @@ class My extends AuthController
     }
     public function index()
     {
-//        echo date('Y-m-d,H:i:s',1521516681);
+        $uid = User::getActiveUid();
         $this->assign([
             'menus'=>GroupDataService::getData('my_index_menu')?:[],
             'orderStatusNum'=>StoreOrder::getOrderStatusNum($this->userInfo['uid']),
             'notice'=>UserNotice::getNotice($this->userInfo['uid']),
             'statu' =>(int)SystemConfig::getValue('store_brokerage_statu'),
+            'userInfo'=> Db::name('user')->where('uid',$uid)->field('uid,avatar,nickname,add_time,integral')->find(),
+            'num'=>Db::name('examine')->where(['uid'=>$uid,'is_del'=>0])->count(),
+            'num2'=>Db::name('report')->where(['uid'=>$uid])->count()
         ]);
         return $this->fetch();
     }

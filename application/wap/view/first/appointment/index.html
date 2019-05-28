@@ -1,0 +1,208 @@
+{extend name="public/container"}
+{block name="title"}预约{/block}
+{block name="head_top"}
+<style>
+.item.on {
+    border-bottom: 1px solid #ad1818;
+    color: #ad1818 !important;
+}
+input[type="checkbox"]{width: 15px;height: 15px;-webkit-appearance:checkbox !important;}
+button {
+    display: block;
+    width: 100%;
+    height: .67rem;
+    background-color: #56ca59;
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 50px;
+}
+</style>
+{/block}
+{block name="content"}
+<div class="user">
+    <section>
+        <div class="user-orders">
+            <div class="title flex" style="text-align:center;">
+                <span style="width: 100%;">会议室 - 预约</span>
+            </div>
+            <div class="user-orders-list flex" style="height: 0.70rem;">
+                <a class="item <?php if($xt ==1){ echo ' on';}  ?>" href="{:Url('index')}?xt=1">
+                    今天
+                </a>
+                <a class="item <?php if($xt ==2){ echo ' on';}  ?>" href="{:Url('index')}?xt=2">
+                    明天
+                </a>
+                <a class="item <?php if($xt ==3){ echo ' on';}  ?>" href="{:Url('index')}?xt=3">
+                    {$day1}
+                </a>
+                <a class="item <?php if($xt ==4){ echo ' on';}  ?>" href="{:Url('index')}?xt=4">
+                    {$day2}
+                </a>
+                <a class="item <?php if($xt ==5){ echo ' on';}  ?>" href="{:Url('index')}?xt=5">
+                    {$day3}
+                </a>
+            </div>
+        </div>
+
+
+
+        {empty name="list"}
+        <div class="user-orders">
+            <div class="title flex">
+                <span>8:00 - 9:00</span>
+                <input type="checkbox" name="time" value="1">
+            </div>
+            <div class="title flex">
+                <span>9:00 - 10:00</span>
+                <input type="checkbox" name="time" value="2">
+            </div>
+            <div class="title flex">
+                <span>10:00 - 11:00</span>
+                <input type="checkbox" name="time" value="3">
+            </div>
+            <div class="title flex">
+                <span>11:00 - 12:00</span>
+                <input type="checkbox" name="time" value="4">
+            </div>
+            <div class="title flex">
+                <span>13:00 - 14:00</span>
+                <input type="checkbox" name="time" value="5">
+            </div>
+            <div class="title flex">
+                <span>14:00 - 15:00</span>
+                <input type="checkbox" name="time" value="6">
+            </div>
+            <div class="title flex">
+                <span>15:00 - 16:00</span>
+                <input type="checkbox" name="time" value="7">
+            </div>
+            <div class="title flex">
+                <span>16:00 - 17:00</span>
+                <input type="checkbox" name="time" value="8">
+            </div>
+            <div class="title flex">
+                <span>17:00 - 18:00</span>
+                <input type="checkbox" name="time" value="9">
+            </div>
+        </div>
+        {else/}
+            <div class="user-orders">
+                <div class="title flex">
+                    <span>8:00 - 9:00</span>
+                    {if condition="$list['time1']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="1">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>9:00 - 10:00</span>
+                    {if condition="$list['time2']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="2">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>10:00 - 11:00</span>
+                    {if condition="$list['time3']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="3">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>11:00 - 12:00</span>
+                    {if condition="$list['time4']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="4">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>13:00 - 14:00</span>
+                    {if condition="$list['time5']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="5">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>14:00 - 15:00</span>
+                    {if condition="$list['time6']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="6">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>15:00 - 16:00</span>
+                    {if condition="$list['time7']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="7">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>16:00 - 17:00</span>
+                    {if condition="$list['time8']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="8">
+                    {/if}
+                </div>
+                <div class="title flex">
+                    <span>17:00 - 18:00</span>
+                    {if condition="$list['time9']"}
+                        <span>已占用</span>
+                    {else/}
+                        <input type="checkbox" name="time" value="9">
+                    {/if}
+                </div>
+            </div>
+        {/empty}
+        <div>
+            <p id="hidt" style="color:darksalmon;font-size:30px;text-align: center;display:none;">请选择预约时间段</p>
+            <input type="hidden" id="xt" value="{$xt}">
+            <button type="button" onclick="appointment();">立即预约</button>
+        </div>
+    </section>
+    {include file="public/store_menu"}
+</div>
+<script>
+function appointment(){
+    var obj = document.getElementsByName("time");
+    var check_val = [];
+    for(k in obj){
+        if(obj[k].checked){
+            check_val.push(obj[k].value);
+        }
+    }
+    var pt = document.getElementById("hidt");
+    if(check_val.length==0){
+        pt.style.display='';
+        return false;
+    }
+    var xt = $('#xt').val();
+    $.ajax({
+        type:"POST",
+        url:"./checkTime",
+        data:{'xt':xt,'ids':check_val},
+        dataType:"json",
+        success:function(data){
+            $('#hidt').html(data.msg);
+            pt.style.display='';
+        }
+    });
+}
+
+$('input').click(function(){
+    var pt = document.getElementById("hidt");
+    this.checked ? pt.style.display='none':'';
+});
+
+
+</script>
+
+{/block}
