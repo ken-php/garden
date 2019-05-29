@@ -117,7 +117,7 @@
                     {field: 'cate_name', title: '所属园区',templet:'#cate_name',width:'10%'},
                     {field: 'is_hatched', title: '是否入孵',edit:'is_hatched',width:'10%'},
                     {field: 'corporate_name', title: '公司名称',edit:'corporate_name',align:'center'},
-                    {field: 'create_time', title: '申请时间',width:'10%'},
+                    {field: 'create_time', title: '申请时间',width:'15%'},
                     {field: 'is_audited', title: '状态',templet:"#checkboxstatus",width:'8%'},
                     {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
                 ];
