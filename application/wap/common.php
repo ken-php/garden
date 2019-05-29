@@ -53,3 +53,22 @@ function setView($uid,$product_id=0,$cate=0,$type='',$product_type = 'product',$
         ]);
     }
 }
+
+/**
+ * 模板赋值月报函数
+ * @param $id
+ * @return mixed
+ * @author ken
+ * @date 2019/5/29
+ */
+function getCatename($id)
+{
+    $category = \think\Db::name('store_category')->where('id',$id)->field('id,cate_name')->select();
+    foreach ($category as $key => $val){
+        if ($val['id'] == 23){
+            return $val['cate_name'];
+        }elseif ($val['id'] == 63){
+            return $val['cate_name'];
+        }
+    }
+}

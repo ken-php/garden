@@ -82,5 +82,45 @@ class ReportModel extends ModelBasic
         return $model;
     }
 
+    /**
+     * 获取连表查询条件
+     * @param $type
+     * @return array
+     */
+    public static function setData($type){
+        switch ((int)$type){
+            case 1:
+                $data = ['e.is_audited'=>0,'e.is_del'=>0];
+                break;
+            case 2:
+                $data = ['e.is_audited'=>1,'e.is_del'=>0];
+                break;
+            case 3:
+                $data = ['e.is_del'=>1];
+                break;
+        };
+        return isset($data) ? $data: [];
+    }
+
+    /**
+     * 月报列表
+     * @param $where
+     * @param $order
+     * @param string $limit
+     * @return false|\PDOStatement|string|\think\Collection
+     * @author ken
+     * @date 2019/5/28
+     */
+    public static function getReportRes($where, $order, $limit = '')
+    {
+        $res = Db::name('report')
+            ->where($where)
+            ->field('id,category_id,project_name,address,FROM_UNIXTIME(create_time) as create_time')
+            ->order($order)
+            ->limit($limit)
+            ->select();
+
+        return $res;
+    }
 
 }

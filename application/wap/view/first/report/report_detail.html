@@ -1,0 +1,182 @@
+{extend name="public/container"}
+{block name="title"}月报详情{/block}
+{block name="head_top"}
+<style>
+    td{
+        padding-bottom: 10px;
+    }
+    .discount-list header {
+        position: inherit;
+        left: 0;
+        top: 200px;
+        width: 100%;
+        background-color: #fff;
+    }
+    .btnn {
+        display: block;
+        width: 30%;
+        height: .57rem;
+        background-color: #56ca59;
+        color: #fff;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+</style>
+{/block}
+{block name="content"}
+<!--<div class="authenticate" style="margin-top: 30px;">-->
+    <!--<section>-->
+        <!--<form action="{:Url('index')}">-->
+            <!--<input type="hidden" name="type" value="1">-->
+            <!--<div class="publish-btn" style="position: inherit;"><button type="submit">填写公司月报</button></div>-->
+        <!--</form>-->
+    <!--</section>-->
+<!--</div>-->
+
+<div class="discount-list" >
+    <section>
+        <!--<header class="flex coupon-menu" style="z-index: 999;">-->
+            <!--<a class="item on" data-type="new" href="javascript:void(0);">未审核</a>-->
+            <!--<a class="item" data-type="overdug" href="javascript:void(0);">已审核</a>-->
+            <!--<a class="item" data-type="use" href="javascript:void(0);">已作废</a>-->
+        <!--</header>-->
+        <div style="margin-top: 20px; text-align: center; font-size: 16px;border: 1px">
+            <span style="color: #e3383e;font-weight: bold">月报详情</span>
+        </div>
+        <div class="list-box" style="margin-top: 0;">
+            {empty name="reportDetail"}
+            <div class="empty">
+                <img src="{__WAP_PATH}crmeb/images/empty_detail.png">
+                <p>暂无</p>
+            </div>
+            {else/}
+            <table style="margin: 20px auto;width:100%;">
+
+                <tr>
+                    <td style="width:80px;font-weight: bold">园区名称 :</td>
+                    <td>{$reportDetail.category_id|getCatename}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">公司/项目:</td>
+                    <td>{$reportDetail.project_name}</td>
+                </tr>
+                <tr>
+                    <td style="width:200px; font-weight: bold">是否注册企业:</td>
+                    {eq name="$reportDetail.is_register" value="1"}
+                    <td>已注册</td>
+                        {else/}
+                        <td>未注册</td>
+                    {/eq}
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">注册地址:</td>
+                    <td>{$reportDetail.address}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">是否是科技型中小企业:</td>
+                    {if $reportDetail.is_small_business == 1}
+                    <td>是</td>
+                    {else/}
+                    <td>不是</td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">是否是高新技术企业:</td>
+                    {if $reportDetail.is_high_tech == 1}
+                    <td>是</td>
+                    {else/}
+                    <td>不是</td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">是否上市挂牌:</td>
+                    {if $reportDetail.is_listed == 1}
+                    <td>是</td>
+                    {else/}
+                    <td>不是</td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">从业人员数:</td>
+                    <td>{$reportDetail.team_num} 人</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">从业人员数:</td>
+                    <td>{$reportDetail.persons_num} 人</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">场地面积:</td>
+                    <td>{$reportDetail.site_area} 平米</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">1到3月营业额:</td>
+                    <td>{$reportDetail.one_turnover} 千元</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight: bold">4月营业额:</td>
+                    <td>{$reportDetail.current_turnover} 千元</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">4月纳税额:</td>
+                    <td>{$reportDetail.current_tax} 千元</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">研发经费投入:</td>
+                    <td>{$reportDetail.funding} 千元</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">享受的财政支持金额:</td>
+                    <td>{$reportDetail.amount} 千元</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">参加的投融资对接活动次数:</td>
+                    <td>{$reportDetail.activities_num} 次</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">4月是否获得投资:</td>
+                    {if $reportDetail.investment == 1}
+                    <td>获得</td>
+                    {else/}
+                    <td>未获得</td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">1到3月获得投资金额:</td>
+                    <td>{$reportDetail.investment_amount} 千元</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">1到3月知识产权申请数:</td>
+                    <td>{$reportDetail.intellectual} 次</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">拥有有效知识产权数:</td>
+                    <td>{$reportDetail.have_num} 次</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">1到3月申请发明专利数量:</td>
+                    <td>{$reportDetail.patents} 次</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold">提交时间 :</td>
+                    <td>{$reportDetail.create_time}</td>
+                </tr>
+                <tr style="border-bottom: lightgray 1px solid;">
+                    <td colspan="2">
+                        <a href="{:Url('index')}" style="float:right;margin-right: 5px;color: darksalmon;">--> 返回</a>
+                    </td>
+                    <!-- <td colspan="2"><button class="btnn">编辑</button></td> -->
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </table>
+            {/empty}
+        </div>
+    </section>
+    {include file="public/store_menu"}
+</div>
+
+{/block}
