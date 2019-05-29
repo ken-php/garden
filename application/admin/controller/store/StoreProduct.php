@@ -224,6 +224,7 @@ class StoreProduct extends AuthController
         // $data['cate_id'] = implode(',',$data['cate_id']);
         $data['cate_id'] = $data['cate_id'][0];
         if(!$data['cate_id']) return Json::fail('请选择房间归属');
+        $data['park_id'] = Db::name('store_category')->where('id',$data['cate_id'])->value('pid');
         if(!$data['store_name']) return Json::fail('请输入房间名称');
         // 唯一性验证
         $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
@@ -345,6 +346,7 @@ class StoreProduct extends AuthController
         $cate_id=$data['cate_id'];
         // $data['cate_id'] = implode(',',$data['cate_id']);
         $data['cate_id'] = $cate_id[0];
+        $data['park_id'] = Db::name('store_category')->where('id',$data['cate_id'])->value('pid');
         if(!$data['store_name']) return Json::fail('请输入房间名称');
         // 唯一性验证
         $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);

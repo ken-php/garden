@@ -58,7 +58,7 @@
                     </div> -->
                     <div class="layui-btn-container">
                         <a class="layui-btn layui-btn-sm" href="{:Url('index')}">园区首页</a>
-                        <button type="button" class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}?type={$type}')">
+                        <button type="button" class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}?type={$type}&pid={$pid}')">
                         {if condition="$type == 1"} 添加园区 {else} 添加楼栋 {/if}
                         </button>
                     </div>

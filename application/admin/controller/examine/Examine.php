@@ -11,6 +11,7 @@ use service\UtilService as Util;
 use service\JsonService as Json;
 use think\Request;
 use app\admin\model\store\StoreCategory as CategoryModel;
+use app\admin\model\store\StoreProduct as ProductModel;
 use app\admin\model\examine\ExamineModel;
 use think\Url;
 use think\Session;
@@ -117,6 +118,14 @@ class Examine extends AuthController
             Form::idate('start_time','入园协议起时间')->col(8),
             Form::idate('end_time','入园协议止时间')->col(8),
             Form::input('room_number','入驻房间编号')->col(12),
+            // Form::select('room_number','入驻房间编号')->setOptions(function(){
+            //     $list = ProductModel::where(['is_show'=>1,'is_del'=>0])->field('id,store_name,park_id')->select();
+            //     $menus=[];
+            //     foreach ($list as $v){
+            //         $menus[] = ['value'=>$v['id'],'label'=>$v['store_name'],'park_id'=>$v['park_id']];
+            //     }
+            //     return $menus;
+            // })->filterable(1)->multiple(1)->col(12),
             Form::number('site_area','入驻场地面积')->col(12),
 
             // 项目经营情况
@@ -188,20 +197,38 @@ class Examine extends AuthController
         // 组合起止时间
         $data['start_end_time'] = $data['start_time'].'-'.$data['end_time'];
 
+        if(!$data['room_number']) return Json::fail('请输入入驻房间编号');
+
+
         if($id){
+            // 验证房间是否存在,并且是出售的状态
+            $flag = CategoryModel::isHasPorduct($data['category_id'],$data['room_number'],$id);
+            if($flag) return Json::fail('园区里不存在的房间号');
             // 修改
             $isHas = Db::name('examine')->where('id',$id)->value('id');
             if(!$isHas) return Json::successful('修改失败，数据不存在!');
             $data['update_time'] = time();
             ExamineModel::edit($data,$id);
+
+            Db::name('store_product')->where('is_sell',$id)->update(['is_sell'=>0]);
+            $arr = explode(',',$data['room_number']);
+            Db::name('store_product')->where(['park_id'=>$data['category_id'],'is_show'=>1,'is_del'=>0,'is_sell'=>0])
+            ->whereIn('store_name',$arr)->update(['is_sell'=>$id]);
             return Json::successful('修改成功!');
         }
 
+        // 验证房间是否存在,并且是出售的状态
+        $flag = CategoryModel::isHasPorduct($data['category_id'],$data['room_number']);
+        if($flag) return Json::fail('园区里不存在的房间号');
         // 新增
         $data['create_time'] = time();
         // 获取当前用户的uid
         $data['uid'] = getUidByAdminId(Session::get('adminId'));
-        $res=ExamineModel::set($data);
+        // $res=ExamineModel::set($data);
+        $lastId = Db::name('examine')->insertGetId($data);
+        $arr = explode(',',$data['room_number']);
+        Db::name('store_product')->where(['park_id'=>$data['category_id'],'is_show'=>1,'is_del'=>0])
+        ->whereIn('store_name',$arr)->update(['is_sell'=>$lastId]);
         return Json::successful('添加申请成功!');
     }
 
@@ -263,6 +290,14 @@ class Examine extends AuthController
             Form::idate('start_time','入园协议起时间',$product->getData('start_time'))->col(8),
             Form::idate('end_time','入园协议止时间',$product->getData('end_time'))->col(8),
             Form::input('room_number','入驻房间编号',$product->getData('room_number'))->col(12),
+            // Form::select('room_number','入驻房间编号',explode(',',$product->getData('room_number')))->setOptions(function(){
+            //     $list = ProductModel::where(['is_show'=>1,'is_del'=>0,''])->field('id,store_name')->select();
+            //     $menus=[];
+            //     foreach ($list as $v){
+            //         $menus[] = ['value'=>$v['id'],'label'=>$v['store_name']];
+            //     }
+            //     return $menus;
+            // })->filterable(1)->multiple(1)->col(12),
             Form::number('site_area','入驻场地面积',$product->getData('site_area'))->col(12),
 
             // 项目经营情况

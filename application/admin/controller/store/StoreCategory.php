@@ -11,6 +11,7 @@ use think\Request;
 use app\admin\model\store\StoreCategory as CategoryModel;
 use think\Url;
 use app\admin\model\system\SystemAttachment;
+use think\Db;
 
 /**
  * 产品分类控制器
@@ -78,7 +79,7 @@ class StoreCategory extends AuthController
      *
      * @return \think\Response
      */
-    public function create($type=1)
+    public function create($type=1,$pid=0)
     {
         if($type==1){
             $add_name = '园区';
@@ -90,7 +91,7 @@ class StoreCategory extends AuthController
         }else{
             $add_name = '楼栋';
             $field = [
-                Form::select('pid','归属园区')->setOptions(function(){
+                Form::select('pid','归属园区',$pid)->setOptions(function(){
                     $list = CategoryModel::getTierList();
                     // $menus = [['value'=>0,'label'=>'全部']];
                     $menus = [];
@@ -100,7 +101,7 @@ class StoreCategory extends AuthController
                         }
                     }
                     return $menus;
-                })->filterable(1),
+                })->filterable(1)->disabled(1),
                 Form::input('cate_name','楼栋名称'),
                 // Form::frameImageOne('pic','楼栋图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')))->icon('image'),
                 Form::number('sort','排序'),
@@ -154,6 +155,9 @@ class StoreCategory extends AuthController
         // if(count($data['pic'])<1) return Json::fail('请上传分类图标');
         if($data['sort'] <0 ) $data['sort'] = 0;
         // $data['pic'] = $data['pic'][0];
+        // 验证园区名称唯一性
+        $only = Db::name('store_category')->where(['cate_name'=>$data['cate_name']])->count();
+        if($only) return Json::fail('园区名称已存在');
         $data['add_time'] = time();
         CategoryModel::set($data);
         return Json::successful('添加'.$name.'成功!');
@@ -188,7 +192,7 @@ class StoreCategory extends AuthController
                         }
                     }
                     return $menus;
-                })->filterable(1),
+                })->filterable(1)->disabled(1),
                 Form::input('cate_name','楼栋名称',$c->getData('cate_name')),
                 // Form::frameImageOne('pic','分类图标',Url::build('admin/widget.images/index',array('fodder'=>'pic')),$c->getData('pic'))->icon('image'),
                 Form::number('sort','排序',$c->getData('sort')),
@@ -225,6 +229,8 @@ class StoreCategory extends AuthController
         // if(count($data['pic'])<1) return Json::fail('请上传图标');
         if($data['sort'] <0 ) $data['sort'] = 0;
         // $data['pic'] = $data['pic'][0];
+        $only = Db::name('store_category')->where(['cate_name'=>$data['cate_name'],'id'=>['neq',$id]])->count();
+        if($only) return Json::fail('园区名称已存在');
         CategoryModel::edit($data,$id);
         return Json::successful('修改'.$name.'成功!');
     }
@@ -237,9 +243,20 @@ class StoreCategory extends AuthController
      */
     public function delete($id)
     {
-        if(!CategoryModel::delCategory($id))
-            return Json::fail(CategoryModel::getErrorInfo('包含楼栋不允许删除!'));
-        else
-            return Json::successful('删除成功!');
+        $num = CategoryModel::delCategory($id);
+        switch($num){
+            case 1:
+                return Json::fail(CategoryModel::getErrorInfo('园区包含楼栋,不允许删除!'));
+            break;
+            case 2:
+                return Json::fail(CategoryModel::getErrorInfo('楼栋包含房间,不允许删除!'));
+            break;
+            case 3:
+                return Json::successful('删除成功!');
+            break;
+            case 4:
+                return Json::fail(CategoryModel::getErrorInfo('删除失败!'));
+            break;
+        }
     }
 }

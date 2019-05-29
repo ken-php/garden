@@ -10,6 +10,7 @@ namespace app\admin\model\store;
 use traits\ModelTrait;
 use basic\ModelBasic;
 use service\UtilService;
+use think\Db;
 
 /**
  * Class StoreCategory
@@ -83,12 +84,33 @@ class StoreCategory extends ModelBasic
         return UtilService::sortListTier($model->order('sort desc,id desc')->where('is_show',1)->select()->toArray());
     }
 
+    // 删除园区或者楼栋
     public static function delCategory($id){
-        $count = self::where('pid',$id)->count();
-        if($count)
-            return false;
-        else{
-            return self::del($id);
+        $pid = self::where('id',$id)->value('pid');
+        if($pid == 0){
+            $num = self::where('pid',$id)->count();
+            if($num) return 1;
+        }else{
+            // 是否包含房间
+            $num = Db::name('store_product')->where('cate_id',$id)->count();
+            if($num) return 2;
         }
+        return self::del($id) ? 3 : 4;
     }
+
+    // 是否选择了不存在的房间号
+    public static function isHasPorduct($cate_id,$room,$id=0)
+    {
+        $arr = Db::name('store_product')
+        ->where(['park_id'=>$cate_id,'is_show'=>1,'is_del'=>0])
+        ->whereOr(['park_id'=>$cate_id,'is_show'=>1,'is_del'=>0,'is_sell'=>$id])->column('store_name');
+        $arr2 = explode(',',$room);
+        foreach($arr2 as $v){
+            if($v && !in_array($v,$arr)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -7,7 +7,8 @@
 {/block}
 {block name="content"}
     <div class="row">
-        <div class="col-sm-3 ui-sortable">
+
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">急</span>
@@ -18,8 +19,8 @@
                     <small><a href="{:Url('order.store_order/index')}">待发货</a> </small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">待</span>
@@ -30,8 +31,8 @@
                     <small><a href="{:Url('order.store_order/index')}">退换货</a></small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable" >
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable" >
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">急</span>
@@ -42,8 +43,8 @@
                     <small><a href="{:Url('store.store_product/index',array('type'=>5))}">库存预警</a></small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">待</span>
@@ -54,8 +55,8 @@
                     <small><a href="{:Url('finance.user_extract/index')}">待提现</a></small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">昨</span>
@@ -70,8 +71,8 @@
                     <small>昨日订单数</small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">昨</span>
@@ -86,8 +87,8 @@
                     <small>昨日交易额</small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">今</span>
@@ -102,8 +103,8 @@
                     <small>今日新增粉丝</small>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3 ui-sortable">
+        </div> -->
+        <!-- <div class="col-sm-3 ui-sortable">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">月</span>
@@ -118,14 +119,14 @@
                     <small>本月新增粉丝</small>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 <div id="app">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
+                <!-- <div class="ibox-title">
                     <h5>订单</h5>
                     <div class="pull-right">
                         <div class="btn-group">
@@ -135,8 +136,8 @@
                             <button type="button" class="btn btn-xs btn-white" :class="{'active': active == 'year'}" v-on:click="getlist('year')">年</button>
                         </div>
                     </div>
-                </div>
-                <div class="ibox-content">
+                </div> -->
+                <!-- <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="flot-chart-content echarts" ref="order_echart" id="flot-dashboard-chart1"></div>
@@ -187,16 +188,15 @@
                                         <div :style="{width:cyclecount_percent+'%'}" class="progress-bar box"></div>
                                     </div>
                                 </li>
-
-
                             </ul>
                         </div>
-                    </div>
-                </div>
+                    </div>                    
+                </div> -->
+
             </div>
         </div>
     </div>
-    <div class="row" >
+    <!-- <div class="row" >
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -213,7 +213,23 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+    <div class="row" >
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h2>园区后台管理系统 - 高效办公，由此开启!</h2>
+                </div>
+                <!-- <div class="ibox-content">
+                    <div class="row" style="text-align:center;height:500px;">
+                        <img src="/uploads/common/s_5ad15d48be090.jpg">
+                    </div>
+                </div> -->
+            </div>
+        </div>
     </div>
+
 </div>
 {/block}
 {block name="script"}
