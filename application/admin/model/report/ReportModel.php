@@ -26,12 +26,11 @@ class ReportModel extends ModelBasic
     public static function List($where){
         $model=self::getModelObject($where)->field('e.*,s.cate_name');
         if($where['excel']==0) $model=$model->page((int)$where['page'],(int)$where['limit']);
-        $data=($data=$model->select()) && count($data) ? $data->toArray():[];
+        $data = ($data=$model->select()) && count($data) ? $data->toArray():[];
         foreach ($data as &$item){
-            $item['is_register'] = $item['is_register'] == 1 ? '是' : '否';
-            $item['is_small_business'] = $item['is_small_business'] == 1 ? '是' : '否';
-            $item['is_high_tech'] = $item['is_high_tech'] == 1 ? '是' : '否';
-            $item['is_listed'] = $item['is_listed'] == 1 ? '是' : '否';
+            $item['is_hatched'] = $item['is_hatched'] == 1 ? '已入孵' : '待入孵';
+            $item['is_register'] = $item['is_register'] == 1 ? '已注册' : '未注册';
+            $item['is_graduate_school'] = $item['is_graduate_school'] == 1 ? '是' : '否';
         }
         if($where['excel']==1){
             $export = [];
@@ -51,6 +50,7 @@ class ReportModel extends ModelBasic
                 ->ExcelSave();
         }
         $count=self::getModelObject($where)->count();
+
         return compact('count','data');
     }
 
@@ -100,6 +100,18 @@ class ReportModel extends ModelBasic
                 break;
         };
         return isset($data) ? $data: [];
+    }
+
+    /**
+     * 验证同园区项目编号
+     * @param $project_num
+     * @param $cate_id
+     * @return mixed
+     * @author ken
+     * @date 2019/5/30
+     */
+    public static function getUniqueness($project_num,$cate_id){
+        return self::where(['category_id'=>$cate_id,'project_num'=>$project_num])->value('id');
     }
 
     /**

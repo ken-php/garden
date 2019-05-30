@@ -123,5 +123,5 @@ function get_this_class_methods($class,$array4 = []) {
 
 function getUidByAdminId($admin_id)
 {
-    return Db::name('user')->where('admin_id',$admin_id)->value('uid');
+    return Db::name('system_admin')->where('id',$admin_id)->value('id');
 }

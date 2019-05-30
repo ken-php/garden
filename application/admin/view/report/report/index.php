@@ -44,7 +44,8 @@
                     <div class="layui-btn-container">
                         <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>
                     </div>
-                    <table class="layui-hide" id="List" lay-filter="List"></table>
+<!--                    <table class="layui-hide" id="List" lay-filter="List"></table>-->
+                    <table class="layui-hide" id="List" lay-filter="List" ></table>
                     <!--操作-->
                     <script type="text/html" id="act">
                         <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
@@ -54,33 +55,140 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-<script src="{__ADMIN_PATH}js/layuiList.js"></script>
+<!--<script src="{__ADMIN_PATH}js/layuiList.js"></script>-->
+<script src="{__ADMIN_PATH}js/layui.js"></script>
 <script>
-    var type=1;
-    //实例化form
-    layList.form.render();
-    //加载列表
-    layList.tableList('List',"{:Url('product_ist',['type'=>1])}",function (){
-        var join=new Array();
-        switch (parseInt(type)){
-            case 1:
-                join=[
-                    {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
-                    {field: 'project_name', title: '企业或项目名',width:'10%'},
-                    {field: 'is_register', title: '是否注册企业',width:'10%'},
-                    {field: 'address', title: '注册地址',width:'10%'},
-                    {field: 'is_small_business', title: '是否是科技型中小企业',align:'center'},
-                    {field: 'is_high_tech', title: '是否是高新技术企业',width:'10%'},
-                    {field: 'is_listed', title: '是否上市挂牌',width:'8%'},
-                    {field: 'create_time', title: '填报时间',width:'8%'},
-                    {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
-                ];
-                break;
-        }
-        return join;
-    })
+
+    layui.use('table', function() {
+        var table = layui.table;
+
+        table.render({
+            elem: '#List',
+            url: "{:Url('product_ist',['type'=>1])}",
+            cols: [[
+                {type: 'checkbox', fixed: 'left'},
+                {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},
+                {field: 'project_num', title: '项目编号', width: 90},
+                {field: 'cate_name', title: '归属园区', width: 110},
+                {field: 'is_hatched', title: '是否入孵', width: 90},
+                {field: 'corporate_name', title: '企业或项目名', width: 110},
+                {field: 'org_code', title: '组织机构代码', width: 110},
+                {field: 'project_synopsis', title: '项目简介', width: 90},
+                {field: 'is_register', title: '是否注册企业', width: 110},
+                {field: 'project_type', title: '项目类别', width: 90},
+                {field: 'jop_num', title: '就业人数', width: 90},
+                {field: 'entr_num', title: '创业人数', width: 90},
+                {field: 'legal_name', title: '法人姓名', width: 90},
+                {field: 'legal_id_card', title: '法人身份证', width: 100},
+                {field: 'legal_school', title: '毕业院校', width: 90},
+                {field: 'legal_time', title: '法人毕业时间', width: 110},
+                {field: 'legal_education', title: '法人学历', width: 90},
+                {field: 'legal_phone', title: '法人电话', width: 90},
+                {field: 'is_graduate_school', title: '法人是否毕业或在校5年', width: 170},
+                {field: 'team_name', title: '团队成员姓名', width: 110},
+                {field: 'team_school', title: '团队成员毕业院校', width: 140},
+                {field: 'team_time', title: '团队成员毕业时间', width: 140},
+                {field: 'team_education', title: '团队成员学历', width: 120},
+                {field: 'team_phone', title: '团队成员电话', width: 120},
+                {field: 'residence_time', title: '入住园区时间', width: 120},
+                {field: 'start_time', title: '入园协议起时间', width: 130},
+                {field: 'end_time', title: '入园协议止时间', width: 130},
+                {field: 'room_number', title: ' 入驻房间编号', width: 120},
+                {field: 'site_area', title: ' 入驻场地面积', width: 120},
+                {field: 'month_turnover', title: '营业额-本月(万元)', width: 150},
+                {field: 'year_turnover', title: '营业额-本年累计(万元)', width: 160},
+                {field: 'month_taxes', title: '纳税额-本月(万元)', width: 150},
+                {field: 'year_taxes', title: '纳税额-本年累计(万元)', width: 160},
+                {field: 'resource_docking', title: '有效资源对接情况', width: 150},
+                {field: 'name_investor', title: '出资单位名称', width: 110},
+                {field: 'financing_amount', title: '融资金额', width: 90},
+                {field: 'gov_amount', title: '政府扶持资金名称及金额(万元)', width: 210},
+                {field: 'project_awards', title: '项目获奖及专利情况', width: 150},
+                {field: 'change_record', title: '信息变更记录', width: 110},
+                {field: 'back_time', title: '退园时间', width: 90},
+                {field: 'reason', title: '退园原因', width: 90},
+                {field: 'industry_type', title: '行业类型', width: 90},
+                {field: 'products_services', title: '项目提供的产品或服务', width: 160},
+                {field: 'required_pro_serv', title: '项目需要的产品或服务', width: 160},
+                {field: 'financing_needs', title: '是否有融资需求', width: 130},
+                {field: 'entrepr', title: '是否需要创业辅导培训', width: 160},
+
+                {field: 'create_time', title: '填报时间', width: 180},
+                {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
+            ]]
+            , page: true
+        });
+
+    });
+    // var type=1;
+    // //实例化form
+    // layList.form.render({
+    //     elem: '#List'
+    // });
+    // //加载列表
+    // layList.tableList('List',"{:Url('product_ist',['type'=>1])}",function (){
+    //
+    //     var join=new Array();
+    //     switch (parseInt(type)){
+    //         case 1:
+    //             join=[
+    //                 {field: 'id', title: 'ID', sort: true,event:'id',width:60},
+    //                 {field: 'project_num', title: '项目编号',width:60},
+    //                 {field: 'cate_name', title: '归属园区',width:80},
+    //                 {field: 'is_hatched', title: '是否入孵',width:60},
+    //                 {field: 'corporate_name', title: '企业或项目名',width:80},
+    //                 {field: 'org_code', title: '组织机构代码',width:60},
+    //                 {field: 'project_synopsis', title: '项目简介',width:80},
+    //                 {field: 'is_register', title: '是否注册企业',width:60},
+    //                 {field: 'project_type', title: '项目类别',width:60},
+    //                 {field: 'jop_num', title: '就业人数',width:60},
+    //                 {field: 'entr_num', title: '创业人数',width:60},
+    //                 {field: 'legal_name', title: '法人姓名',width:60},
+    //                 {field: 'legal_id_card', title: '法人身份证',width:80},
+    //                 {field: 'legal_school', title: '毕业院校',width:60},
+    //                 {field: 'legal_time', title: '法人毕业时间',width:80},
+    //                 {field: 'legal_education', title: '法人学历',width:60},
+    //                 {field: 'legal_phone', title: '法人电话',width:'80'},
+    //                 {field: 'is_graduate_school', title: '法人是否毕业或在校5年',width:60},
+    //                 {field: 'team_name', title: '团队成员姓名',width:60},
+    //                 {field: 'team_school', title: '团队成员毕业院校',width:60},
+    //                 {field: 'team_time', title: '团队成员毕业时间',width:80},
+    //                 {field: 'team_education', title: '团队成员学历',width:60},
+    //                 {field: 'team_phone', title: '团队成员电话',width:60},
+    //                 {field: 'residence_time', title: '入住园区时间',width:80},
+    //                 {field: 'start_time', title: '入园协议起时间',width:60},
+    //                 {field: 'end_time', title: '入园协议止时间',width:60},
+    //                 {field: 'room_number', title: ' 入驻房间编号',width:50},
+    //                 {field: 'site_area', title: ' 入驻场地面积',width:50},
+    //                 {field: 'month_turnover', title: '营业额-本月(万元)',width:50},
+    //                 {field: 'year_turnover', title: '营业额-本年累计(万元)',width:50},
+    //                 {field: 'month_taxes', title: '纳税额-本月(万元)',width:50},
+    //                 {field: 'year_taxes', title: '纳税额-本年累计(万元)',width:50},
+    //                 {field: 'resource_docking', title: '有效资源对接情况',width:50},
+    //                 {field: 'name_investor', title: '出资单位名称',width:80},
+    //                 {field: 'financing_amount', title: '融资金额',width:50},
+    //                 {field: 'gov_amount', title: '政府扶持资金名称及金额(万元)',width:80},
+    //                 {field: 'project_awards', title: '项目获奖及专利情况',width:80},
+    //                 {field: 'change_record', title: '信息变更记录',width:80},
+    //                 {field: 'back_time', title: '退园时间',width:80},
+    //                 {field: 'reason', title: '退园原因',width:80},
+    //                 {field: 'industry_type', title: '行业类型',width:60},
+    //                 {field: 'products_services', title: '项目提供的产品或服务',width:80},
+    //                 {field: 'required_pro_serv', title: '项目需要的产品或服务',width:80},
+    //                 {field: 'financing_needs', title: '是否有融资需求',width:80},
+    //                 {field: 'entrepr', title: '是否需要创业辅导培训',width:60},
+    //
+    //                 {field: 'create_time', title: '填报时间',width:80},
+    //                 {field: 'right', title: '操作',align:'center',toolbar:'#act',width:80},
+    //             ];
+    //             break;
+    //     }
+    //     return join;
+    // })
+
     //excel下载
     layList.search('export',function(where){
         location.href=layList.U({c:'report.report',a:'product_ist',q:{
