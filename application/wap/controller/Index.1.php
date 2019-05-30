@@ -37,7 +37,7 @@ class Index extends AuthController
 
     public function index()
     {
-        $uid = User::getActiveUid();
+        // $uid = User::getActiveUid();
         // 申请项目
         // $project = Db::name('examine')->where('uid',$uid)->field('id,concat(project_num,"-",corporate_name) as project_name')->count();
         // 是否申请过项目,假如第一次进来就去申请公司/项目页面
@@ -48,13 +48,10 @@ class Index extends AuthController
         //     return $this->fetch('project');
         // }
 
-        $id = Db::name('project_user')->where('uid',$uid)->value('project_id');
 
         $this->assign([
             'banner'=>GroupDataService::getData('store_home_banner')?:[],
-            'roll_news'=>Db::name('notice')->select()?:[],
-            'notice_user'=>Db::name('notice_user')->where('uid',$uid)->select()?:[],
-            'examine'=>Db::name('examine')->where('id',$id)->select()?:[],
+            'roll_news'=>GroupDataService::getData('store_home_roll_news')?:[]
         ]);
 
         return $this->fetch();
@@ -141,13 +138,12 @@ class Index extends AuthController
         }
         $uid = User::getActiveUid();
         // 申请的项目
-        $idArr = Db::name('project_user')->where(['uid'=>$uid,'status'=>1])->column('project_id');
        if($xt == 1){
-           $projectlist = Db::name('examine')->whereIn('id',$idArr)->where(['is_audited'=>0,'is_del'=>0])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
+           $projectlist = Db::name('examine')->where(['uid'=>$uid,'is_audited'=>0,'is_del'=>0])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
        }else if($xt == 2){
-           $projectlist = Db::name('examine')->whereIn('id',$idArr)->where(['is_audited'=>1,'is_del'=>0])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
+           $projectlist = Db::name('examine')->where(['uid'=>$uid,'is_audited'=>1,'is_del'=>0])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
        }else{
-           $projectlist = Db::name('examine')->whereIn('id',$idArr)->where(['is_del'=>1])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
+           $projectlist = Db::name('examine')->where(['uid'=>$uid,'is_del'=>1])->field('id,project_num,corporate_name,FROM_UNIXTIME(create_time) as create_time')->order('id desc')->select();
        }
         // 项目列表
         $this->assign(compact('projectlist','xt'));

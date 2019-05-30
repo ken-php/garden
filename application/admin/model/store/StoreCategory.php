@@ -92,8 +92,8 @@ class StoreCategory extends ModelBasic
             if($num) return 1;
         }else{
             // 是否包含房间
-            $num = Db::name('store_product')->where('cate_id',$id)->count();
-            if($num) return 2;
+            // $num = Db::name('store_product')->where('cate_id',$id)->count();
+            // if($num) return 2;
         }
         return self::del($id) ? 3 : 4;
     }

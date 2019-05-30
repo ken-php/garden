@@ -113,46 +113,38 @@ class Examine extends AuthController
             Form::input('team_phone','联系电话')->col(7),
 
             // 入驻园区信息
-            Form::input('qi4','----','入驻园区信息')->readonly(1)->disabled(1),
-            Form::idate('residence_time','入驻园区时间')->col(8),
-            Form::idate('start_time','入园协议起时间')->col(8),
-            Form::idate('end_time','入园协议止时间')->col(8),
-            Form::input('room_number','入驻房间编号')->col(12),
-            // Form::select('room_number','入驻房间编号')->setOptions(function(){
-            //     $list = ProductModel::where(['is_show'=>1,'is_del'=>0])->field('id,store_name,park_id')->select();
-            //     $menus=[];
-            //     foreach ($list as $v){
-            //         $menus[] = ['value'=>$v['id'],'label'=>$v['store_name'],'park_id'=>$v['park_id']];
-            //     }
-            //     return $menus;
-            // })->filterable(1)->multiple(1)->col(12),
-            Form::number('site_area','入驻场地面积')->col(12),
+            // Form::input('qi4','----','入驻园区信息')->readonly(1)->disabled(1),
+            // Form::idate('residence_time','入驻园区时间')->col(8),
+            // Form::idate('start_time','入园协议起时间')->col(8),
+            // Form::idate('end_time','入园协议止时间')->col(8),
+            // Form::input('room_number','入驻房间编号')->col(12),
+            // Form::number('site_area','入驻场地面积')->col(12),
 
             // 项目经营情况
-            Form::input('qi5','----','项目经营情况')->readonly(1)->disabled(1),
-            Form::number('month_turnover','营业额-本月(万元)')->precision(2)->col(6),
-            Form::number('year_turnover','营业额-本年累计(万元)')->precision(2)->col(6),
-            Form::number('month_taxes','纳税额-本月(万元)')->precision(2)->col(6),
-            Form::number('year_taxes','纳税额-本年累计(万元)')->precision(2)->col(6),
+            // Form::input('qi5','----','项目经营情况')->readonly(1)->disabled(1),
+            // Form::number('month_turnover','营业额-本月(万元)')->precision(2)->col(6),
+            // Form::number('year_turnover','营业额-本年累计(万元)')->precision(2)->col(6),
+            // Form::number('month_taxes','纳税额-本月(万元)')->precision(2)->col(6),
+            // Form::number('year_taxes','纳税额-本年累计(万元)')->precision(2)->col(6),
 
             // 项目培育孵化情况
-            Form::input('qi6','----','项目培育孵化情况')->readonly(1)->disabled(1),
-            Form::input('resource_docking','有效资源对接情况')->col(12),
-            Form::input('name_investor','出资单位名称')->col(12),
-            Form::number('financing_amount','融资金额')->precision(2)->col(12),
-            Form::number('gov_amount','政府扶持资金名称及金额(万元)')->precision(2)->col(12),
+            // Form::input('qi6','----','项目培育孵化情况')->readonly(1)->disabled(1),
+            // Form::input('resource_docking','有效资源对接情况')->col(12),
+            // Form::input('name_investor','出资单位名称')->col(12),
+            // Form::number('financing_amount','融资金额')->precision(2)->col(12),
+            // Form::number('gov_amount','政府扶持资金名称及金额(万元)')->precision(2)->col(12),
 
             // 其他信息
-            Form::input('qi7','----','其他信息')->readonly(1)->disabled(1),
-            Form::textarea('project_awards','项目获奖及专利情况')->col(24),
-            Form::textarea('change_record','信息变更记录')->col(24),
-            Form::idate('back_time','退园时间')->col(8),
-            Form::input('reason','退园原因')->col(16),
-            Form::input('industry_type','行业类型')->col(24),
-            Form::input('products_services','项目提供的产品或服务')->col(24),
-            Form::input('required_pro_serv','项目需要的产品或服务')->col(24),
-            Form::number('financing_needs','是否有融资需求（1风险投资2贷款）')->col(8),
-            Form::input('entrepr','是否需要创业辅导培训（财务、法务等）')->col(24)
+            // Form::input('qi7','----','其他信息')->readonly(1)->disabled(1),
+            // Form::textarea('project_awards','项目获奖及专利情况')->col(24),
+            // Form::textarea('change_record','信息变更记录')->col(24),
+            // Form::idate('back_time','退园时间')->col(8),
+            // Form::input('reason','退园原因')->col(16),
+            // Form::input('industry_type','行业类型')->col(24),
+            // Form::input('products_services','项目提供的产品或服务')->col(24),
+            // Form::input('required_pro_serv','项目需要的产品或服务')->col(24),
+            // Form::number('financing_needs','是否有融资需求（1风险投资2贷款）')->col(8),
+            // Form::input('entrepr','是否需要创业辅导培训（财务、法务等）')->col(24)
         ];
         $form = Form::make_post_form('添加申请',$field,Url::build('save'),2);
         $this->assign(compact('form'));
@@ -164,22 +156,34 @@ class Examine extends AuthController
      */
     public function save(Request $request,$id=0)
     {
-        $data = Util::postMore([
-            'project_num','category_id','is_hatched','corporate_name',
-            'org_code','project_synopsis','project_type',
-            'jop_num','entr_num','is_register',
-            'legal_name','legal_id_card','legal_school',
-            'legal_time','legal_education','legal_phone',
-            'is_graduate_school','team_name','team_school',
-            'team_time','team_education','team_phone',
-            'residence_time','start_end_time','start_time','end_time',
-            'room_number','site_area','month_turnover',
-            'year_turnover','month_taxes','year_taxes',
-            'resource_docking','name_investor','financing_amount',
-            'gov_amount','project_awards','change_record',
-            'back_time','reason','industry_type',
-            'products_services','required_pro_serv','financing_needs','entrepr'
-        ],$request);
+        if($id==0){
+            $data = Util::postMore([
+                'project_num','category_id','is_hatched','corporate_name',
+                'org_code','project_synopsis','project_type',
+                'jop_num','entr_num','is_register',
+                'legal_name','legal_id_card','legal_school',
+                'legal_time','legal_education','legal_phone',
+                'is_graduate_school','team_name','team_school',
+                'team_time','team_education','team_phone'
+            ],$request);
+        }else{
+            $data = Util::postMore([
+                'project_num','category_id','is_hatched','corporate_name',
+                'org_code','project_synopsis','project_type',
+                'jop_num','entr_num','is_register',
+                'legal_name','legal_id_card','legal_school',
+                'legal_time','legal_education','legal_phone',
+                'is_graduate_school','team_name','team_school',
+                'team_time','team_education','team_phone',
+                'residence_time','start_end_time','start_time','end_time',
+                'room_number','site_area','month_turnover',
+                'year_turnover','month_taxes','year_taxes',
+                'resource_docking','name_investor','financing_amount',
+                'gov_amount','project_awards','change_record',
+                'back_time','reason','industry_type',
+                'products_services','required_pro_serv','financing_needs','entrepr'
+            ],$request);
+        }
         // 数据校验
         if(!$data['project_num']) return Json::fail('请输入项目编号');
         if(!$data['category_id']) return Json::fail('请选择所属园区');
@@ -197,38 +201,18 @@ class Examine extends AuthController
         // 组合起止时间
         $data['start_end_time'] = $data['start_time'].'-'.$data['end_time'];
 
-        if(!$data['room_number']) return Json::fail('请输入入驻房间编号');
-
-
         if($id){
-            // 验证房间是否存在,并且是出售的状态
-            $flag = CategoryModel::isHasPorduct($data['category_id'],$data['room_number'],$id);
-            if($flag) return Json::fail('园区里不存在的房间号');
             // 修改
             $isHas = Db::name('examine')->where('id',$id)->value('id');
             if(!$isHas) return Json::successful('修改失败，数据不存在!');
             $data['update_time'] = time();
             ExamineModel::edit($data,$id);
-
-            Db::name('store_product')->where('is_sell',$id)->update(['is_sell'=>0]);
-            $arr = explode(',',$data['room_number']);
-            Db::name('store_product')->where(['park_id'=>$data['category_id'],'is_show'=>1,'is_del'=>0,'is_sell'=>0])
-            ->whereIn('store_name',$arr)->update(['is_sell'=>$id]);
             return Json::successful('修改成功!');
         }
 
-        // 验证房间是否存在,并且是出售的状态
-        $flag = CategoryModel::isHasPorduct($data['category_id'],$data['room_number']);
-        if($flag) return Json::fail('园区里不存在的房间号');
         // 新增
         $data['create_time'] = time();
-        // 获取当前用户的uid
-        $data['uid'] = getUidByAdminId(Session::get('adminId'));
-        // $res=ExamineModel::set($data);
-        $lastId = Db::name('examine')->insertGetId($data);
-        $arr = explode(',',$data['room_number']);
-        Db::name('store_product')->where(['park_id'=>$data['category_id'],'is_show'=>1,'is_del'=>0])
-        ->whereIn('store_name',$arr)->update(['is_sell'=>$lastId]);
+        $res=ExamineModel::set($data);
         return Json::successful('添加申请成功!');
     }
 
@@ -290,14 +274,6 @@ class Examine extends AuthController
             Form::idate('start_time','入园协议起时间',$product->getData('start_time'))->col(8),
             Form::idate('end_time','入园协议止时间',$product->getData('end_time'))->col(8),
             Form::input('room_number','入驻房间编号',$product->getData('room_number'))->col(12),
-            // Form::select('room_number','入驻房间编号',explode(',',$product->getData('room_number')))->setOptions(function(){
-            //     $list = ProductModel::where(['is_show'=>1,'is_del'=>0,''])->field('id,store_name')->select();
-            //     $menus=[];
-            //     foreach ($list as $v){
-            //         $menus[] = ['value'=>$v['id'],'label'=>$v['store_name']];
-            //     }
-            //     return $menus;
-            // })->filterable(1)->multiple(1)->col(12),
             Form::number('site_area','入驻场地面积',$product->getData('site_area'))->col(12),
 
             // 项目经营情况
@@ -408,6 +384,99 @@ class Examine extends AuthController
                 return Json::successful('成功移到回收站!');
         }
 
+    }
+
+
+    /**
+     * 数据初始化
+     * 前后台用户
+     * 项目表
+     * 项目用户表
+     */
+    public function test()
+    {
+        $da = Db::table('test')->select();
+        foreach($da as $v){
+            $data['project_num'] = $v['c2'];
+            $data['category_id'] = 23;
+            $data['is_hatched'] = 1;
+            $data['corporate_name'] = $v['c5'];
+            $data['org_code'] = $v['c6'];
+            $data['project_synopsis'] = $v['c7'];
+            $data['is_register'] = 1;
+            $data['project_type'] = $v['c9'];
+            $data['jop_num'] = (int)$v['c10'];
+            $data['entr_num'] = (int)$v['c11'];
+            $data['legal_name'] = $v['c12'];
+            $data['legal_id_card'] = $v['c13'];
+            $data['legal_school'] = $v['c14'];
+            $data['legal_time'] = $v['c15'];
+            $data['legal_education'] = $v['c16'];
+            $data['legal_phone'] = (int)$v['c17'];
+            $data['is_graduate_school'] = 1;
+            $data['team_name'] = $v['c19'];
+            $data['team_school'] = $v['c22'];
+            $data['team_time'] = $v['c23'];
+            $data['team_education'] = $v['c24'];
+            $data['team_phone'] = (int)$v['c25'];
+            $data['residence_time'] = $v['c26'];
+            $data['start_end_time'] = $v['c27'];
+            $arr = explode('-',$v['c27']);
+            $data['start_time'] = $arr[0];
+            $data['end_time'] = $arr[1];
+            $data['room_number'] = $v['c28'];
+            $data['site_area'] = $v['c29'];
+            $data['month_turnover'] = $v['c30'];
+            $data['year_turnover'] = $v['c31'];
+            $data['month_taxes'] = $v['c32'];
+            $data['year_taxes'] = $v['c33'];
+            $data['resource_docking'] = $v['c34'];
+            $data['name_investor'] = $v['c35'];
+            $data['financing_amount'] = $v['c36'];
+            $data['gov_amount'] = $v['c37'];
+            $data['project_awards'] = $v['c38'];
+            $data['change_record'] = $v['c39'];
+            $data['back_time'] = $v['c40'];
+            $data['reason'] = $v['c41'];
+            $data['industry_type'] = $v['c42'];
+            $data['products_services'] = $v['c43'];
+            $data['required_pro_serv'] = $v['c44'];
+            $data['financing_needs'] = 1;
+            $data['entrepr'] = $v['c46'];
+            
+            // 唯一性验证
+            $onlyT = ExamineModel::getUniqueness($data['project_num'],$data['category_id']);
+            if($onlyT){
+                return Json::fail('同一园区里项目编号不能重复');
+            }else {
+                $projectid = Db::name('examine')->insertGetId($data);
+
+                $account = $data['legal_phone'];
+                // pc用户
+                $data１['account'] = $account;
+                $data１['pwd'] = md5(123456);
+                $data１['real_name'] = $account;
+                $data１['phone'] = $account;
+                $data１['add_time'] = time();
+                $admin_id = Db::name('system_admin')->insertGetId($data１);
+
+                // wap用户
+                $data2['admin_id'] = $admin_id;
+                $data2['account'] = $account;
+                $data2['pwd'] = md5(123456);
+                $data2['nickname'] = $account;
+                $data2['phone'] = $account;
+                $data2['add_time'] = time();
+                $data2['add_ip'] = $this->request->ip();
+                $uid = Db::name('user')->insertGetId($data2);
+
+                // 项目用户表
+                $data3['uid'] = $uid;
+                $data3['project_id'] = $projectid;
+                Db::name('project_user')->insert($data3);
+            }
+
+        }
     }
 
 
