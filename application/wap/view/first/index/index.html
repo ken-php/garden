@@ -59,7 +59,7 @@
                         <div style="float:left;width: 93%;">
                             <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 5px;">{$vo.content}</span>
                             <br><br>
-                            <a style="font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: red;" href="#">马上提报</a>
+                            <a style="font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: red;" href="{:Url('report/index')}">马上提报</a>
                             <img style="width:24px;height:24px;float: right;" src="{__WAP_PATH}crmeb/images/ttb16.svg" />
                         </div>
                     </div>
@@ -75,25 +75,25 @@
                     </div>
                     <div style="float:left;width: 90%;padding-top: 15px;">
                         <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">{$vo.corporate_name}</span>
-                        <button type="button" style="width:48px;background-color: #56ca59;font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: #fff;" >变更</button>>
+                        <a href="{:Url('project')}?type=2&id={$vo.id}&xt=2"><button type="button" style="width:48px;background-color: #56ca59;font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: #fff;" >变更</button></a>
                     </div>
                 </div>
                 <div style="margin: 15px 5px 0 15px;height: 40px;">
                         <div style="float:left;width: 10%;">
-                            <img style="width:48px;height:48px;" src="{__WAP_PATH}sx/images/state-ytk.png" />
+                            <img style="width:24px;height:24px;margin-left: 10px;" src="{__WAP_PATH}sx/images/user-service05.png" />
                         </div>
-                        <div style="float:left;width: 90%;padding-top: 15px;">
+                        <div style="float:left;width: 90%;padding-top: 5px;">
                             <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">{$vo.legal_phone}</span>
                             <button type="button" style="width:48px;background-color: #56ca59;font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: #fff;" >解绑</button>
                         </div>
                 </div>
                 <div style="margin: 15px 5px 0 15px;height: 40px;">
-                        <div style="float:left;width: 10%;">
-                            <img style="width:48px;height:48px;" src="{__WAP_PATH}sx/images/state-ytk.png" />
-                        </div>
-                        <div style="float:left;width: 90%;padding-top: 15px;">
-                            <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">历史填报数据</span>
-                        </div>
+                    <div style="float:left;width: 10%;">
+                        <img style="width:24px;height:24px;margin-left: 10px;" src="{__WAP_PATH}crmeb/images/user-service04.png" />
+                    </div>
+                    <div style="float:left;width: 90%;">
+                        <a href="{:Url('report/index')}"><span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">历史填报数据</span></a>
+                    </div>
                 </div>
             {/volist}
             

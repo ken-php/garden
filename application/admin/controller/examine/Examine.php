@@ -99,7 +99,7 @@ class Examine extends AuthController
             Form::input('legal_name','姓名')->col(8),
             Form::input('legal_id_card','身份证号')->col(8),
             Form::input('legal_school','毕业院校')->col(8),
-            Form::idate('legal_time','毕业时间')->col(6),
+            Form::input('legal_time','毕业时间')->col(6),
             Form::input('legal_education','学历')->col(5),
             Form::input('legal_phone','联系电话')->col(7),
             Form::radio('is_graduate_school','是否毕业5年或在校',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(6),
@@ -108,7 +108,7 @@ class Examine extends AuthController
             Form::input('qi3','----','团队成员信息')->readonly(1)->disabled(1),
             Form::input('team_name','姓名')->col(8),
             Form::input('team_school','毕业院校')->col(8),
-            Form::idate('team_time','毕业时间')->col(6),
+            Form::input('team_time','毕业时间')->col(6),
             Form::input('team_education','学历')->col(5),
             Form::input('team_phone','联系电话')->col(7),
 
@@ -192,14 +192,14 @@ class Examine extends AuthController
         if($data['legal_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['legal_phone'])) return Json::fail('法人信息 - 手机格式有误');
         if($data['team_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['team_phone'])) return Json::fail('团队成员信息 - 手机格式有误');
         if($data['residence_time'] && $data['back_time'] && strtotime($data['back_time']) < strtotime($data['residence_time'])) return Json::fail('入驻园区时间 要小于 退园时间');
-        if($data['start_time'] && $data['end_time'] && strtotime($data['end_time']) < strtotime($data['start_time'])) return Json::fail('入园协议起时间 要小于 止时间');
+        // if($data['start_time'] && $data['end_time'] && strtotime($data['end_time']) < strtotime($data['start_time'])) return Json::fail('入园协议起时间 要小于 止时间');
         // 唯一性验证
         $onlyT = ExamineModel::getUniqueness($data['project_num'],$data['category_id']);
         if($onlyT && (($id && $id!=$onlyT) || $id==0)){
             return Json::fail('同一园区里项目编号不能重复');
         }
         // 组合起止时间
-        $data['start_end_time'] = $data['start_time'].'-'.$data['end_time'];
+        // $data['start_end_time'] = $data['start_time'].'-'.$data['end_time'];
 
         if($id){
             // 修改
@@ -255,7 +255,7 @@ class Examine extends AuthController
             Form::input('legal_name','姓名',$product->getData('legal_name'))->col(8),
             Form::input('legal_id_card','身份证号',$product->getData('legal_id_card'))->col(8),
             Form::input('legal_school','毕业院校',$product->getData('legal_school'))->col(8),
-            Form::idate('legal_time','毕业时间',$product->getData('legal_time'))->col(6),
+            Form::input('legal_time','毕业时间',$product->getData('legal_time'))->col(6),
             Form::input('legal_education','学历',$product->getData('legal_education'))->col(5),
             Form::input('legal_phone','联系电话',$product->getData('legal_phone'))->col(7),
             Form::radio('is_graduate_school','是否毕业5年或在校',$product->getData('is_graduate_school'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(6),
@@ -264,15 +264,16 @@ class Examine extends AuthController
             Form::input('qi3','----','团队成员信息')->readonly(1)->disabled(1),
             Form::input('team_name','姓名',$product->getData('team_name'))->col(8),
             Form::input('team_school','毕业院校',$product->getData('team_school'))->col(8),
-            Form::idate('team_time','毕业时间',$product->getData('team_time'))->col(6),
+            Form::input('team_time','毕业时间',$product->getData('team_time'))->col(6),
             Form::input('team_education','学历',$product->getData('team_education'))->col(5),
             Form::input('team_phone','联系电话',$product->getData('team_phone'))->col(7),
 
             // 入驻园区信息
             Form::input('qi4','----','入驻园区信息')->readonly(1)->disabled(1),
-            Form::idate('residence_time','入驻园区时间',$product->getData('residence_time'))->col(8),
-            Form::idate('start_time','入园协议起时间',$product->getData('start_time'))->col(8),
-            Form::idate('end_time','入园协议止时间',$product->getData('end_time'))->col(8),
+            Form::input('residence_time','入驻园区时间',$product->getData('residence_time'))->col(8),
+            Form::input('start_end_time','入园协议起止时间',$product->getData('start_time'))->col(16),
+            // Form::idate('start_time','入园协议起时间',$product->getData('start_time'))->col(8),
+            // Form::idate('end_time','入园协议止时间',$product->getData('end_time'))->col(8),
             Form::input('room_number','入驻房间编号',$product->getData('room_number'))->col(12),
             Form::number('site_area','入驻场地面积',$product->getData('site_area'))->col(12),
 
@@ -294,7 +295,7 @@ class Examine extends AuthController
             Form::input('qi7','----','其他信息')->readonly(1)->disabled(1),
             Form::textarea('project_awards','项目获奖及专利情况',$product->getData('project_awards'))->col(24),
             Form::textarea('change_record','信息变更记录',$product->getData('change_record'))->col(24),
-            Form::idate('back_time','退园时间',$product->getData('back_time'))->col(8),
+            Form::input('back_time','退园时间',$product->getData('back_time'))->col(8),
             Form::input('reason','退园原因',$product->getData('reason'))->col(16),
             Form::input('industry_type','行业类型',$product->getData('industry_type'))->col(24),
             Form::input('products_services','项目提供的产品或服务',$product->getData('products_services'))->col(24),
