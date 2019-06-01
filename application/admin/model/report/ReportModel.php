@@ -24,8 +24,10 @@ class ReportModel extends ModelBasic
      *
      */
     public static function List($where){
+//        $model=self::getModelObject($where)->field('e.*,s.cate_name');
         $model=self::getModelObject($where)->field('e.*,s.cate_name');
-        if($where['excel']==0) $model=$model->page((int)$where['page'],(int)$where['limit']);
+
+        if($where['excel']==0)$model=$model->page((int)$where['page'],(int)$where['limit']);
         $data = ($data=$model->select()) && count($data) ? $data->toArray():[];
         foreach ($data as &$item){
             $item['is_hatched'] = $item['is_hatched'] == 1 ? '已入孵' : '待入孵';
@@ -64,6 +66,44 @@ class ReportModel extends ModelBasic
         $model=$model->alias('e')->join('StoreCategory s','e.category_id=s.id','LEFT');
         if(!empty($where)){
             $model=$model->group('e.id');
+            $time['data']='';
+            if($where['start_time']!='' && $where['end_time']!=''){
+                $time['data']=$where['start_time'].' - '.$where['end_time'];
+
+                // 获取档案表项目编号
+//                $projectCode = Db::name('examine')->field('project_num')->select();
+//                foreach ($projectCode as $key =>$val){
+//                    $model=self::getModelTime($time,self::alias('e')
+//                        ->join('StoreCategory s','e.category_id=s.id','LEFT')
+//                        ->join('examine B','B.project_num=e.project_num')
+//                        ->where('e.project_num',$val['project_num'])
+//                        ->order('e.create_time desc'),'e.create_time')
+//                        ->field('e.*,s.cate_name');
+//
+//                    if (!$model){
+//                        $model=self::getModelTime($time,self::alias('e')
+//                            ->join('StoreCategory s','e.category_id=s.id','LEFT')
+//                            ->join('examine B','B.project_num=e.project_num')
+//                            ->order('e.create_time desc'),'e.create_time')
+//                            ->field('B.*,s.cate_name');
+//                    }
+//
+//                }
+
+
+                $model=self::getModelTime($time,self::alias('e')
+                    ->join('StoreCategory s','e.category_id=s.id','LEFT')
+                    ->join('examine B','B.project_num=e.project_num')
+//                    ->where('e.project_num','not in','B.project_num')
+                    ->order('e.create_time desc'),'e.create_time');
+
+            }
+
+            if (isset($where['month']) && $where['month'] != ''){
+                $month = date('Y-m',strtotime(date('Y-'.$where['month'],time())));
+                $model = $model->where('e.month',$month);
+            }
+
             if(isset($where['search_name']) && $where['search_name']!=''){
                 if($where['search_name']=='是' || $where['search_name']=='否'){
                     $is_hatched = $where['search_name']=='是' ? 1 : 0;

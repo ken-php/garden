@@ -41,6 +41,9 @@ class Report extends AuthController
         $where = Util::getMore([
             ['page',1],
             ['limit',20],
+            ['month',''],
+            ['start_time',''],
+            ['end_time',''],
             ['search_name',''],
             ['cate_id',''],
             ['excel',0],
@@ -88,7 +91,7 @@ class Report extends AuthController
             Form::radio('is_hatched','是否入孵项目',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
 
             // 企业（项目）信息
-            Form::input('qi1','----','企业（项目）信息')->readonly(1)->disabled(1),
+            Form::input('qi1','','企业（项目）信息')->readonly(1)->disabled(1),
             Form::input('corporate_name','公司名称')->col(12),
             Form::input('org_code','组织机构代码')->col(12),
             Form::input('project_synopsis','项目简介'),
@@ -98,7 +101,7 @@ class Report extends AuthController
             Form::radio('is_register','是否工商注册',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(12),
 
             // 法人信息
-            Form::input('qi2','----','法人信息')->readonly(1)->disabled(1),
+            Form::input('qi2','','法人信息')->readonly(1)->disabled(1),
             Form::input('legal_name','姓名')->col(8),
             Form::input('legal_id_card','身份证号')->col(8),
             Form::input('legal_school','毕业院校')->col(8),
@@ -108,7 +111,7 @@ class Report extends AuthController
             Form::radio('is_graduate_school','是否毕业5年或在校',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(6),
 
             // 团队成员信息
-            Form::input('qi3','----','团队成员信息')->readonly(1)->disabled(1),
+            Form::input('qi3','','团队成员信息')->readonly(1)->disabled(1),
             Form::input('team_name','姓名')->col(8),
             Form::input('team_school','毕业院校')->col(8),
             Form::idate('team_time','毕业时间')->col(6),
@@ -116,7 +119,7 @@ class Report extends AuthController
             Form::input('team_phone','联系电话')->col(7),
 
             // 入驻园区信息
-            Form::input('qi4','----','入驻园区信息')->readonly(1)->disabled(1),
+            Form::input('qi4','','入驻园区信息')->readonly(1)->disabled(1),
             Form::idate('residence_time','入驻园区时间')->col(8),
             Form::idate('start_time','入园协议起时间')->col(8),
             Form::idate('end_time','入园协议止时间')->col(8),
@@ -124,21 +127,21 @@ class Report extends AuthController
             Form::number('site_area','入驻场地面积')->col(12),
 
             // 项目经营情况
-            Form::input('qi5','----','项目经营情况')->readonly(1)->disabled(1),
+            Form::input('qi5','','项目经营情况')->readonly(1)->disabled(1),
             Form::number('month_turnover','营业额-本月(万元)')->precision(2)->col(6),
             Form::number('year_turnover','营业额-本年累计(万元)')->precision(2)->col(6),
             Form::number('month_taxes','纳税额-本月(万元)')->precision(2)->col(6),
             Form::number('year_taxes','纳税额-本年累计(万元)')->precision(2)->col(6),
 
             // 项目培育孵化情况
-            Form::input('qi6','----','项目培育孵化情况')->readonly(1)->disabled(1),
+            Form::input('qi6','','项目培育孵化情况')->readonly(1)->disabled(1),
             Form::input('resource_docking','有效资源对接情况')->col(12),
             Form::input('name_investor','出资单位名称')->col(12),
             Form::number('financing_amount','融资金额')->precision(2)->col(12),
             Form::number('gov_amount','政府扶持资金名称及金额(万元)')->precision(2)->col(12),
 
             // 其他信息
-            Form::input('qi7','----','其他信息')->readonly(1)->disabled(1),
+            Form::input('qi7','','其他信息')->readonly(1)->disabled(1),
             Form::textarea('project_awards','项目获奖及专利情况')->col(24),
             Form::textarea('change_record','信息变更记录')->col(24),
             Form::idate('back_time','退园时间')->col(8),
@@ -147,7 +150,8 @@ class Report extends AuthController
             Form::input('products_services','项目提供的产品或服务')->col(24),
             Form::input('required_pro_serv','项目需要的产品或服务')->col(24),
             Form::number('financing_needs','是否有融资需求（1风险投资2贷款）')->col(8),
-            Form::input('entrepr','是否需要创业辅导培训（财务、法务等）')->col(24)
+            Form::input('entrepr','是否需要创业辅导培训（财务、法务等）')->col(24),
+            Form::input('month','几月份的月报(格式: 2019-05)')->col(24)
         ];
         $form = Form::make_post_form('添加申请',$field,Url::build('save'),2);
         $this->assign(compact('form'));
@@ -173,13 +177,14 @@ class Report extends AuthController
             'resource_docking','name_investor','financing_amount',
             'gov_amount','project_awards','change_record',
             'back_time','reason','industry_type',
-            'products_services','required_pro_serv','financing_needs','entrepr'
+            'products_services','required_pro_serv','financing_needs','entrepr','month'
         ],$request);
         // 数据校验
         if(!$data['project_num']) return Json::fail('请输入项目编号');
         if(!$data['category_id']) return Json::fail('请选择所属园区');
         if(!$data['corporate_name']) return Json::fail('请输入公司名称');
         if(!$data['org_code']) return Json::fail('请输入组织机构代码');
+        if(!$data['month']) return Json::fail('请输入几月份的月报');
         if($data['legal_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['legal_phone'])) return Json::fail('法人信息 - 手机格式有误');
         if($data['team_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['team_phone'])) return Json::fail('团队成员信息 - 手机格式有误');
         if($data['residence_time'] && $data['back_time'] && strtotime($data['back_time']) < strtotime($data['residence_time'])) return Json::fail('入驻园区时间 要小于 退园时间');
@@ -205,7 +210,7 @@ class Report extends AuthController
         $data['create_time'] = time();
         // 获取当前用户的uid
         $data['uid'] = getUidByAdminId(Session::get('adminId'));
-        
+
         $res = ReportModel::set($data);
         return Json::successful('添加申请成功!');
     }
@@ -293,7 +298,8 @@ class Report extends AuthController
             Form::input('products_services','项目提供的产品或服务',$product->getData('products_services'))->col(24),
             Form::input('required_pro_serv','项目需要的产品或服务',$product->getData('required_pro_serv'))->col(24),
             Form::number('financing_needs','是否有融资需求（1风险投资2贷款）',$product->getData('financing_needs'))->col(8),
-            Form::input('entrepr','是否需要创业辅导培训（财务、法务等）',$product->getData('entrepr'))->col(24)
+            Form::input('entrepr','是否需要创业辅导培训（财务、法务等）',$product->getData('entrepr'))->col(24),
+            Form::input('month','几月份的月报（格式: 2019-5）',$product->getData('month'))->col(24)
         ];
         $form = Form::make_post_form('编辑申请',$field,Url::build('save',array('id'=>$id)),2);
         $this->assign(compact('form'));
