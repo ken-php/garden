@@ -13,7 +13,7 @@ use app\admin\model\examine\ExamineModel;
  * Class ReportModel
  * @package app\admin\model\report
  */
-class ReportModel extends ModelBasic
+class ReportNotModel extends ModelBasic
 {
     protected $name = 'report';
     use ModelTrait;
@@ -36,7 +36,6 @@ class ReportModel extends ModelBasic
             $item['is_graduate_school'] = $item['is_graduate_school'] == 1 ? '是' : '否';
             $item['financing_needs'] = $item['financing_needs'] == 1 ? '风险投资' : '贷款';
         }
-
         if($where['excel']==1){
             $export = [];
             foreach ($data as $key => $val){
@@ -59,49 +58,47 @@ class ReportModel extends ModelBasic
                     $val['legal_education'],
                     $val['legal_phone'],
                     $val['is_graduate_school'],
-                    $val['team_name'],
-                    $val['team_school'],
-                    $val['team_time'],
-                    $val['team_education'],
-                    $val['team_phone'],
-                    $val['residence_time'],
-                    $val['start_end_time'],
-                    $val['start_time'],
-                    $val['end_time'],
-                    $val['room_number'],
-                    $val['site_area'],
-                    $val['month_turnover'],
-                    $val['year_turnover'],
-                    $val['month_taxes'],
-                    $val['year_taxes'],
-                    $val['resource_docking'],
-                    $val['name_investor'],
-                    $val['financing_amount'],
-                    $val['gov_amount'],
-                    $val['project_awards'],
-                    $val['change_record'],
-                    $val['back_time'],
-                    $val['reason'],
-                    $val['industry_type'],
-                    $val['products_services'],
-                    $val['required_pro_serv'],
-                    $val['financing_needs'],
-                    $val['entrepr'],
-                    $val['products_services'],
-                    $val['required_pro_serv'],
+//                    $item['team_name'],
+//                    $item['team_school'],
+//                    $item['team_time'],
+//                    $item['team_education'],
+//                    $item['team_phone'],
+//                    $item['residence_time'],
+//                    $item['start_time'],
+//                    $item['end_time'],
+//                    $item['room_number'],
+//                    $item['site_area'],
+//                    $item['month_turnover'],
+//                    $item['year_turnover'],
+//                    $item['month_taxes'],
+//                    $item['year_taxes'],
+//                    $item['resource_docking'],
+//                    $item['name_investor'],
+//                    $item['financing_amount'],
+//                    $item['gov_amount'],
+//                    $item['project_awards'],
+//                    $item['change_record'],
+//                    $item['back_time'],
+//                    $item['reason'],
+//                    $item['industry_type'],
+//                    $item['products_services'],
+//                    $item['required_pro_serv'],
+//                    $item['financing_needs'],
+//                    $item['entrepr'],
+//                    $item['products_services'],
+//                    $item['required_pro_serv'],
                 ];
             }
-
             PHPExcelService::setExcelHeader([
                 '序号','项目编号','园区名称','是否入孵项目','公司名称','组织机构代码','项目简介',
                 '是否工商注册','项目类别','就业人数','创业人数','法人姓名','法人身份证号','毕业院校',
-                '法人毕业时间','法人学历','法人电话','法人是否毕业5年获在校','团队成员姓名','团队成员毕业院校',
-                '团队成员毕业时间','团队成员学历','团队成员电话','入驻园区时间','入园协议起止时间','入园开始时间',
-                '入园结束时间',
-                '入驻房间编号','入驻场地面积','本月营业额(万元)','本年累计营业额(万元)','本月纳税额(万元)',
-                '本年累计纳税额(万元)','有效资源对接情况','出资单位名称','融资金额','政府扶持资金名称及金额(万元)',
-                '项目获奖及专利情况','信息变更记录','退园时间','退园原因','行业类型','项目提供的产品或服务',
-                '项目需要的产品或服务','是否有融资需求','是否需要创业辅导培训(财务、法务等)'
+                '法人毕业时间','法人学历','法人电话','法人是否毕业5年获在校',
+//                '团队成员姓名','团队成员毕业院校',
+//                '团队成员毕业时间','团队成员学历','团队成员电话','入驻园区时间','入园开始时间','入园结束时间',
+//                '入驻房间编号','入驻场地面积','本月营业额(万元)','本年累计营业额(万元)','本月纳税额(万元)',
+//                '本年累计纳税额(万元)','有效资源对接情况','出资单位名称','融资金额','政府扶持资金名称及金额(万元)',
+//                '项目获奖及专利情况','信息变更记录','退园时间','退园原因','行业类型','项目提供的产品或服务',
+//                '项目需要的产品或服务','是否有融资需求','是否需要创业辅导培训(财务、法务等)'
             ])
                 ->setExcelTile('月报导出','月报信息'.time(),' 生成时间：'.date('Y-m-d H:i:s',time()))
                 ->setExcelContent($export)
@@ -118,45 +115,26 @@ class ReportModel extends ModelBasic
      * @return object
      */
     public static function getModelObject($where=[]){
-        $model=new self();
+        $model = new ExamineModel();
         $model = $model->alias('e')->join('StoreCategory s','e.category_id=s.id','LEFT');
 
         if(!empty($where)){
             $model=$model->group('e.id');
-            $time['data']='';
-            if($where['start_time']!='' && $where['end_time']!=''){
-                $time['data']=$where['start_time'].' - '.$where['end_time'];
-
-                $model=self::getModelTime($time,self::alias('e')
-                    ->join('StoreCategory s','e.category_id=s.id','LEFT')
-                    ->join('examine B','B.project_num=e.project_num')
-//                    ->where('e.project_num','not in','B.project_num')
-                    ->order('e.create_time desc'),'e.create_time');
-
-
-
-            }
-
-            // 上月没提交月报列表
-            if (isset($where['type']) && $where['type'] == 2){
-                $model = new ExamineModel();
-                $model = $model->alias('e')->join('StoreCategory s','e.category_id=s.id','LEFT');
-                $model=$model->group('e.id');
-                $curMonth = date('Y-m',strtotime("-1 month", time()));
-                    $projectNum = self::where('month',$curMonth)->column('project_num');
-                    $model= $model->where('project_num','not in',$projectNum);
-
-            }
 
             if (isset($where['month']) && $where['month'] != ''){
                 // 查询上月月报,最新月报数据
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
                 $month = date('Y-m',strtotime(date('Y-'.$where['month'],time())));
                 if ($curMonth == $month){
-                    $model = $model->where('e.month',$curMonth);
+                    $projectNum = self::where('month',$curMonth)->column('project_num');
+                    $model= $model->where('project_num','not in',$projectNum);
                 }else{
                     // 不是当前月
-                    $model = $model->where('e.month',$month);
+                    $projectNum = self::where('month',$month)->column('project_num');
+                    if (!$projectNum){
+                        $model= $model->where('project_num','not in',self::getProjectNum());
+                    }
+                    $model= $model->where('project_num','not in',$projectNum);
                 }
             }
 
@@ -176,6 +154,15 @@ class ReportModel extends ModelBasic
             }
         }
         return $model;
+    }
+
+    /**
+     * 获取所有项目编号
+     * @return array
+     */
+    public static function getProjectNum()
+    {
+        return Db::name('examine')->column('project_num');
     }
 
     /**
@@ -229,17 +216,6 @@ class ReportModel extends ModelBasic
             ->select();
 
         return $res;
-    }
-
-    /**
-     * 获取所有项目编号
-     * @return array
-     * @author ken
-     * @date 2019/6/3
-     */
-    public static function getProjectNum()
-    {
-        return Db::name('report')->column('project_num');
     }
 
 }

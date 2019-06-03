@@ -1,16 +1,6 @@
 {extend name="public/container"}
 {block name="content"}
 <div class="layui-fluid" style="background: #fff;margin-top: -10px;">
-    <div class="layui-tab layui-tab-brief" lay-filter="tab">
-        <ul class="layui-tab-title">
-            <li lay-id="list" {eq name='type' value='1'}class="layui-this" {/eq} >
-            <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">月报列表({$reportNum})</a>
-            </li>
-            <li lay-id="list" {eq name='type' value='2'}class="layui-this" {/eq} >
-            <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">上月待提交月报({$reportNotNum})</a>
-            </li>
-        </ul>
-    </div>
     <div class="layui-row layui-col-space15"  id="app">
         <div class="layui-col-md12">
             <div class="layui-card">
@@ -28,16 +18,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">时间范围</label>
-                                <div class="layui-input-inline" style="width: 200px;">
-                                    <input type="text" name="start_time" placeholder="开始时间" id="start_time" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid">-</div>
-                                <div class="layui-input-inline" style="width: 200px;">
-                                    <input type="text" name="end_time" placeholder="结束时间" id="end_time" class="layui-input">
-                                </div>
-                            </div>
+<!--                            <div class="layui-inline">-->
+<!--                                <label class="layui-form-label">时间范围</label>-->
+<!--                                <div class="layui-input-inline" style="width: 200px;">-->
+<!--                                    <input type="text" name="start_time" placeholder="开始时间" id="start_time" class="layui-input">-->
+<!--                                </div>-->
+<!--                                <div class="layui-form-mid">-</div>-->
+<!--                                <div class="layui-input-inline" style="width: 200px;">-->
+<!--                                    <input type="text" name="end_time" placeholder="结束时间" id="end_time" class="layui-input">-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="layui-inline">
                                 <label class="layui-form-label">月份查询</label>
                                 <div class="layui-input-block">
@@ -82,23 +72,16 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>
-                    </div>
+<!--                    <div class="layui-btn-container">-->
+<!--                        <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>-->
+<!--                    </div>-->
 <!--                    <table class="layui-hide" id="List" lay-filter="List"></table>-->
                     <table class="layui-hide" id="List" lay-filter="List" ></table>
                     <!--操作-->
                     <script type="text/html" id="act">
-                        {eq name="type" value="2"}
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
-                            通知
-                        </button>
-                        {else/}
                         <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
                             编辑
                         </button>
-                        {/eq}
-
                     </script>
                 </div>
             </div>
@@ -171,13 +154,13 @@
     //     });
     //
     // });
-    var type=<?=$type?>;
+    var type=1;
     //实例化form
     layList.form.render();
     layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
     layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
     //加载列表
-    layList.tableList('List',"{:Url('product_ist',['type'=>$type])}",function (){
+    layList.tableList('List',"{:Url('product_ist',['type'=>1])}",function (){
 
         var join=new Array();
         switch (parseInt(type)){
@@ -201,70 +184,35 @@
                     {field: 'legal_education', title: '法人学历', width: 90},
                     {field: 'legal_phone', title: '法人电话', width: 120},
                     {field: 'is_graduate_school', title: '法人是否毕业或在校5年', width: 170},
-                    {field: 'team_name', title: '团队成员姓名', width: 110},
-                    {field: 'team_school', title: '团队成员毕业院校', width: 140},
-                    {field: 'team_time', title: '团队成员毕业时间', width: 140},
-                    {field: 'team_education', title: '团队成员学历', width: 120},
-                    {field: 'team_phone', title: '团队成员电话', width: 120},
-                    {field: 'residence_time', title: '入住园区时间', width: 120},
-                    {field: 'start_time', title: '入园协议起时间', width: 130},
-                    {field: 'end_time', title: '入园协议止时间', width: 130},
-                    {field: 'room_number', title: ' 入驻房间编号', width: 120},
-                    {field: 'site_area', title: ' 入驻场地面积', width: 120},
-                    {field: 'month_turnover', title: '营业额-本月(万元)', width: 150},
-                    {field: 'year_turnover', title: '营业额-本年累计(万元)', width: 160},
-                    {field: 'month_taxes', title: '纳税额-本月(万元)', width: 150},
-                    {field: 'year_taxes', title: '纳税额-本年累计(万元)', width: 160},
-                    {field: 'resource_docking', title: '有效资源对接情况', width: 150},
-                    {field: 'name_investor', title: '出资单位名称', width: 110},
-                    {field: 'financing_amount', title: '融资金额', width: 90},
-                    {field: 'gov_amount', title: '政府扶持资金名称及金额(万元)', width: 210},
-                    {field: 'project_awards', title: '项目获奖及专利情况', width: 150},
-                    {field: 'change_record', title: '信息变更记录', width: 110},
-                    {field: 'back_time', title: '退园时间', width: 130},
-                    {field: 'reason', title: '退园原因', width: 90},
-                    {field: 'industry_type', title: '行业类型', width: 90},
-                    {field: 'products_services', title: '项目提供的产品或服务', width: 160},
-                    {field: 'required_pro_serv', title: '项目需要的产品或服务', width: 160},
-                    {field: 'financing_needs', title: '是否有融资需求', width: 130},
-                    {field: 'entrepr', title: '是否需要创业辅导培训', width: 160},
+                    // {field: 'team_name', title: '团队成员姓名', width: 110},
+                    // {field: 'team_school', title: '团队成员毕业院校', width: 140},
+                    // {field: 'team_time', title: '团队成员毕业时间', width: 140},
+                    // {field: 'team_education', title: '团队成员学历', width: 120},
+                    // {field: 'team_phone', title: '团队成员电话', width: 120},
+                    // {field: 'residence_time', title: '入住园区时间', width: 120},
+                    // {field: 'start_time', title: '入园协议起时间', width: 130},
+                    // {field: 'end_time', title: '入园协议止时间', width: 130},
+                    // {field: 'room_number', title: ' 入驻房间编号', width: 120},
+                    // {field: 'site_area', title: ' 入驻场地面积', width: 120},
+                    // {field: 'month_turnover', title: '营业额-本月(万元)', width: 150},
+                    // {field: 'year_turnover', title: '营业额-本年累计(万元)', width: 160},
+                    // {field: 'month_taxes', title: '纳税额-本月(万元)', width: 150},
+                    // {field: 'year_taxes', title: '纳税额-本年累计(万元)', width: 160},
+                    // {field: 'resource_docking', title: '有效资源对接情况', width: 150},
+                    // {field: 'name_investor', title: '出资单位名称', width: 110},
+                    // {field: 'financing_amount', title: '融资金额', width: 90},
+                    // {field: 'gov_amount', title: '政府扶持资金名称及金额(万元)', width: 210},
+                    // {field: 'project_awards', title: '项目获奖及专利情况', width: 150},
+                    // {field: 'change_record', title: '信息变更记录', width: 110},
+                    // {field: 'back_time', title: '退园时间', width: 90},
+                    // {field: 'reason', title: '退园原因', width: 90},
+                    // {field: 'industry_type', title: '行业类型', width: 90},
+                    // {field: 'products_services', title: '项目提供的产品或服务', width: 160},
+                    // {field: 'required_pro_serv', title: '项目需要的产品或服务', width: 160},
+                    // {field: 'financing_needs', title: '是否有融资需求', width: 130},
+                    // {field: 'entrepr', title: '是否需要创业辅导培训', width: 160},
 
-                    {field: 'create_time', title: '填报时间', width: 180},
-                    {field: 'status', title: '是否提交月报', width: 110},
-                    {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
-                ];
-                break;
-            case 2:
-                join=[
-                    {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},
-                    {field: 'project_num', title: '项目编号', width: 90},
-                    {field: 'cate_name', title: '归属园区', width: 110},
-                    {field: 'is_hatched', title: '是否入孵', width: 90},
-                    {field: 'corporate_name', title: '企业或项目名', width: 180},
-                    {field: 'org_code', title: '组织机构代码', width: 110},
-                    {field: 'project_synopsis', title: '项目简介', width: 200},
-                    {field: 'is_register', title: '是否注册企业', width: 110},
-                    {field: 'project_type', title: '项目类别', width: 160},
-                    {field: 'jop_num', title: '就业人数', width: 90},
-                    {field: 'entr_num', title: '创业人数', width: 90},
-                    {field: 'legal_name', title: '法人姓名', width: 90},
-                    {field: 'legal_id_card', title: '法人身份证', width: 170},
-                    {field: 'legal_school', title: '毕业院校', width: 160},
-                    {field: 'legal_time', title: '法人毕业时间', width: 110},
-                    {field: 'legal_education', title: '法人学历', width: 90},
-                    {field: 'legal_phone', title: '法人电话', width: 120},
-                    {field: 'is_graduate_school', title: '法人是否毕业或在校5年', width: 170},
-                    {field: 'team_name', title: '团队成员姓名', width: 110},
-                    {field: 'team_school', title: '团队成员毕业院校', width: 140},
-                    {field: 'team_time', title: '团队成员毕业时间', width: 140},
-                    {field: 'team_education', title: '团队成员学历', width: 120},
-                    {field: 'team_phone', title: '团队成员电话', width: 120},
-                    {field: 'residence_time', title: '入住园区时间', width: 120},
-                    {field: 'start_time', title: '入园协议起时间', width: 130},
-                    {field: 'end_time', title: '入园协议止时间', width: 130},
-                    {field: 'room_number', title: ' 入驻房间编号', width: 120},
-                    {field: 'site_area', title: ' 入驻场地面积', width: 120},
-
+                    // {field: 'status', title: '是否提交月报', width: 110},
                     {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
                 ];
                 break;
@@ -351,13 +299,6 @@
     //查询
     layList.search('search',function(where){
         layList.reload(where);
-    });
-    //多选事件绑定
-    $('.layui-btn-container').find('button').each(function () {
-        var type=$(this).data('type');
-        $(this).on('click',function(){
-            action[type] && action[type]();
-        })
     });
 </script>
 {/block}
