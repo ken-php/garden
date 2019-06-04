@@ -28,7 +28,7 @@
   <script charset="utf-8" type="text/javascript" src="{__WAP_PATH}static/lib/diygw-mobile-all.min.js"></script> 
   <style type="text/css">
 	
-	.top{display:none}.page{top:0;}
+	.top{display:block;z-index:2;}.page{top:0;}.back{display: block;}
 
  .weui-btn2 {
     position: relative;
@@ -59,9 +59,9 @@
  <body data-ride="animatebox" style="background-color:#ffffff;" data-mpid="19955" data-homepage="" data-dashboardid="19955" data-page_id="30577" data-page_name="page998179"> 
   <div class="container"> 
    <div class="top">
-    <h1 class="page__title" style="background-color:#479de6">未命名页面<span id="PageBack" class="back">返回</span><a class="home fa fa-home ajax-page" id="home" href=".html"></a></h1>
+    <a href="javascript:history.go(-1);"><h1 class="page__title" style="background-color:#479de6"><span id="PageBack" class="back">返回</span></h1></a>
    </div> 
-   <div class="page" id="page" style="background-color:#ffffff;margin-bottom:20px;"> 
+   <div class="page" id="page" style="background-color:#ffffff;margin-bottom:20px;margin-top: 40px;"> 
     <div class="pagebg"></div> 
     <div class="pagemain"> 
      <div class="weui-tab" id="weui-tab244975"> 
@@ -75,7 +75,7 @@
       </div> 
       <div class="weui-tab__panel"> 
        <div class="weui-tab__content_on" style=""> 
-        {empty name="projectlist"}
+        {empty name="reportList"}
           <div class="empty" style="text-align:center;">
               <img style="width:150px;" src="{__WAP_PATH}crmeb/images/empty_detail.png">
               <p>暂无</p>
@@ -102,8 +102,8 @@
              <a data-index="9122000" href="javascript:search();" class="weui-btn2 weui-btn_primary " style="width: 50%;">查询</a>
              <script>
                  function search(){
-                   var start_time = $('#24490').val();
-                   var end_time = $('#714490').val();
+                   var start_time = $('#24490').val().trim();
+                   var end_time = $('#714490').val().trim();
                    if(start_time && end_time){
                      if(new Date(start_time).getTime() > new Date(end_time).getTime()){
                        $('#infod').html('开始时间不能大于结束时间');
@@ -111,7 +111,9 @@
                        $('#infodiv').attr('data-show','true');
                        $('#infodiv').attr('style','z-index: 10000; display: block;');
                        $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                     }
+                     }else{
+                        window.location.href = "{:Url('index')}?page=1&start="+start_time+"&end="+end_time;
+                     }       
                    } else {
                      $('#infod').html('请选择时间');
                      $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
@@ -228,6 +230,7 @@
                               if (res.code == 200) {
                                 $('#weui-tab41424').attr('style','display:block;');
                               }else{
+                                $('#weui-tab41424').attr('style','display:none;');
                                 $('#infod22').html(res.msg);
                                 $('#infodiv2').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
                                 $('#infodiv2').attr('data-show','true');
@@ -237,6 +240,7 @@
                           }                
                       });
                    } else {
+                     $('#weui-tab41424').attr('style','display:none;');
                      $('#infod22').html('请选择时间');
                      $('#infodiv2').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
                      $('#infodiv2').attr('data-show','true');
@@ -245,7 +249,7 @@
                    }
                 }
               </script>
-           <div class="weui-tab" id="weui-tab41424" style="display:block;">
+           <div class="weui-tab" id="weui-tab41424" style="display:none;">
             <div class="weui-navbar nav-green">
              <div class="weui-navbar__item weui-bar__item_on" id="divwe1">
               企业信息
@@ -261,7 +265,8 @@
              <div class="weui-tab__content_on" style="" id="divwe11"> 
               <div class="weui-form"> 
                <div class="weui-form-item"> 
-                <input type="text" disabled="disabled" value="{$data.project_num}" name="project_num" id="951424" class="weui-form-input" /> 
+                <input type="text" disabled="disabled" value="{$data.project_num}" name="project_num" id="951424" class="weui-form-input" />
+                <input type="hidden" value="{$data.project_num}" name="project_num"  /> 
                </div> 
               </div> 
               <div class="weui-cells__title">
@@ -269,7 +274,7 @@
               </div> 
               <div class="weui-form "> 
                <div class="weui-form-item"> 
-                <select class="weui-form-input" data-load="1"  data-ride="select" placeholder="请选择所属园区" id="75569" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
+                <select class="weui-form-input" data-load="1"  name="category_id" data-ride="select" placeholder="请选择所属园区" id="75569" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
                   {volist name="list" id="vo"}
                     {eq name="vo.id" value="$data.category_id"}
                     <option data-value="{$vo.id}" selected="selected" data-checked="checked" data-title="{$vo.cate_name}">{$vo.id}</option> 
@@ -512,7 +517,28 @@
          <input type="hidden" class="hide" name="dashboardId" value="19955" /> 
          <input type="hidden" class="hide" name="formId" value="235625" /> 
          <input type="hidden" class="hide" name="tableName" value="table_235625" /> 
-         <input type="hidden" class="hide" name="id" value="{$data.id}" /> 
+         <input type="hidden" class="hide" name="examine_id" value="{$data.id}" /> 
+         <input type="hidden" class="hide" name="residence_time" value="{$data.residence_time}" />
+         <input type="hidden" class="hide" name="start_end_time" value="{$data.start_end_time}" />
+         <input type="hidden" class="hide" name="room_number" value="{$data.room_number}" />
+         <input type="hidden" class="hide" name="site_area" value="{$data.site_area}" />
+         <input type="hidden" class="hide" name="month_turnover" value="{$data.month_turnover}" />
+         <input type="hidden" class="hide" name="year_turnover" value="{$data.year_turnover}" />
+         <input type="hidden" class="hide" name="month_taxes" value="{$data.month_taxes}" />
+         <input type="hidden" class="hide" name="year_taxes" value="{$data.year_taxes}" />
+         <input type="hidden" class="hide" name="resource_docking" value="{$data.resource_docking}" />
+         <input type="hidden" class="hide" name="name_investor" value="{$data.name_investor}" />
+         <input type="hidden" class="hide" name="financing_amount" value="{$data.financing_amount}" />
+         <input type="hidden" class="hide" name="gov_amount" value="{$data.gov_amount}" />
+         <input type="hidden" class="hide" name="project_awards" value="{$data.project_awards}" />
+         <input type="hidden" class="hide" name="change_record" value="{$data.change_record}" />
+         <input type="hidden" class="hide" name="back_time" value="{$data.back_time}" />
+         <input type="hidden" class="hide" name="reason" value="{$data.reason}" />
+         <input type="hidden" class="hide" name="industry_type" value="{$data.industry_type}" />
+         <input type="hidden" class="hide" name="products_services" value="{$data.products_services}" />
+         <input type="hidden" class="hide" name="required_pro_serv" value="{$data.required_pro_serv}" />
+         <input type="hidden" class="hide" name="financing_needs" value="{$data.financing_needs}" />
+         <input type="hidden" class="hide" name="entrepr" value="{$data.entrepr}" />
          <div id="errorsform235625" class="hide"></div> 
         </form> 
        </div> 
