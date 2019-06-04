@@ -59,7 +59,7 @@
  <body data-ride="animatebox" style="background-color:#ffffff;" data-mpid="19955" data-homepage="" data-dashboardid="19955" data-page_id="30577" data-page_name="page998179"> 
   <div class="container"> 
    <div class="top">
-    <h1 class="page__title" style="background-color:#479de6"><a href="javascript:history.go(-1);"><span id="PageBack" class="back">返回</span></a></h1>
+    <h1 class="page__title" style="background-color:#479de6"><a href="{:Url('index/index')}"><span id="PageBack" class="back">返回</span></a></h1>
    </div> 
    <div class="page" id="page" style="background-color:#ffffff;margin-bottom:20px;margin-top: 40px;"> 
     <div class="pagebg"></div> 
@@ -74,57 +74,51 @@
        </div> 
       </div> 
       <div class="weui-tab__panel"> 
-       <div class="weui-tab__content_on" style=""> 
+       <div class="weui-tab__content_on" style="">
+          <div class="weui-cells__title">
+              查询月份
+             </div> 
+             <div class="weui-form"> 
+              <div class="weui-form-item">
+                  <select class="weui-form-input" data-load="1"  name="start_time" data-ride="select" placeholder="选择填报时间" id="24490" required="" data-bv-notempty="" data-bv-notempty-message="选择填报时间">
+                      <option value="">请选择</option>
+                    {volist name="selectTiemAll" id="vo"}
+                        {eq name="vo" value="$start"}
+                        <option data-value="{$vo}"  data-title="{$vo}" selected="selected">{$vo}</option>
+                        {else/}
+                        <option data-value="{$vo}"  data-title="{$vo}" >{$vo}</option>
+                        {/eq}
+                    {/volist}
+                    </select> 
+               <!-- <input reg="请输入正则" data-ride="datetime" start="1900-01-01" end="2050-01-01" value="" type="1" placeholder="请选择开始月份" name="start_time" id="24490" class="weui-form-input" />  -->
+              </div> 
+             </div>
+             <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <a data-index="9122000" href="javascript:search();" class="weui-btn2 weui-btn_primary " style="width: 50%;">查询</a>
+                 <script>
+                     function search(){
+                       var start_time = $('#24490').val().trim();
+                      //  var end_time = $('#714490').val().trim();
+                       if(start_time){
+                          window.location.href = "{:Url('index')}?page=1&start="+start_time+"&end=";
+                       } else {
+                         $('#infod').html('请选择时间');
+                         $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
+                         $('#infodiv').attr('data-show','true');
+                         $('#infodiv').attr('style','z-index: 10000; display: block;');
+                         $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
+                       }
+                     }
+                 </script>
+                </div> 
+               </div>
         {empty name="reportList"}
           <div class="empty" style="text-align:center;">
               <img style="width:150px;" src="{__WAP_PATH}crmeb/images/empty_detail.png">
               <p>暂无</p>
           </div>
         {else/}
-        <div class="weui-cells__title">
-            开始月份
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <input reg="请输入正则" data-ride="datetime" start="1900-01-01" end="2050-01-01" value="" type="1" placeholder="请选择开始月份" name="start_time" id="24490" class="weui-form-input" /> 
-            </div> 
-           </div> 
-           <div class="weui-cells__title">
-            结束月份
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <input reg="请输入正则" data-ride="datetime" start="1900-01-01" end="2050-01-01" value="" type="1" placeholder="请选择结束月份" name="end_time" id="714490" class="weui-form-input" /> 
-            </div> 
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <a data-index="9122000" href="javascript:search();" class="weui-btn2 weui-btn_primary " style="width: 50%;">查询</a>
-             <script>
-                 function search(){
-                   var start_time = $('#24490').val().trim();
-                   var end_time = $('#714490').val().trim();
-                   if(start_time && end_time){
-                     if(new Date(start_time).getTime() > new Date(end_time).getTime()){
-                       $('#infod').html('开始时间不能大于结束时间');
-                       $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                       $('#infodiv').attr('data-show','true');
-                       $('#infodiv').attr('style','z-index: 10000; display: block;');
-                       $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                     }else{
-                        window.location.href = "{:Url('index')}?page=1&start="+start_time+"&end="+end_time;
-                     }       
-                   } else {
-                     $('#infod').html('请选择时间');
-                     $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                     $('#infodiv').attr('data-show','true');
-                     $('#infodiv').attr('style','z-index: 10000; display: block;');
-                     $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                   }
-                 }
-             </script>
-            </div> 
-           </div>
           {volist name="reportList" id="vo"}
             <div class="timeline"> 
             <ul> 

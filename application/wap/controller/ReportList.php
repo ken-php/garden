@@ -48,9 +48,10 @@ class ReportList extends AuthController
         }
 
         // 填报列表
-        if($start!=0 && $end!=0){
-            $start = date('Y-m',strtotime($start));$end = date('Y-m',strtotime($end));
-            $reportList = Db::name('report')->where('uid',$uid)->where('month','between',[$start,$end])->page($page)->order('id desc')->select();
+        if($start!=0){
+            $start = date('Y-m',strtotime($start));
+            // $end = date('Y-m',strtotime($end));
+            $reportList = Db::name('report')->where('uid',$uid)->where('month',$start)->page($page)->order('id desc')->select();
         }else{
             $reportList = Db::name('report')->where('uid',$uid)->page($page)->order('id desc')->select();
         }
@@ -64,12 +65,26 @@ class ReportList extends AuthController
             $data= Db::name('report')->where('uid',$uid)->where('month',$month)->find();
         }
 
+        $selectTiemAll[] = date('Y-m',strtotime("-12 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-11 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-10 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-9 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-8 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-7 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-6 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-5 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-4 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-3 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-2 month"));
+        $selectTiemAll[] = date('Y-m',strtotime("-1 month"));
+        $selectTiemAll[] = date('Y-m');
+
         $selectTiem[] = date('Y-m',strtotime("-2 month"));
         $two = date('Y-m',strtotime("-1 month"));
         $selectTiem[] = $two;
         $selectTiem[] = date('Y-m');
         
-        $this->assign(compact('reportList','list','data','selectTiem','two'));
+        $this->assign(compact('reportList','list','data','selectTiemAll','selectTiem','two'));
         return $this->fetch();
     }
 
