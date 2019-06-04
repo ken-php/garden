@@ -65,133 +65,16 @@
     <div class="pagebg"></div> 
     <div class="pagemain"> 
      <div class="weui-tab" id="weui-tab244975"> 
-      <div class="weui-navbar nav-green"> 
+      <div class="weui-navbar nav-green">
        <div class="weui-navbar__item weui-bar__item_on">
-        列表
-       </div> 
-       <div class="weui-navbar__item ">
-        填报
-       </div> 
-      </div> 
-      <div class="weui-tab__panel"> 
+          {eq name="$type" value="0"} 编辑填报 {else/} 填报详情{/eq}
+       </div>
+      </div>
+      <div class="weui-tab__panel">
        <div class="weui-tab__content_on" style=""> 
-        {empty name="reportList"}
-          <div class="empty" style="text-align:center;">
-              <img style="width:150px;" src="{__WAP_PATH}crmeb/images/empty_detail.png">
-              <p>暂无</p>
-          </div>
-        {else/}
-        <div class="weui-cells__title">
-            开始月份
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <input reg="请输入正则" data-ride="datetime" start="1900-01-01" end="2050-01-01" value="" type="1" placeholder="请选择开始月份" name="start_time" id="24490" class="weui-form-input" /> 
-            </div> 
-           </div> 
-           <div class="weui-cells__title">
-            结束月份
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <input reg="请输入正则" data-ride="datetime" start="1900-01-01" end="2050-01-01" value="" type="1" placeholder="请选择结束月份" name="end_time" id="714490" class="weui-form-input" /> 
-            </div> 
-           </div> 
-           <div class="weui-form"> 
-            <div class="weui-form-item"> 
-             <a data-index="9122000" href="javascript:search();" class="weui-btn2 weui-btn_primary " style="width: 50%;">查询</a>
-             <script>
-                 function search(){
-                   var start_time = $('#24490').val().trim();
-                   var end_time = $('#714490').val().trim();
-                   if(start_time && end_time){
-                     if(new Date(start_time).getTime() > new Date(end_time).getTime()){
-                       $('#infod').html('开始时间不能大于结束时间');
-                       $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                       $('#infodiv').attr('data-show','true');
-                       $('#infodiv').attr('style','z-index: 10000; display: block;');
-                       $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                     }else{
-                        window.location.href = "{:Url('index')}?page=1&start="+start_time+"&end="+end_time;
-                     }       
-                   } else {
-                     $('#infod').html('请选择时间');
-                     $('#infodiv').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                     $('#infodiv').attr('data-show','true');
-                     $('#infodiv').attr('style','z-index: 10000; display: block;');
-                     $('#weui-popup__modal458340').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                   }
-                 }
-             </script>
-            </div> 
-           </div>
-          {volist name="reportList" id="vo"}
-            <div class="timeline"> 
-            <ul> 
-              <li class="timeline-item timeline-item-green" id="datatemplate536214"> 
-              <div class="timeline-item-head-first" style=""> 
-                <i class="weui_icon weui_icon_success_no_circle timeline-item-checked hide"></i> 
-              </div> 
-              <div class="timeline-item-tail" style=""></div> 
-              <div class="timeline-item-content"> 
-                <h4 style="">项目编号:</h4> 
-                <p class="recent" style="">{$vo.project_num}</p> 
-              </div> </li> 
-              <li class="timeline-item timeline-item-green"> 
-              <div class="timeline-item-head" style=""> 
-                <i class="weui_icon weui_icon_success_no_circle timeline-item-checked "></i> 
-              </div> 
-              <div class="timeline-item-tail" style=""></div> 
-              <div class="timeline-item-content"> 
-                <h4 style="">公司/项目:</h4> 
-                <p class="recent" style="">{$vo.corporate_name}</p> 
-              </div> </li> 
-              <li class="timeline-item timeline-item-green"> 
-              <div class="timeline-item-head" style=""> 
-                <i class="weui_icon weui_icon_success_no_circle timeline-item-checked "></i> 
-              </div> 
-              <div class="timeline-item-tail" style=""></div> 
-              <div class="timeline-item-content"> 
-                <h4 style="">填报时间:</h4> 
-                <p class="recent" style="">{$vo.month}</p> 
-              </div> </li> 
-            </ul> 
-            </div>
-            <div class="weui-form">
-                <div class="weui-form-item">
-                 <a data-index="3625680" style="width: 20%;float: left;background-color: teal;" href="{:Url('edit')}?id={$vo.id}&type=1" class="weui-btn2 weui-btn_primary  ">详情</a>
-                  <a data-index="3625681" style="width: 20%;" href="{:Url('edit')}?id={$vo.id}" class="weui-btn2 weui-btn_primary  ">编辑</a>
-                 </div>
-            </div>
-          {/volist}
-        {/empty}
-        <div style="z-index:10000" data-id="458340" id="infodiv" data-title="信息" class="weui-popup__container  weui-popup__458340  form-group-design hide" data-animatetarget="#weui-popup__modal458340" data-delay="1" data-show="false"> 
-         <div class="weui-popup__overlay" data-opacity="50%"></div> 
-         <div id="weui-popup__modal458340" style="top:0%;left:10%;width:80%" data-contentwidth="80%" class="weui-popup__modal weui-panel c"> 
-          <div class="weui-panel__hd nav-black">
-           <div class="weui-panel__title">
-             信息 
-           </div> 
-           <div class="weui-panel__tools"> 
-            <a data-id="458340" class="close-popup"> <i class="fa fa-remove"></i> </a> 
-           </div> 
-          </div> 
-          <div class="weui-panel__bd"> 
-           <div class="" id="infod"></div> 
-          </div> 
-          <div class="weui-panel__ft"> 
-           <div class="weui_btn_area weui_btn_area_inline"> 
-            <a data-index="4583400" href="closepopup" class="weui-btn weui-btn_warn  ">关闭</a> 
-           </div> 
-          </div> 
-         </div> 
-        </div>
-       </div> 
-       <div class="weui-tab__content" style=""> 
         <form class="form-horizontal ui-sortable formtable_235625" data-listhref="" data-ride="form" role="form" id="form235625" name="table_235625" data-url="/data/data.html" action="/data/save.html" enctype="multipart/form-data" method="post" data-bv-group=".weui-cell" data-bv-container="#errorsform235625" data-bv-feedbackicons-valid="weui-icon-success" data-bv-feedbackicons-invalid="weui-icon-warn" data-bv-feedbackicons-validating="weui-icon-warn"> 
          <div class="row-form clearfix"> 
           <div class="">
-
               <div id="infodiv2" style="z-index:10000" data-id="76325" data-title="提示信息" class="weui-popup__container  weui-popup__76325  form-group-design hide" data-animatetarget="#weui-popup__modal76325" data-delay="1" data-show="false">
                   <div class="weui-popup__overlay" data-opacity="50%"></div>
                   <div id="weui-popup__modal76325" style="top:0%;left:10%;width:80%" data-contentwidth="80%" class="weui-popup__modal weui-panel c">
@@ -210,61 +93,13 @@
                   </div>
               </div>
 
-              <div class="weui-cells__title">选择填报时间</div>
-              <!-- <div class="weui-form">
-                  <div class="weui-form-item">
-                    <input reg="请输入正则" data-ride="datetime" start="1900-01" end="2050-01" value="" type="1" placeholder="请选择填报时间" name="month_time" id="675068" class="weui-form-input">
-                    <a href="javascript:monthTime();" class="weui-btn weui-btn_primary " style="width: 50%;margin-top: 20px;">确认</a> 
-                  </div>
-              </div> -->
+              <div class="weui-cells__title">填报时间</div>
               <div class="weui-form">
-                <div class="weui-form-item">
-                  <select class="weui-form-input" data-load="1"  name="month_time" data-ride="select" placeholder="选择填报时间" id="675068" required="" data-bv-notempty="" data-bv-notempty-message="选择填报时间">
-                    {volist name="selectTiem" id="vo"}
-                      {eq name="vo" value="$two"}
-                      <option data-value="{$vo}" selected="selected" data-checked="checked" data-title="{$vo}">{$vo}</option> 
-                      {else/}
-                        <option data-value="{$vo}"  data-title="{$vo}" >{$vo}</option>
-                      {/eq}
-                    {/volist}
-                  </select> 
-                  <a href="javascript:monthTime();" class="weui-btn weui-btn_primary " style="width: 50%;margin-top: 20px;">确认</a> 
+                <div class="weui-form-item" >
+                  <input type="text" disabled="disabled" value="{$data.month}" name="month_time" id="954" class="weui-form-input" />
                 </div>
               </div>
-
-              <script>
-                function monthTime(){
-                  var start_time = $('#675068').val();
-                  if(start_time){
-                     $.ajax({
-                          url: "{:Url('searchTime')}",
-                          type: 'POST',
-                          dataType: 'json',
-                          data: {'start_time':start_time},
-                          success: function (res) {
-                              if (res.code == 200) {
-                                $('#weui-tab41424').attr('style','display:block;');
-                              }else{
-                                $('#weui-tab41424').attr('style','display:none;');
-                                $('#infod22').html(res.msg);
-                                $('#infodiv2').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                                $('#infodiv2').attr('data-show','true');
-                                $('#infodiv2').attr('style','z-index: 10000; display: block;');
-                                $('#weui-popup__modal76325').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                              }
-                          }                
-                      });
-                   } else {
-                     $('#weui-tab41424').attr('style','display:none;');
-                     $('#infod22').html('请选择时间');
-                     $('#infodiv2').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
-                     $('#infodiv2').attr('data-show','true');
-                     $('#infodiv2').attr('style','z-index: 10000; display: block;');
-                     $('#weui-popup__modal76325').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                   }
-                }
-              </script>
-           <div class="weui-tab" id="weui-tab41424" style="display:none;">
+           <div class="weui-tab" id="weui-tab41424" style="display:block;">
             <div class="weui-navbar nav-green">
              <div class="weui-navbar__item weui-bar__item_on" id="divwe1">
               企业信息
@@ -293,18 +128,21 @@
               </div> 
               <div class="weui-form ">
                <div class="weui-form-item"> 
-                <select class="weui-form-input" data-load="1"  name="category_id" data-ride="select" placeholder="请选择所属园区" id="75569" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
+                <!-- <select class="weui-form-input" data-load="1" disabled="disabled"  name="category_id" data-ride="select" placeholder="请选择所属园区" id="75569" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
                   {volist name="list" id="vo"}
                     {eq name="vo.id" value="$data.category_id"}
-                    <option data-value="{$vo.id}" selected="selected" data-checked="checked" data-title="{$vo.cate_name}">{$vo.id}</option> 
+                    <option data-value="{$vo.id}" selected="selected" disabled="disabled" data-checked="checked" data-title="{$vo.cate_name}">{$vo.id}</option> 
                     {else/}
                       <option data-value="{$vo.id}"  data-title="{$vo.cate_name}" >{$vo.id}</option>
                     {/eq}
                   {/volist}
-                  <!-- <option value="">请选择</option>
-                  <option data-value="1" selected="selected" data-checked="checked" data-title="选项一">选项一</option> 
-                  <option data-value="2" data-title="选项二">选项二</option>  -->
-                </select> 
+                </select> -->
+                {volist name="list" id="vo"}
+                    {eq name="vo.id" value="$data.category_id"}
+                    <input type="text" disabled="disabled" value="{$vo.cate_name}" id="5664" class="weui-form-input" />
+                    <input type="hidden" value="{$data.category_id}" name="category_id"/>
+                    {/eq}
+                  {/volist}
                </div> 
               </div> 
               <div class="weui-cells__title">
@@ -520,13 +358,13 @@
               <div class="weui-cells__title">营业额（千元）</div>
               <div class="weui-form"> 
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入营业额（千元）" value="" name="turnover" id="675" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入营业额（千元）" value="{$data.turnover}" name="turnover" id="675" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div> 
               <div class="weui-cells__title">纳税额（千元）</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入纳税额（千元）" value="" name="taxes" id="676" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入纳税额（千元）" value="{$data.taxes}" name="taxes" id="676" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">注册地址</div>
@@ -538,22 +376,30 @@
               <div class="weui-cells__title">场地面积(一般都是15平，个别的大一些)</div>
               <div class="weui-form"> 
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入场地面积" value="" name="area" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入场地面积" value="{$data.area}" name="area" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
               <div class="weui-cells__title">是否是新增创客/团队</div>
               <div class="weui-form"> 
-                <div class="weui-form-item"> 
+                <div class="weui-form-item">
                  <div class="iblock">
-                  <input type="radio" id="1100351" name="is_new_teams" value="1" class="weui-form-checkbox" /> 
+                  {eq name="$data.is_new_teams" value="1"}
+                  <input type="radio" id="1100351" name="is_new_teams" value="1"  checked="checked"  class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1100351" name="is_new_teams" value="1" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1100351" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     是
                    </div> </label> 
                  </div> 
-                 <div class="iblock"> 
-                  <input type="radio" id="1100352" name="is_new_teams" value="0" checked="checked" class="weui-form-checkbox" /> 
-                  <label for="1100352" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                 <div class="iblock">
+                    {eq name="$data.is_new_teams" value="0"}
+                  <input type="radio" id="1100352" name="is_new_teams" value="0" checked="checked" class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1100352" name="is_new_teams" value="0" class="weui-form-checkbox" />
+                  {/eq}
+                  <label for="1100352" class="weui-form-label"> <i class="weui-icon-radio"></i>
                    <div class="weui-form-text">
                     否
                    </div> </label> 
@@ -565,14 +411,23 @@
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
                  <div class="iblock">
-                  <input type="radio" id="1700351" name="is_science" value="1" class="weui-form-checkbox" /> 
+                  
+                  {eq name="$data.is_science" value="1"}
+                  <input type="radio" id="1700351" name="is_science" value="1" checked="checked" class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1700351" name="is_science" value="1" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1700351" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     是
                    </div> </label> 
                  </div> 
-                 <div class="iblock"> 
-                  <input type="radio" id="1700352" name="is_science" value="0" checked="checked" class="weui-form-checkbox" /> 
+                 <div class="iblock">
+                    {eq name="$data.is_science" value="0"}
+                    <input type="radio" id="1700352" name="is_science" value="0" checked="checked" class="weui-form-checkbox" /> 
+                    {else/}
+                    <input type="radio" id="1700352" name="is_science" value="0" class="weui-form-checkbox" /> 
+                    {/eq}
                   <label for="1700352" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     否
@@ -584,14 +439,22 @@
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
                  <div class="iblock">
+                  {eq name="$data.is_high_tech" value="1"}
+                  <input type="radio" id="1700450" name="is_high_tech" value="1" checked="checked" class="weui-form-checkbox" />
+                  {else/}
                   <input type="radio" id="1700450" name="is_high_tech" value="1" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1700450" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     是
                    </div> </label> 
                  </div>
                  <div class="iblock"> 
-                  <input type="radio" id="1700451" name="is_high_tech" value="0" checked="checked" class="weui-form-checkbox" /> 
+                  {eq name="$data.is_high_tech" value="0"}
+                  <input type="radio" id="1700451" name="is_high_tech" value="0" checked="checked" class="weui-form-checkbox" />
+                    {else/}
+                    <input type="radio" id="1700451" name="is_high_tech" value="0" class="weui-form-checkbox" />
+                    {/eq}
                   <label for="1700451" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     否
@@ -602,27 +465,35 @@
                <div class="weui-cells__title">新增与合作大学创办企业数</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入新增与合作大学创办企业数" value="" name="enterprises_num" id="332243" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增与合作大学创办企业数" value="{$data.enterprises_num}" name="enterprises_num" id="332243" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
               <div class="weui-cells__title">新增接纳大学生/研究生实习人员数</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
-                <input type="digit" placeholder="请输入新增接纳大学生/研究生实习人员数" value="" name="interns_num" id="58741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增接纳大学生/研究生实习人员数" value="{$data.interns_num}" name="interns_num" id="58741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
                <div class="weui-cells__title">是否上市挂牌</div>
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
                  <div class="iblock">
-                  <input type="radio" id="1700550" name="is_sale" value="1" class="weui-form-checkbox" /> 
+                  {eq name="$data.is_sale" value="1"}
+                  <input type="radio" id="1700550" name="is_sale" value="1" checked="checked" class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1700550" name="is_sale" value="1" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1700550" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     是
                    </div> </label> 
                  </div>
                  <div class="iblock"> 
+                  {eq name="$data.is_sale" value="0"}
                   <input type="radio" id="1700551" name="is_sale" value="0" checked="checked" class="weui-form-checkbox" />
+                    {else/}
+                    <input type="radio" id="1700551" name="is_sale" value="0" class="weui-form-checkbox" />
+                    {/eq}
                   <label for="1700551" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     否
@@ -633,45 +504,53 @@
                <div class="weui-cells__title">新增从业人员数（团队人数）</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
-                <input type="digit" placeholder="请输入新增从业人员数（团队人数）" value="" name="add_jop_num" id="339683" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增从业人员数（团队人数）" value="{$data.add_jop_num}" name="add_jop_num" id="339683" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
               <div class="weui-cells__title">新增应届毕业生就业人员数</div>
               <div class="weui-form"> 
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入新增应届毕业生就业人员数" value="" name="add_entr_num" id="674" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增应届毕业生就业人员数" value="{$data.add_entr_num}" name="add_entr_num" id="674" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
               <div class="weui-cells__title">研发经费投入（千元）</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入研发经费投入（千元）" value="" name="funds" id="678" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入研发经费投入（千元）" value="{$data.funds}" name="funds" id="678" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">享受的财政支持金额（仅限企业）</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入享受的财政支持金额" value="" name="financial" id="679" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入享受的财政支持金额" value="{$data.financial}" name="financial" id="679" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">参加的投融资对接活动次数</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入参加的投融资对接活动次数" value="" name="activity_num" id="680" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入参加的投融资对接活动次数" value="{$data.activity_num}" name="activity_num" id="680" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">是否获得投资</div>
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
                  <div class="iblock">
-                  <input type="radio" id="1700650" name="is_investment" value="1" class="weui-form-checkbox" /> 
+                  {eq name="$data.is_investment" value="1"}
+                  <input type="radio" id="1700650" name="is_investment" value="1"  checked="checked" class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1700650" name="is_investment" value="1" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1700650" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     是
                    </div> </label> 
                  </div>
                  <div class="iblock"> 
-                  <input type="radio" id="1700651" name="is_investment" value="0" checked="checked" class="weui-form-checkbox" />
+                  {eq name="$data.is_investment" value="0"}
+                  <input type="radio" id="1700650" name="is_investment" value="0"  checked="checked" class="weui-form-checkbox" />
+                  {else/}
+                  <input type="radio" id="1700650" name="is_investment" value="0" class="weui-form-checkbox" />
+                  {/eq}
                   <label for="1700651" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                    <div class="weui-form-text">
                     否
@@ -682,50 +561,52 @@
                <div class="weui-cells__title">获得投资金额(千元)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入获得投资金额(千元)" value="" name="investment_amount" id="6740" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入获得投资金额(千元)" value="{$data.investment_amount}" name="investment_amount" id="6740" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">知识产权申请数</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入知识产权申请数" value="" name="intellectual_num" id="6741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入知识产权申请数" value="{$data.intellectual_num}" name="intellectual_num" id="6741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">新增拥有有效知识产权数(已注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(已注册公司的填此项)" value="" name="has_intel_num" id="6742" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(已注册公司的填此项)" value="{$data.has_intel_num}" name="has_intel_num" id="6742" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">新增申请发明专利数量(已注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入新增申请发明专利数量(已注册公司的填此项)" value="" name="patents_num" id="6743" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增申请发明专利数量(已注册公司的填此项)" value="{$data.patents_num}" name="patents_num" id="6743" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">新增拥有有效知识产权数(未注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(未注册公司的填此项)" value="" name="re_has_intel_num" id="6744" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(未注册公司的填此项)" value="{$data.re_has_intel_num}" name="re_has_intel_num" id="6744" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">新增申请发明专利数量(未注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入新增申请发明专利数量(未注册公司的填此项)" value="" name="re_patents_num" id="6745" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增申请发明专利数量(未注册公司的填此项)" value="{$data.re_patents_num}" name="re_patents_num" id="6745" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">新增科技成果转化数</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入新增科技成果转化数" value="" name="achievement_num" id="6746" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增科技成果转化数" value="{$data.achievement_num}" name="achievement_num" id="6746" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
+              {eq name="$type" value="0"}
               <div class="weui-form">
                <div class="weui-form-item">
                 <a data-index="8541020" href="javascript:formSubmit();" class="weui-btn weui-btn_primary  ">提交</a> 
                </div> 
-              </div> 
+              </div>
+              {/eq}
              </div>
             </div> 
            </div> 
@@ -800,8 +681,8 @@
          <input type="hidden" class="hide" name="required_pro_serv" value="{$data.required_pro_serv}" />
          <input type="hidden" class="hide" name="financing_needs" value="{$data.financing_needs}" />
          <input type="hidden" class="hide" name="entrepr" value="{$data.entrepr}" />
-         <input type="hidden" class="hide" name="edit_id" value="" />
-         <div id="errorsform235625" class="hide"></div> 
+         <input type="hidden" class="hide" name="edit_id" value="{$data.id}" />
+         <div id="errorsform235625" class="hide"></div>
         </form> 
        </div> 
       </div> 
@@ -824,15 +705,11 @@
                 dataType: 'json',
                 data: $('form').serialize(),
                 success: function (res) {
-                    if (res.code == 200) {
-                      location.reload();
-                    }else{
                       $('#infod22').html(res.msg);
                       $('#infodiv2').removeClass('form-group-design hide').addClass('weui-popup__container--visible');
                       $('#infodiv2').attr('data-show','true');
                       $('#infodiv2').attr('style','z-index: 10000; display: block;');
                       $('#weui-popup__modal76325').attr('style','top: 0%; left: 10%; width: 80%; opacity: 1;');
-                    }
                 }                
             });
         }

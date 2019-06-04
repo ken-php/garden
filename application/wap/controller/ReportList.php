@@ -107,7 +107,7 @@ class ReportList extends AuthController
             'back_time','reason','industry_type',
             'products_services','required_pro_serv','financing_needs','entrepr','month_time',
             'address','is_new_teams','is_science','is_high_tech','enterprises_num','interns_num','is_sale','add_jop_num','add_entr_num','area','turnover','taxes','funds','financial',
-            'activity_num','is_investment','investment_amount','intellectual_num','has_intel_num','patents_num','re_has_intel_num','re_patents_num','achievement_num'
+            'activity_num','is_investment','investment_amount','intellectual_num','has_intel_num','patents_num','re_has_intel_num','re_patents_num','achievement_num','edit_id'
         ],$request);
         // 数据校验
         if(!$data['project_num']) return Json::fail('请输入项目编号');
@@ -125,17 +125,31 @@ class ReportList extends AuthController
             ExamineModel::edit($data,$isHas);
         }
 
-        // 新增
-        $data['month'] = date('Y-m',strtotime($data['month_time']));
-        $data['create_time'] = time();
-        // 获取当前用户的uid
-        $data['uid'] = User::getActiveUid();
-        $res=ReportModel::set($data);
-        return Json::successful('添加成功!');
+        if(empty($data['edit_id'])){
+            // 新增
+            $data['month'] = date('Y-m',strtotime($data['month_time']));
+            $data['create_time'] = time();
+            // 获取当前用户的uid
+            $data['uid'] = User::getActiveUid();
+            $res=ReportModel::set($data);
+            return Json::successful('添加成功!');
+        }else{
+            // 编辑
+            $data['update_time'] = time();
+            $data['id'] = $data['edit_id'];
+            $res=ReportModel::update($data);
+            return Json::successful('编辑成功!');
+        }
     }
 
-    public function edit($id)
+    public function edit($id,$type=0)
     {
+        // 园区列表
+        $list = CategoryModel::where(['pid'=>0,'is_show'=>1])->field('id,cate_name')->select();
+        $uid = User::getActiveUid();
+        $month = Db::name('report')->where('uid',$uid)->value('max(month)');
+        $data= Db::name('report')->where('uid',$uid)->where('month',$month)->find();        
+        $this->assign(compact('list','data','type'));
         return $this->fetch();
     }
 
