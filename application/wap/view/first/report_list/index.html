@@ -259,20 +259,24 @@
              </div> 
              <div class="weui-navbar__item" id="divwe3">
               团队信息
-             </div> 
+             </div>
+             <div class="weui-navbar__item" id="divwe4">
+              其他信息
+             </div>
             </div> 
             <div class="weui-tab__panel"> 
-             <div class="weui-tab__content_on" style="" id="divwe11"> 
-              <div class="weui-form"> 
-               <div class="weui-form-item"> 
+             <div class="weui-tab__content_on" style="" id="divwe11">
+              <div class="weui-cells__title">项目编号(系统生成)</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
                 <input type="text" disabled="disabled" value="{$data.project_num}" name="project_num" id="951424" class="weui-form-input" />
                 <input type="hidden" value="{$data.project_num}" name="project_num"  /> 
-               </div> 
-              </div> 
+               </div>
+              </div>
               <div class="weui-cells__title">
                所属园区
               </div> 
-              <div class="weui-form "> 
+              <div class="weui-form ">
                <div class="weui-form-item"> 
                 <select class="weui-form-input" data-load="1"  name="category_id" data-ride="select" placeholder="请选择所属园区" id="75569" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
                   {volist name="list" id="vo"}
@@ -316,34 +320,40 @@
                   </div> </label> 
                 </div> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">公司名称</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入公司名称" value="{$data.corporate_name}" name="corporate_name" id="563278" class="weui-form-input" required="" data-bv-notempty-message="不能为空哟" /> 
                </div> 
               </div> 
+              <div class="weui-cells__title">组织机构代码</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入组织机构代码" value="{$data.org_code}" name="org_code" id="340483" class="weui-form-input" required="" data-bv-notempty-message="不能为空哟" /> 
                </div> 
               </div>
+              <div class="weui-cells__title">项目简介</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入项目简介" value="{$data.project_synopsis}" name="project_synopsis" id="613822" class="weui-form-input" /> 
-               </div> 
-              </div> 
-              <div class="weui-form"> 
-               <div class="weui-form-item"> 
+               </div>
+              </div>
+              <div class="weui-cells__title">项目类别</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
                 <input type="text" placeholder="请输入项目类别" value="{$data.project_type}" name="project_type" id="486366" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">就业人数</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="digit" placeholder="请输入就业人数" value="{$data.jop_num}" name="jop_num" id="339683" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">创业人数</div>
               <div class="weui-form"> 
-               <div class="weui-form-item"> 
+               <div class="weui-form-item">
                 <input type="digit" placeholder="请输入创业人数" value="{$data.entr_num}" name="entr_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div> 
@@ -361,7 +371,7 @@
                  <label for="8768290" class="weui-form-label"> <i class="weui-icon-radio"></i> 
                   <div class="weui-form-text">
                    是
-                  </div> </label> 
+                  </div> </label>
                 </div> 
                 <div class="iblock"> 
                     {eq name="$data.is_register" value="0"}
@@ -382,32 +392,38 @@
                </div> 
               </div> 
              </div> 
-             <div class="weui-tab__content" style="" id="divwe22"> 
+             <div class="weui-tab__content" style="" id="divwe22">
+              <div class="weui-cells__title">姓名</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入姓名" value="{$data.legal_name}" name="legal_name" id="917894" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">身份证号</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="idcard" placeholder="请输入身份证号" value="{$data.legal_id_card}" name="legal_id_card" id="206508" class="weui-form-input" data-bv-regexp-pattern="/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" data-bv-regexp-message="请输入18位的有效身份证" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">毕业院校</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入毕业院校" value="{$data.legal_school}" name="legal_school" id="27309" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">毕业时间</div>
               <div class="weui-form"> 
-               <div class="weui-form-item"> 
+               <div class="weui-form-item">
                 <input type="text" placeholder="请输入毕业时间" value="{$data.legal_time}" name="legal_time" id="468713" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">学历</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入学历" value="{$data.legal_education}" name="legal_education" id="789146" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">联系电话</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入联系电话" value="{$data.legal_phone}" name="legal_phone" id="398932" class="weui-form-input" /> 
@@ -449,37 +465,206 @@
               </div> 
              </div> 
              <div class="weui-tab__content" style="" id="divwe33"> 
+              <div class="weui-cells__title">姓名</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入姓名" value="{$data.team_name}" name="team_name" id="2781" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">毕业院校</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入毕业院校" value="{$data.team_school}" name="team_school" id="328357" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">毕业时间</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入毕业时间" value="{$data.team_time}" name="team_time" id="231355" class="weui-form-input" /> 
                </div> 
-              </div> 
+              </div>
+              <div class="weui-cells__title">学历</div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
                 <input type="text" placeholder="请输入学历" value="{$data.team_education}" name="team_education" id="26907" class="weui-form-input" /> 
-               </div> 
-              </div> 
-              <div class="weui-form"> 
-               <div class="weui-form-item"> 
+               </div>
+              </div>
+              <div class="weui-cells__title">联系电话</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
                 <input type="text" placeholder="请输入联系电话" value="{$data.team_phone}" name="team_phone" id="145650" class="weui-form-input" /> 
-               </div> 
-              </div> 
+               </div>
+              </div>
               <div class="weui-form"> 
                <div class="weui-form-item"> 
+                <a data-index="9103860" href="javascript:;" class="weui-btn weui-btn_primary  " id="nextbtn3">下一步</a> 
+               </div> 
+              </div> 
+             </div>
+             <div class="weui-tab__content" style="" id="divwe44"> 
+              <div class="weui-cells__title">注册地址</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入注册地址" value="{$data.address}" name="address" id="2782" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">是否成为科技型中小企业</div>
+              <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <div class="iblock">
+                  <input type="radio" id="1700250" name="is_science" value="1" class="weui-form-checkbox" /> 
+                  <label for="1700250" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    是
+                   </div> </label> 
+                 </div> 
+                 <div class="iblock"> 
+                  <input type="radio" id="1700251" name="is_science" value="0" checked="checked" class="weui-form-checkbox" /> 
+                  <label for="1700251" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    否
+                   </div> </label> 
+                 </div> 
+                </div> 
+               </div>
+              <div class="weui-cells__title">是否成为高新技术企业</div>
+              <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <div class="iblock">
+                  <input type="radio" id="1700250" name="is_high_tech" value="1" class="weui-form-checkbox" />
+                  <label for="1700250" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    是
+                   </div> </label> 
+                 </div>
+                 <div class="iblock"> 
+                  <input type="radio" id="1700251" name="is_high_tech" value="0" checked="checked" class="weui-form-checkbox" /> 
+                  <label for="1700251" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    否
+                   </div> </label>
+                 </div>
+                </div>
+               </div>
+               <div class="weui-cells__title">是否上市挂牌</div>
+              <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <div class="iblock">
+                  <input type="radio" id="1700250" name="is_sale" value="1" class="weui-form-checkbox" /> 
+                  <label for="1700250" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    是
+                   </div> </label> 
+                 </div>
+                 <div class="iblock"> 
+                  <input type="radio" id="1700251" name="is_sale" value="0" checked="checked" class="weui-form-checkbox" />
+                  <label for="1700251" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    否
+                   </div> </label>
+                 </div>
+                </div>
+               </div>
+               <div class="weui-cells__title">新增从业人员数（团队人数）</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="digit" placeholder="请输入新增从业人员数（团队人数）" value="" name="add_jop_num" id="339683" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">新增应届毕业生就业人员数</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入新增应届毕业生就业人员数" value="" name="add_entr_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">场地面积(一般都是15平，个别的大一些)</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入场地面积" value="" name="area" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">营业额（千元）</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入营业额（千元）" value="" name="turnover" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div> 
+              <div class="weui-cells__title">纳税额（千元）</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入纳税额（千元）" value="" name="taxes" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">研发经费投入（千元）</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入研发经费投入（千元）" value="" name="funds" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">享受的财政支持金额（仅限企业）</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入享受的财政支持金额" value="" name="financial" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">参加的投融资对接活动次数</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入参加的投融资对接活动次数" value="" name="activity_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">是否获得投资</div>
+              <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <div class="iblock">
+                  <input type="radio" id="1700250" name="is_investment" value="1" class="weui-form-checkbox" /> 
+                  <label for="1700250" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    是
+                   </div> </label> 
+                 </div>
+                 <div class="iblock"> 
+                  <input type="radio" id="1700251" name="is_investment" value="0" checked="checked" class="weui-form-checkbox" />
+                  <label for="1700251" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    否
+                   </div> </label>
+                 </div>
+                </div>
+               </div>
+               <div class="weui-cells__title">获得投资金额(千元)</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入获得投资金额(千元)" value="" name="investment_amount" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">知识产权申请数</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入知识产权申请数" value="" name="intellectual_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">拥有有效知识产权数</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入拥有有效知识产权数" value="" name="has_intel_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">申请发明专利数量</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入申请发明专利数量" value="" name="patents_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-form">
+               <div class="weui-form-item">
                 <a data-index="8541020" href="javascript:formSubmit();" class="weui-btn weui-btn_primary  ">提交</a> 
                </div> 
               </div> 
              </div> 
+
+
+
             </div> 
            </div> 
            <script type="text/javascript">
@@ -498,9 +683,11 @@
                       $('#divwe1').removeClass('weui-bar__item_on');
                       $('#divwe2').addClass('weui-bar__item_on');
                       $('#divwe3').removeClass('weui-bar__item_on');
+                      $('#divwe4').removeClass('weui-bar__item_on');
                       $('#divwe11').removeClass('weui-tab__content_on').addClass('weui-tab__content');
                       $('#divwe22').addClass('weui-tab__content_on');
                       $('#divwe33').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                      $('#divwe44').removeClass('weui-tab__content_on').addClass('weui-tab__content');
                   });
                   $('#nextbtn2').on('click', function(e) {
                     //  console.log(222);
@@ -510,6 +697,18 @@
                       $('#divwe11').removeClass('weui-tab__content_on').addClass('weui-tab__content');
                       $('#divwe22').removeClass('weui-tab__content_on').addClass('weui-tab__content');
                       $('#divwe33').addClass('weui-tab__content_on');
+                      $('#divwe44').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                  });
+                  $('#nextbtn3').on('click', function(e) {
+                    //  console.log(333);
+                      $('#divwe1').removeClass('weui-bar__item_on');
+                      $('#divwe2').removeClass('weui-bar__item_on');
+                      $('#divwe3').removeClass('weui-bar__item_on');
+                      $('#divwe4').addClass('weui-bar__item_on');
+                      $('#divwe11').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                      $('#divwe22').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                      $('#divwe33').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                      $('#divwe44').addClass('weui-tab__content_on');
                   });
             </script> 
           </div> 

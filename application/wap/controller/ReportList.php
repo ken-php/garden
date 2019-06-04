@@ -100,7 +100,9 @@ class ReportList extends AuthController
             'resource_docking','name_investor','financing_amount',
             'gov_amount','project_awards','change_record',
             'back_time','reason','industry_type',
-            'products_services','required_pro_serv','financing_needs','entrepr','month_time'
+            'products_services','required_pro_serv','financing_needs','entrepr','month_time',
+            'address','is_science','is_high_tech','is_sale','add_jop_num','add_entr_num','area','turnover','taxes','funds','financial',
+            'activity_num','is_investment','investment_amount','intellectual_num','has_intel_num','patents_num'
         ],$request);
         // 数据校验
         if(!$data['project_num']) return Json::fail('请输入项目编号');
