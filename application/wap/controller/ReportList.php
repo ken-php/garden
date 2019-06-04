@@ -63,8 +63,13 @@ class ReportList extends AuthController
             $month = Db::name('report')->where('uid',$uid)->value('max(month)');
             $data= Db::name('report')->where('uid',$uid)->where('month',$month)->find();
         }
+
+        $selectTiem[] = date('Y-m',strtotime("-2 month"));
+        $two = date('Y-m',strtotime("-1 month"));
+        $selectTiem[] = $two;
+        $selectTiem[] = date('Y-m');
         
-        $this->assign(compact('reportList','list','data'));
+        $this->assign(compact('reportList','list','data','selectTiem','two'));
         return $this->fetch();
     }
 

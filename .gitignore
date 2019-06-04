@@ -3,4 +3,5 @@
 /.idea
 /application/database.php/
 /public/uploads/
-
+/public/.user.ini
+.user.ini
