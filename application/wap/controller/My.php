@@ -56,7 +56,7 @@ class My extends AuthController
             'notice'=>UserNotice::getNotice($this->userInfo['uid']),
             'statu' =>(int)SystemConfig::getValue('store_brokerage_statu'),
             'userInfo'=> Db::name('user')->where('uid',$uid)->field('uid,avatar,nickname,add_time,integral')->find(),
-            'num'=>Db::name('examine')->where(['uid'=>$uid,'is_del'=>0])->count(),
+            'num'=>Db::name('project_user')->where(['uid'=>$uid,'status'=>1])->count(),
             'num2'=>Db::name('report')->where(['uid'=>$uid])->count()
         ]);
         return $this->fetch();

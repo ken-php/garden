@@ -30,22 +30,77 @@
 
             <!-- 系统公告 -->
             {notempty name="roll_news"}
-            <div class="hot-txt-roll border-1px flex">
-                <div class="hot-icon" style="width:67px;color:darksalmon;">系统公告:</div>
-                <div class="txt-list">
-                    <ul class="line"> {volist name="roll_news" id="vo"}
-                        <li style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><a
-                                style="display: block;"
-                                href="<?= empty($vo['url']) ? 'javascript:void(0);' : $vo['url']; ?>">{$vo.info}</a>
-                        </li>
-                        {/volist}
-                    </ul>
+            <div>
+                <div style="color:darksalmon;margin: 15px auto;">
+                    <img style="width:24px;height:24px;" src="{__WAP_PATH}crmeb/images/ttb2.svg" />
+                    <span>公告通知:</span>
+                    <div style="float: right;">
+                        <a href="#">
+                        <img style="width:24px;height:24px;margin-bottom: -5px;" src="{__WAP_PATH}crmeb/images/ttb9.svg" />
+                        <span style="color:darksalmon;">历史更多</span></a>
+                    </div>
                 </div>
+                {volist name="roll_news" id="vo"}
+                    <div style="margin: 15px 15px 0 15px;height: 40px;">
+                        <div style="float:left;width: 5%;">
+                            <img style="width:24px;height:24px;margin-bottom: -5px;" src="{__WAP_PATH}crmeb/images/user-service06.png" />
+                        </div>
+                        <div style="float:left;width: 93%;">
+                            <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 5px;">{$vo.content}</span>
+                        </div>
+                    </div>
+                {/volist}
+
+                {volist name="notice_user" id="vo"}
+                    <div style="margin: 15px 15px 0 15px;height: 40px;">
+                        <div style="float:left;width: 5%;">
+                            <img style="width:24px;height:24px;margin-bottom: -5px;" src="{__WAP_PATH}crmeb/images/ttb15.svg" />
+                        </div>
+                        <div style="float:left;width: 93%;">
+                            <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 5px;">{$vo.content}</span>
+                            <br><br>
+                            <a style="font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: red;" href="{:Url('report/index')}">马上填报</a>
+                            <img style="width:24px;height:24px;float: right;" src="{__WAP_PATH}crmeb/images/ttb16.svg" />
+                        </div>
+                    </div>
+                {/volist}
             </div>
             {/notempty}
+
+            <div style="height: 60px;"></div>
+            {volist name="examine" id="vo"}
+                <div style="margin: 15px 5px 0 15px;height: 40px;">
+                    <div style="float:left;width: 10%;">
+                        <img style="width:48px;height:48px;" src="{__WAP_PATH}sx/images/state-ytk.png" />
+                    </div>
+                    <div style="float:left;width: 90%;padding-top: 15px;">
+                        <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">{$vo.corporate_name}</span>
+                        <a href="{:Url('project')}?type=2&id={$vo.id}&xt=2"><button type="button" style="width:48px;background-color: #56ca59;font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: #fff;" >变更</button></a>
+                    </div>
+                </div>
+                <div style="margin: 15px 5px 0 15px;height: 40px;">
+                        <div style="float:left;width: 10%;">
+                            <img style="width:24px;height:24px;margin-left: 10px;" src="{__WAP_PATH}sx/images/user-service05.png" />
+                        </div>
+                        <div style="float:left;width: 90%;padding-top: 5px;">
+                            <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">{$iphone}</span>
+                            <a href="{:Url('index')}?project_id={$vo.id}"><button type="button" style="width:48px;background-color: #56ca59;font-size: 14px;float: right;padding-top: 5px;padding-left: 5px;color: #fff;" >解绑</button></a>
+                        </div>
+                </div>
+                <div style="margin: 15px 5px 0 15px;height: 40px;">
+                    <div style="float:left;width: 10%;">
+                        <img style="width:24px;height:24px;margin-left: 10px;" src="{__WAP_PATH}crmeb/images/user-service04.png" />
+                    </div>
+                    <div style="float:left;width: 90%;">
+                        <a href="{:Url('report/index')}">
+                            <span style="text-align: left;display: inline-block;font-size: 14px;margin-left: 8px;">历史填报数据</span>
+                        </a>
+                    </div>
+                </div>
+            {/volist}
             
             <!-- 新品推荐 -->
-            <div class="template-prolist">
+            <!-- <div class="template-prolist">
                 <div class="title-like flex" v-show="page.list.length > 0" v-cloak=""><span class="title-line left"></span> <span class="icon"></span>
                     <span>新品推荐</span> <span class="title-line right"></span></div>
                 <ul class="flex">
@@ -59,12 +114,12 @@
                             </div>
                         </a></li>
                 </ul>
-            </div>
-            <p class="loading-line" v-show="loading == true"><i></i><span>正在加载中</span><i></i></p>
+            </div> -->
+            <!-- <p class="loading-line" v-show="loading == true"><i></i><span>正在加载中</span><i></i></p>
             <p class="loading-line" v-show="loading == false && page.loaded == false" v-cloak="" @click="getList">
                 <i></i><span>点击加载</span><i></i></p>
             <p class="loading-line" v-show="loading == false && page.loaded == true" v-cloak="">
-                <i></i><span>没有更多了</span><i></i></p></div>
+                <i></i><span>没有更多了</span><i></i></p></div> -->
     </section>
     {include file="public/store_menu"}
 </div>
