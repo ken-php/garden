@@ -41,67 +41,53 @@ class ReportModel extends ModelBasic
             $export = [];
             foreach ($data as $key => $val){
                 $export[] = [
-                    $val['id'],
-                    $val['project_num'],
-                    $val['cate_name'],
-                    $val['is_hatched'],
-                    $val['corporate_name'],
-                    $val['org_code'],
-                    $val['project_synopsis'],
-                    $val['is_register'],
-                    $val['project_type'],
-                    $val['jop_num'],
-                    $val['entr_num'],
-                    $val['legal_name'],
-                    $val['legal_id_card'],
-                    $val['legal_school'],
-                    $val['legal_time'],
-                    $val['legal_education'],
-                    $val['legal_phone'],
-                    $val['is_graduate_school'],
-                    $val['team_name'],
-                    $val['team_school'],
-                    $val['team_time'],
-                    $val['team_education'],
-                    $val['team_phone'],
-                    $val['residence_time'],
-                    $val['start_end_time'],
-                    $val['start_time'],
-                    $val['end_time'],
-                    $val['room_number'],
-                    $val['site_area'],
-                    $val['month_turnover'],
-                    $val['year_turnover'],
-                    $val['month_taxes'],
-                    $val['year_taxes'],
-                    $val['resource_docking'],
-                    $val['name_investor'],
-                    $val['financing_amount'],
-                    $val['gov_amount'],
-                    $val['project_awards'],
-                    $val['change_record'],
-                    $val['back_time'],
-                    $val['reason'],
-                    $val['industry_type'],
-                    $val['products_services'],
-                    $val['required_pro_serv'],
-                    $val['financing_needs'],
-                    $val['entrepr'],
-                    $val['products_services'],
-                    $val['required_pro_serv'],
+                    $val['corporate_name'],  // 企业或项目名
+                    $val['cate_name'],  // 所属园区
+                    $val['is_register'],  // 是否注册企业
+                    $val['address'],  // 注册地址
+                    $val['area'],  // 场地面积
+                    $val['is_new_teams'],  // 是否新增创客/团队
+                    $val['is_science'],  // 是否科技型中小企业
+                    $val['is_high_tech'],  // 是否高新技术企业
+                    $val['enterprises_num'],  // 与合作大学创办企业数
+                    $val['interns_num'],  // 接纳大学生/研究生实习人员数
+                    $val['is_sale'],  // 是否上市挂牌
+                    $val['add_jop_num'],  // 新增从业人员
+                    $val['add_entr_num'],  // 新增应届毕业生就业人员数
+                    $val['turnover'],  // 当前月营业额
+                    $val['taxes'],  // 当前月纳税额
+                    $val['funds'],  // 研发经费投入
+                    $val['financial'],  // 享受财政支持金额
+                    $val['activity_num'],  // 参加的投融资对接活动次数
+                    $val['is_investment'],  // 是否获得投资
+                    $val['investment_amount'],  // 获得投资金额
+                    $val['intellectual_num'],  // 知识产权申请数
+                    $val['has_intel_num'],  // 拥有有效知识产权数(已注册公司)
+                    $val['patents_num'],  // 申请发明专利数量(已注册公司)
+                    $val['re_has_intel_num'],  // 拥有有效知识产权数(未注册公司)
+                    $val['re_patents_num'],  // 申请发明专利数量(未注册公司)
+                    $val['achievement_num'],  // 科技成果转化数
                 ];
             }
 
+            if ($where['month'] == '' || $where['month'] == null){
+                $where['month'] = '当前';
+            }
+
             PHPExcelService::setExcelHeader([
-                '序号','项目编号','园区名称','是否入孵项目','公司名称','组织机构代码','项目简介',
-                '是否工商注册','项目类别','就业人数','创业人数','法人姓名','法人身份证号','毕业院校',
-                '法人毕业时间','法人学历','法人电话','法人是否毕业5年获在校','团队成员姓名','团队成员毕业院校',
-                '团队成员毕业时间','团队成员学历','团队成员电话','入驻园区时间','入园协议起止时间','入园开始时间',
-                '入园结束时间',
-                '入驻房间编号','入驻场地面积','本月营业额(万元)','本年累计营业额(万元)','本月纳税额(万元)',
-                '本年累计纳税额(万元)','有效资源对接情况','出资单位名称','融资金额','政府扶持资金名称及金额(万元)',
-                '项目获奖及专利情况','信息变更记录','退园时间','退园原因','行业类型','项目提供的产品或服务',
-                '项目需要的产品或服务','是否有融资需求','是否需要创业辅导培训(财务、法务等)'
+                '企业或项目名','所属园区',
+                '是否注册企业','注册地址',
+                "场地面积(众创空间一般都是15平科技园大一些)",$where['month'].'月是否新增创客/团队',
+                $where['month'].'月是否新增科技型中小企业',$where['month'].'月是否新增高新技术企业',
+                $where['month'].'月新增与合作大学创办企业数',$where['month'].'月新增接纳大学生/研究生实习人员数',
+                $where['month'].'月是否新增上市挂牌',$where['month'].'月新增从业人员数(团队人数)',
+                $where['month'].'月新增应届毕业生就业人员数',$where['month'].'月新增营业额(千元)',
+                $where['month'].'月新增纳税额(千元)',$where['month'].'月新增研发经费投入(千元)',
+                $where['month'].'月新增享受的财政支持金额(仅限企业)',$where['month'].'月新增参加的投资融资对接活动次数',
+                $where['month'].'月新增是否获得投资',$where['month'].'月新增获得投资金额(千元)',
+                $where['month'].'月新增知识产权申请数',$where['month'].'月新增拥有有效知识产权数',
+                $where['month'].'月新增申请发明专利数量',$where['month'].'月新增拥有有效知识产权数',
+                $where['month'].'月新增申请发明专利数量',$where['month'].'月新增科技成果转化数',
             ])
                 ->setExcelTile('月报导出','月报信息'.time(),' 生成时间：'.date('Y-m-d H:i:s',time()))
                 ->setExcelContent($export)
@@ -206,8 +192,8 @@ class ReportModel extends ModelBasic
      * @author ken
      * @date 2019/5/30
      */
-    public static function getUniqueness($project_num,$cate_id){
-        return self::where(['category_id'=>$cate_id,'project_num'=>$project_num])->value('id');
+    public static function getUniqueness($project_num,$cate_id,$month){
+        return self::where(['category_id'=>$cate_id,'project_num'=>$project_num,'month'=>$month])->value('id');
     }
 
     /**
