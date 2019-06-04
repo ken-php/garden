@@ -12,6 +12,7 @@ use service\JsonService as Json;
 use think\Request;
 use app\admin\model\store\StoreCategory as CategoryModel;
 use app\admin\model\report\ReportModel;
+use app\admin\model\examine\ExamineModel;
 use think\Url;
 use think\Session;
 
@@ -26,8 +27,19 @@ class Report extends AuthController
 
     public function index()
     {
+        $type = $this->request->param('type');
+
         //获取分类
         $this->assign('cate',CategoryModel::where(['pid'=>0,'is_show'=>1])->field('id,cate_name')->select());
+
+        // 月报列表
+        $reportNum =  ReportModel::where(['is_del'=>0])->count();
+        // 本月待提交列表
+        $curMonth = date('Y-m',strtotime("-1 month", time())); // 上月月份
+        $projectNum = ReportModel::where('month',$curMonth)->column('project_num');
+        $reportNotNum =  ExamineModel::where('project_num','not in',$projectNum)->count();
+
+        $this->assign(compact('type','reportNum','reportNotNum'));
         return $this->fetch();
     }
 
@@ -36,15 +48,21 @@ class Report extends AuthController
      *
      * @return json
      */
-    public function product_ist(){
+    public function product_ist()
+    {
         $where = Util::getMore([
             ['page',1],
             ['limit',20],
+            ['month',''],
+            ['start_time',''],
+            ['end_time',''],
             ['search_name',''],
             ['cate_id',''],
             ['excel',0],
-            ['order','']
+            ['order',''],
+            ['type',$this->request->param('type')]
         ]);
+
         return JsonService::successlayui(ReportModel::List($where));
     }
 
@@ -74,6 +92,7 @@ class Report extends AuthController
     public function create()
     {
         $field = [
+            Form::input('project_num','项目编号')->col(8),
             Form::select('category_id','所属园区')->setOptions(function(){
                 $list = CategoryModel::where(['pid'=>0,'is_show'=>1])->field('id,cate_name')->select();
                 $menus=[];
@@ -81,32 +100,54 @@ class Report extends AuthController
                     $menus[] = ['value'=>$v['id'],'label'=>$v['cate_name']];
                 }
                 return $menus;
-            })->filterable(1)->multiple(0)->col(24),
-            Form::input('project_name','企业或项目名')->col(24),
+            })->filterable(1)->multiple(0)->col(8),
+
+            // 企业（项目）信息
+            Form::input('qi1','','企业（项目）信息')->readonly(1)->disabled(1),
+
+            Form::input('corporate_name','企业或项目名')->col(24),
             Form::radio('is_register','是否注册企业',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(24),
             Form::input('address','注册地址')->col(24),
-            Form::radio('is_small_business','是否科技型中小企业',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_high_tech','是否是高新技术企业',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_listed','是否上市挂牌',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('area','场地面积')->col(8),
+            Form::radio('is_new_teams','是否新增创客/团队',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_science','是否科技型中小企业',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_high_tech','是否高新技术企业',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('enterprises_num','与合作大学创办企业数')->col(16),
 
-            Form::number('team_num','从业人员数（团队人数）')->col(8),
-            Form::number('persons_num','应届毕业生就业人员数')->col(8),
-            Form::number('site_area','场地面积(一般都是15平，个别的大一些)')->col(8),
 
-            Form::number('one_turnover','1到3月营业额（千元）')->precision(2)->col(8),
-            Form::number('current_turnover','4月营业额（千元）')->precision(2)->col(8),
-            Form::number('current_tax','4月纳税额（千元）')->precision(2)->col(8),
+            // 团队成员信息
+            Form::input('qi2','','团队成员信息')->readonly(1)->disabled(1),
 
-            Form::radio('investment','4月是否获得投资',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(24),
+            Form::number('interns_num','新增接纳大学生/研究生实习人员数')->col(8),
+            Form::radio('is_sale','是否上市挂牌',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('add_entr_num','新增应届毕业生就业人员数')->col(8),
+            Form::number('add_jop_num','新增从业人员')->col(8),
 
-            Form::number('funding','研发经费投入（千元）')->precision(2)->col(8),
-            Form::number('amount','享受的财政支持金额（仅限企业）')->precision(2)->col(8),
-            Form::number('activities_num','参加的投融资对接活动次数')->col(8),
+            // 项目经营情况
+            Form::input('qi3','','项目经营情况')->readonly(1)->disabled(1),
 
-            Form::number('investment_amount','1到3月获得投资金额(千元)')->precision(2)->col(8),
-            Form::number('intellectual','1到3月知识产权申请数')->col(8),
-            Form::number('have_num','拥有有效知识产权数')->col(8),
-            Form::number('patents','1到3月申请发明专利数量')
+            Form::number('turnover','上月营业额(千元)')->precision(2)->col(8),
+            Form::number('taxes','上月纳税额(千元)')->precision(2)->col(8),
+            Form::number('funds','上月研发经费投入(千元)')->precision(2)->col(8),
+            Form::number('financial','上月享受财政支持金额(千元)')->precision(2)->col(8),
+            Form::number('activity_num','参加的投融资对接活动次数')->precision(2)->col(8),
+            Form::radio('is_investment','是否获得投资',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('investment_amount','获得投资金额(千元)')->precision(2)->col(24),
+
+            // 知识产权专利信息
+            Form::input('qi4','','知识产权专利信息')->readonly(1)->disabled(1),
+
+            Form::number('intellectual_num','知识产权申请数')->col(8),
+            Form::number('has_intel_num','拥有有效知识产权数(已注册公司填此项)')->col(8),
+            Form::number('patents_num','申请发明专利数量(已注册公司填此项)')->col(8),
+            Form::number('re_has_intel_num','拥有有效知识产权数(未注册公司填此项)')->col(8),
+            Form::number('re_patents_num','申请发明专利数量(未注册公司填此项)')->col(8),
+            Form::number('achievement_num','科技成果转化数')->col(8),
+
+
+            // 其他信息
+            Form::input('qi7','','其他信息')->readonly(1)->disabled(1),
+            Form::input('month','几月份的月报(格式: 2019-05)')->col(24)
         ];
         $form = Form::make_post_form('添加申请',$field,Url::build('save'),2);
         $this->assign(compact('form'));
@@ -118,34 +159,51 @@ class Report extends AuthController
      */
     public function save(Request $request,$id=0)
     {
+
         $data = Util::postMore([
-            'category_id','project_name','is_register',
-            'address','is_small_business','is_high_tech',
-            'is_listed','team_num','persons_num',
-            'site_area','one_turnover','current_turnover',
-            'current_tax','funding','amount',
-            'activities_num','investment','investment_amount',
-            'intellectual','have_num','patents'
+            'project_num','category_id','corporate_name','is_register',
+            'address','area', 'is_new_teams','is_science',
+            'is_high_tech', 'enterprises_num','interns_num','is_sale',
+            'add_jop_num', 'add_entr_num', 'turnover','taxes',
+            'funds', 'financial', 'activity_num','is_investment',
+            'investment_amount', 'intellectual_num', 'has_intel_num','patents_num',
+            're_has_intel_num', 're_patents_num', 'achievement_num', 'month'
         ],$request);
         // 数据校验
+        if(!$data['project_num']) return Json::fail('请输入项目编号');
         if(!$data['category_id']) return Json::fail('请选择所属园区');
-        if(!$data['project_name']) return Json::fail('请输入企业或项目名');
+        if(!$data['corporate_name']) return Json::fail('请输入公司名称');
+//        if(!$data['org_code']) return Json::fail('请输入组织机构代码');
+        if(!$data['month']) return Json::fail('请输入几月份的月报');
+       // if($data['legal_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['legal_phone'])) return Json::fail('法人信息 - 手机格式有误');
+       // if($data['team_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['team_phone'])) return Json::fail('团队成员信息 - 手机格式有误');
+       // if($data['residence_time'] && $data['back_time'] && strtotime($data['back_time']) < strtotime($data['residence_time'])) return Json::fail('入驻园区时间 要小于 退园时间');
+       // if($data['start_time'] && $data['end_time'] && strtotime($data['end_time']) < strtotime($data['start_time'])) return Json::fail('入园协议起时间 要小于 止时间');
+        // 唯一性验证
+        $onlyT = ReportModel::getUniqueness($data['project_num'],$data['category_id'],$data['month']);
+        if($onlyT && (($id && $id!=$onlyT) || $id==0)){
+            return Json::fail('同一园区里项目编号不能重复');
+        }
+        // 组合起止时间
+//        $data['start_end_time'] = $data['start_time'].'-'.$data['end_time'];
 
         if($id){
             // 修改
-            $isHas = Db::name('examine')->where('id',$id)->value('id');
+            $isHas = Db::name('report')->where('id',$id)->value('id');
             if(!$isHas) return Json::successful('修改失败，数据不存在!');
             $data['update_time'] = time();
             ReportModel::edit($data,$id);
-            return Json::successful('修改月报成功!');
+            return Json::successful('修改成功!');
         }
 
         // 新增
         $data['create_time'] = time();
+        $data['status'] = 1;
         // 获取当前用户的uid
         $data['uid'] = getUidByAdminId(Session::get('adminId'));
-        $res=ReportModel::set($data);
-        return Json::successful('添加月报成功!');
+
+        $res = ReportModel::set($data);
+        return Json::successful('添加申请成功!');
     }
 
     /**
@@ -160,6 +218,9 @@ class Report extends AuthController
         $product = ReportModel::get($id);
         if(!$product) return Json::fail('数据不存在!');
         $field = [
+
+            Form::input('project_num','项目编号',$product->getData('project_num'))->col(8),
+
             Form::select('category_id','所属园区',[$product->getData('category_id')])->setOptions(function(){
                 $list = CategoryModel::where(['pid'=>0,'is_show'=>1])->field('id,cate_name')->select();
                 $menus=[];
@@ -167,32 +228,55 @@ class Report extends AuthController
                     $menus[] = ['value'=>$v['id'],'label'=>$v['cate_name']];
                 }
                 return $menus;
-            })->filterable(1)->multiple(0)->col(24),
-            Form::input('project_name','企业或项目名',$product->getData('project_name'))->col(24),
+            })->filterable(1)->multiple(0)->col(8),
+
+            // 企业（项目）信息
+            Form::input('qi1','','企业（项目）信息')->readonly(1)->disabled(1),
+
+            Form::input('corporate_name','企业或项目名',$product->getData('corporate_name'))->col(24),
             Form::radio('is_register','是否注册企业',$product->getData('is_register'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(24),
             Form::input('address','注册地址',$product->getData('address'))->col(24),
-            Form::radio('is_small_business','是否科技型中小企业',$product->getData('is_small_business'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_high_tech','是否是高新技术企业',$product->getData('is_high_tech'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_listed','是否上市挂牌',$product->getData('is_listed'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('area','场地面积',$product->getData('area'))->col(8),
+            Form::radio('is_new_teams','是否新增创客/团队',$product->getData('is_new_teams'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_science','是否科技型中小企业',$product->getData('is_science'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_high_tech','是否高新技术企业',$product->getData('is_high_tech'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('enterprises_num','与合作大学创办企业数',$product->getData('enterprises_num'))->col(16),
 
-            Form::number('team_num','从业人员数(团队人数)',$product->getData('team_num'))->col(8),
-            Form::number('persons_num','应届毕业生就业人员数',$product->getData('persons_num'))->col(8),
-            Form::number('site_area','场地面积(一般都是15平，个别的大一些)',$product->getData('site_area'))->col(8),
 
-            Form::number('one_turnover','1到3月营业额(千元)',$product->getData('one_turnover'))->precision(2)->col(8),
-            Form::number('current_turnover','4月营业额(千元)',$product->getData('current_turnover'))->precision(2)->col(8),
-            Form::number('current_tax','4月纳税额(千元)',$product->getData('current_tax'))->precision(2)->col(8),
+            // 团队成员信息
+            Form::input('qi2','','团队成员信息')->readonly(1)->disabled(1),
 
-            Form::radio('investment','4月是否获得投资',$product->getData('investment'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(24),
+            Form::number('interns_num','新增接纳大学生/研究生实习人员数',$product->getData('interns_num'))->col(8),
+            Form::radio('is_sale','是否上市挂牌',$product->getData('is_sale'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('add_entr_num','新增应届毕业生就业人员数',$product->getData('add_entr_num'))->col(8),
+            Form::number('add_jop_num','新增从业人员',$product->getData('add_jop_num'))->col(8),
 
-            Form::number('funding','研发经费投入(千元)',$product->getData('funding'))->precision(2)->col(8),
-            Form::number('amount','享受的财政支持金额(仅限企业)',$product->getData('amount'))->precision(2)->col(8),
-            Form::number('activities_num','参加的投融资对接活动次数',$product->getData('activities_num'))->col(8),
+            // 项目经营情况
+            Form::input('qi3','','项目经营情况')->readonly(1)->disabled(1),
 
-            Form::number('investment_amount','1到3月获得投资金额(千元)',$product->getData('investment_amount'))->precision(2)->col(8),
-            Form::number('intellectual','1到3月知识产权申请数',$product->getData('intellectual'))->col(8),
-            Form::number('have_num','拥有有效知识产权数',$product->getData('have_num'))->col(8),
-            Form::number('patents','1到3月申请发明专利数量',$product->getData('patents'))
+            Form::number('turnover','上月营业额(千元)',$product->getData('turnover'))->precision(2)->col(8),
+            Form::number('taxes','上月纳税额(千元)',$product->getData('taxes'))->precision(2)->col(8),
+            Form::number('funds','上月研发经费投入(千元)',$product->getData('funds'))->precision(2)->col(8),
+            Form::number('financial','上月享受财政支持金额(千元)',$product->getData('financial'))->precision(2)->col(8),
+            Form::number('activity_num','参加的投融资对接活动次数',$product->getData('activity_num'))->precision(2)->col(8),
+            Form::radio('is_investment','是否获得投资',$product->getData('is_investment'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::number('investment_amount','获得投资金额(千元)',$product->getData('investment_amount'))->precision(2)->col(24),
+
+            // 知识产权专利信息
+            Form::input('qi4','','知识产权专利信息')->readonly(1)->disabled(1),
+
+            Form::number('intellectual_num','知识产权申请数',$product->getData('intellectual_num'))->col(8),
+            Form::number('has_intel_num','拥有有效知识产权数(已注册公司填此项)',$product->getData('has_intel_num'))->col(8),
+            Form::number('patents_num','申请发明专利数量(已注册公司填此项)',$product->getData('patents_num'))->col(8),
+            Form::number('re_has_intel_num','拥有有效知识产权数(未注册公司填此项)',$product->getData('re_has_intel_num'))->col(8),
+            Form::number('re_patents_num','申请发明专利数量(未注册公司填此项)',$product->getData('re_patents_num'))->col(8),
+            Form::number('achievement_num','科技成果转化数',$product->getData('achievement_num'))->col(8),
+
+
+            // 其他信息
+            Form::input('qi7','','其他信息')->readonly(1)->disabled(1),
+            Form::input('month','几月份的月报(格式: 2019-05)',$product->getData('month'))->col(24),
+
         ];
         $form = Form::make_post_form('编辑申请',$field,Url::build('save',array('id'=>$id)),2);
         $this->assign(compact('form'));

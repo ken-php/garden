@@ -208,14 +208,14 @@ trait ModelTrait
             break;
             case 'quarter':
                 list($startTime,$endTime)=self::getMonth();
-                $model = $model->where($prefix, '>', strtotime($startTime));
-                $model = $model->where($prefix, '<', strtotime($endTime));
+                $model = $model->where($prefix, '>=', strtotime($startTime));
+                $model = $model->where($prefix, '<=', strtotime($endTime));
                 break;
             default:
                 if(strstr($where[$data],$field)!==false){
                     list($startTime, $endTime) = explode($field, $where[$data]);
-                    $model = $model->where($prefix, '>', strtotime($startTime));
-                    $model = $model->where($prefix, '<', strtotime($endTime));
+                    $model = $model->where($prefix, '>=', strtotime($startTime));
+                    $model = $model->where($prefix, '<=', strtotime($endTime));
                 }
                 break;
         }
