@@ -28,18 +28,18 @@
                                     </select>
                                 </div>
                             </div>
+<!--                            <div class="layui-inline">-->
+<!--                                <label class="layui-form-label">时间范围</label>-->
+<!--                                <div class="layui-input-inline" style="width: 200px;">-->
+<!--                                    <input type="text" name="start_time" placeholder="开始时间" id="start_time" class="layui-input">-->
+<!--                                </div>-->
+<!--                                <div class="layui-form-mid">-</div>-->
+<!--                                <div class="layui-input-inline" style="width: 200px;">-->
+<!--                                    <input type="text" name="end_time" placeholder="结束时间" id="end_time" class="layui-input">-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="layui-inline">
-                                <label class="layui-form-label">时间范围</label>
-                                <div class="layui-input-inline" style="width: 200px;">
-                                    <input type="text" name="start_time" placeholder="开始时间" id="start_time" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid">-</div>
-                                <div class="layui-input-inline" style="width: 200px;">
-                                    <input type="text" name="end_time" placeholder="结束时间" id="end_time" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">月份查询</label>
+                                <label class="layui-form-label">上报月份</label>
                                 <div class="layui-input-block">
 <!--                                    <input type="text" name="month" class="layui-input" placeholder="请输入">-->
                                     <select name="month" lay-verify="month">

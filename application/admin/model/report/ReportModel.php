@@ -130,7 +130,7 @@ class ReportModel extends ModelBasic
                 $model=$model->group('e.id');
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
                     $projectNum = self::where('month',$curMonth)->column('project_num');
-                    $model= $model->where('project_num','not in',$projectNum);
+                    $model= $model->where('project_num','not in',$projectNum)->where('category_id','s.id');
 
             }
 
