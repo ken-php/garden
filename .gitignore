@@ -1,5 +1,7 @@
 # Windows thumbnail cache files
 /runtime
+/thinkphp
+/vendor
 /.idea
 /application/database.php/
 /public/uploads/

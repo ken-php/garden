@@ -523,7 +523,33 @@
                 <input type="text" placeholder="请输入注册地址" value="{$data.address}" name="address" id="2782" class="weui-form-input" /> 
                </div> 
               </div>
-              <div class="weui-cells__title">是否成为科技型中小企业</div>
+              <div class="weui-cells__title">场地面积(一般都是15平，个别的大一些)</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入场地面积" value="" name="area" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">是否是新增创客/团队</div>
+              <div class="weui-form"> 
+                <div class="weui-form-item"> 
+                 <div class="iblock">
+                  <input type="radio" id="1100351" name="is_new_teams" value="1" class="weui-form-checkbox" /> 
+                  <label for="1100351" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    是
+                   </div> </label> 
+                 </div> 
+                 <div class="iblock"> 
+                  <input type="radio" id="1100352" name="is_new_teams" value="0" checked="checked" class="weui-form-checkbox" /> 
+                  <label for="1100352" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                   <div class="weui-form-text">
+                    否
+                   </div> </label> 
+                 </div> 
+                </div> 
+               </div>
+
+               <div class="weui-cells__title">是否成为科技型中小企业</div>
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
                  <div class="iblock">
@@ -561,6 +587,18 @@
                  </div>
                 </div>
                </div>
+               <div class="weui-cells__title">新增与合作大学创办企业数</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入新增与合作大学创办企业数" value="" name="enterprises_num" id="332243" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">新增接纳大学生/研究生实习人员数</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="digit" placeholder="请输入新增接纳大学生/研究生实习人员数" value="" name="interns_num" id="58741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
                <div class="weui-cells__title">是否上市挂牌</div>
               <div class="weui-form"> 
                 <div class="weui-form-item"> 
@@ -590,12 +628,6 @@
               <div class="weui-form"> 
                <div class="weui-form-item">
                 <input type="digit" placeholder="请输入新增应届毕业生就业人员数" value="" name="add_entr_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
-               </div> 
-              </div>
-              <div class="weui-cells__title">场地面积(一般都是15平，个别的大一些)</div>
-              <div class="weui-form"> 
-               <div class="weui-form-item">
-                <input type="digit" placeholder="请输入场地面积" value="" name="area" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div> 
               </div>
               <div class="weui-cells__title">营业额（千元）</div>
@@ -650,25 +682,43 @@
                <div class="weui-cells__title">获得投资金额(千元)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入获得投资金额(千元)" value="" name="investment_amount" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入获得投资金额(千元)" value="" name="investment_amount" id="6740" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-cells__title">知识产权申请数</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入知识产权申请数" value="" name="intellectual_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入知识产权申请数" value="" name="intellectual_num" id="6741" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
-              <div class="weui-cells__title">拥有有效知识产权数</div>
+              <div class="weui-cells__title">新增拥有有效知识产权数(已注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入拥有有效知识产权数" value="" name="has_intel_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(已注册公司的填此项)" value="" name="has_intel_num" id="6742" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
-              <div class="weui-cells__title">申请发明专利数量</div>
+              <div class="weui-cells__title">新增申请发明专利数量(已注册公司的填此项)</div>
               <div class="weui-form">
                <div class="weui-form-item">
-                <input type="digit" placeholder="请输入申请发明专利数量" value="" name="patents_num" id="67405" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+                <input type="digit" placeholder="请输入新增申请发明专利数量(已注册公司的填此项)" value="" name="patents_num" id="6743" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">新增拥有有效知识产权数(未注册公司的填此项)</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入月新增拥有有效知识产权数(未注册公司的填此项)" value="" name="re_has_intel_num" id="6744" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">新增申请发明专利数量(未注册公司的填此项)</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入新增申请发明专利数量(未注册公司的填此项)" value="" name="re_patents_num" id="6745" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div>
+              </div>
+              <div class="weui-cells__title">新增科技成果转化数</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="digit" placeholder="请输入新增科技成果转化数" value="" name="achievement_num" id="6746" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
                </div>
               </div>
               <div class="weui-form">
@@ -676,10 +726,7 @@
                 <a data-index="8541020" href="javascript:formSubmit();" class="weui-btn weui-btn_primary  ">提交</a> 
                </div> 
               </div> 
-             </div> 
-
-
-
+             </div>
             </div> 
            </div> 
            <script type="text/javascript">
