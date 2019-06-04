@@ -110,7 +110,7 @@ class PHPExcelService
             //设置边框
             $sheet->getStyle('A1:'.self::$cells.(count($list)+self::$topNumber))->applyFromArray(self::$styleArray);
             //设置自动换行
-            $sheet->getStyle('A4:'.self::$cells.(count($list)+self::$topNumber))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('A3:'.self::$cells.(count($list)+self::$topNumber))->getAlignment()->setWrapText(true);
         }else if($list!==null && is_callable($list)){
             $list($sheet,self::$topNumber,$cellkey,self::$cells)->applyFromArray(self::$styleArray);
         }
