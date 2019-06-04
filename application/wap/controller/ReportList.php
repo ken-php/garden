@@ -65,20 +65,20 @@ class ReportList extends AuthController
             $data= Db::name('report')->where('uid',$uid)->where('month',$month)->find();
         }
 
-        $selectTiemAll[] = date('Y-m',strtotime("-12 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-11 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-10 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-9 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-8 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-7 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-6 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-5 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-4 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-3 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-2 month"));
-        $selectTiemAll[] = date('Y-m',strtotime("-1 month"));
-        $selectTiemAll[] = date('Y-m');
-
+        $selectTiemAll[0] = date('Y-m');
+        $selectTiemAll[1] = date('Y-m',strtotime("-1 month"));
+        $selectTiemAll[2] = date('Y-m',strtotime("-2 month"));
+        $selectTiemAll[3] = date('Y-m',strtotime("-3 month"));
+        $selectTiemAll[4] = date('Y-m',strtotime("-4 month"));
+        $selectTiemAll[5] = date('Y-m',strtotime("-5 month"));
+        $selectTiemAll[6] = date('Y-m',strtotime("-6 month"));
+        $selectTiemAll[7] = date('Y-m',strtotime("-7 month"));
+        $selectTiemAll[8] = date('Y-m',strtotime("-8 month"));
+        $selectTiemAll[9] = date('Y-m',strtotime("-9 month"));
+        $selectTiemAll[10] = date('Y-m',strtotime("-10 month"));
+        $selectTiemAll[11] = date('Y-m',strtotime("-11 month"));
+        $selectTiemAll[12] = date('Y-m',strtotime("-12 month"));
+       
         $selectTiem[] = date('Y-m',strtotime("-2 month"));
         $two = date('Y-m',strtotime("-1 month"));
         $selectTiem[] = $two;
