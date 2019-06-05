@@ -7,7 +7,10 @@
             <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">月报列表({$reportNum})</a>
             </li>
             <li lay-id="list" {eq name='type' value='2'}class="layui-this" {/eq} >
-            <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">上月待提交月报({$reportNotNum})</a>
+            <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">科技园上月待提交月报({$scienceReportNotNum})</a>
+            </li>
+            <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq} >
+            <a href="{eq name='type' value='3'}javascript:;{else}{:Url('index',['type'=>3])}{/eq}">众创空间上月待提交月报({$makerProjectNotNum})</a>
             </li>
         </ul>
     </div>
