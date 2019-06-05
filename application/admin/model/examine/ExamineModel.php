@@ -109,5 +109,17 @@ class ExamineModel extends ModelBasic
         return self::where(['category_id'=>$cate_id,'project_num'=>$project_num])->value('id');
     }
 
-
+    /**
+     * 获取上月未提交月报公司数
+     * @param $where
+     * @param $scienceProjectNum
+     * @return int|string
+     * @throws \think\Exception
+     * @author ken
+     * @date 2019/6/5
+     */
+    public static function getUnReportCount($where , $scienceProjectNum)
+    {
+       return self::where($where)->whereNotIn('project_num',$scienceProjectNum)->count();
+    }
 }

@@ -123,15 +123,24 @@ class ReportModel extends ModelBasic
 
             }
 
-            // 上月没提交月报列表
+            // 科技园上月没提交月报列表
             if (isset($where['type']) && $where['type'] == 2){
                 $model = new ExamineModel();
                 $model = $model->alias('e')->join('StoreCategory s','e.category_id=s.id','LEFT');
                 $model=$model->group('e.id');
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
-                    $projectNum = self::where('month',$curMonth)->column('project_num');
-                    $model= $model->where('project_num','not in',$projectNum)->where('category_id','s.id');
+                    $projectNum = self::where(['month' => $curMonth , 'category_id' => 23])->column('project_num');
+                    $model= $model->where('project_num','not in',$projectNum)->where('category_id',23);
+            }
 
+            // 众创空间上月没提交月报列表
+            if (isset($where['type']) && $where['type'] == 3){
+                $model = new ExamineModel();
+                $model = $model->alias('e')->join('StoreCategory s','e.category_id=s.id','LEFT');
+                $model=$model->group('e.id');
+                $curMonth = date('Y-m',strtotime("-1 month", time()));
+                $projectNum = self::where(['month' => $curMonth , 'category_id' => 63])->column('project_num');
+                $model= $model->where('project_num','not in',$projectNum)->where('category_id',63);
             }
 
             if (isset($where['month']) && $where['month'] != ''){
@@ -226,6 +235,19 @@ class ReportModel extends ModelBasic
     public static function getProjectNum()
     {
         return Db::name('report')->column('project_num');
+    }
+
+    /**
+     * 查询某个字段的所有的值
+     * @param string $where
+     * @param $val
+     * @return array
+     * @author ken
+     * @date 2019/6/5
+     */
+    public static function getSameAllValue($where = '' , $val)
+    {
+        return self::where($where)->column($val);
     }
 
 }
