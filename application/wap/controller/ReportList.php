@@ -125,12 +125,10 @@ class ReportList extends AuthController
             'activity_num','is_investment','investment_amount','intellectual_num','has_intel_num','patents_num','re_has_intel_num','re_patents_num','achievement_num','edit_id'
         ],$request);
         // 数据校验
-        if(!$data['project_num']) return Json::fail('请输入项目编号');
-        if(!$data['category_id']) return Json::fail('请选择所属园区');
-        if(!$data['corporate_name']) return Json::fail('请输入公司名称');
-        if(!$data['org_code']) return Json::fail('请输入组织机构代码');
-        if($data['legal_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['legal_phone'])) return Json::fail('法人信息 - 手机格式有误');
-        if($data['team_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['team_phone'])) return Json::fail('团队成员信息 - 手机格式有误');        
+        $validate = validate('ReportList');
+        if(!$validate->check($data)){
+            return Json::fail($validate->getError());
+        }
 
         if($data['project_num']){
             // 修改
