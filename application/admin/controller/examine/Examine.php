@@ -39,10 +39,12 @@ class Examine extends AuthController
         $toBeAudited =  ExamineModel::where(['is_audited'=>0,'is_del'=>0])->count();
         //已审核
         $audited =  ExamineModel::where(['is_audited'=>1,'is_del'=>0])->count();
+        // 审核失败
+        $auditFailure =  ExamineModel::where(['is_audited'=>3,'is_del'=>0])->count();
         //回收站
         $recycle =  ExamineModel::where(['is_del'=>1])->count();
 
-        $this->assign(compact('type','toBeAudited','audited','recycle'));
+        $this->assign(compact('type','toBeAudited','audited','auditFailure','recycle'));
         return $this->fetch();
     }
 
@@ -307,7 +309,83 @@ class Examine extends AuthController
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
-    
+
+    /**
+     * 审核项目表单
+     * @param $id
+     * @return mixed|void
+     * @throws \FormBuilder\exception\FormBuilderException
+     * @throws \think\exception\DbException
+     * @author ken
+     * @date 2019/6/5
+     */
+    public function audit($id)
+    {
+        if (!$id){
+            return $this->failed('数据不存在!');
+        }
+
+        // 判断项目是否存在
+        $product = ExamineModel::get($id);
+        if(!$product){
+            return Json::fail('数据不存在!');
+        }
+
+        $field = [
+            Form::radio('is_audited','审核项目',1)->options([['label'=>'审核通过','value'=>1],['label'=>'审核失败','value'=>3]])->col(24),
+            Form::textarea(' content','审核失败原因')->col(24),
+        ];
+
+        $form = Form::make_post_form('项目审核',$field,Url::build('updateAudit',array('id'=>$id)),2);
+        $this->assign(compact('form'));
+        return $this->fetch('public/form-builder');
+    }
+
+    /**
+     * 更新审核状态,并新增审核失败原因
+     * @param Request $request
+     * @param int $id
+     * @author ken
+     * @date 2019/6/5
+     */
+    public function updateAudit(Request $request , $id = 0)
+    {
+        $data = Util::postMore([
+            'is_audited','content'
+        ],$request);
+
+        // 审核失败,必须填写失败原因
+        if (isset($data['is_audited']) && $data['is_audited'] == 3){
+            if(!$data['content']) return Json::fail('审核失败,必须请填写失败原因!');
+        }
+
+        // 更新审核状态,并新增失败原因
+        if ($id){
+            if ($data['is_audited'] == 3){
+                // 修改审核状态
+                $isHas = Db::name('examine')->where('id',$id)->value('id');
+                if(!$isHas) return Json::successful('修改失败，数据不存在!');
+                ExamineModel::update(['id' => $id, 'is_audited' => $data['is_audited']]);
+
+                // 新增审核失败原因
+                $data['uid'] = ExamineModel::getUidByExamineId($id);
+                unset($data['is_audited']);
+                $res = ExamineModel::addNotice($data);
+                if ($res){
+                    return Json::successful('审核成功!');
+                }
+                return Json::fail('添加审核失败原因失败!');
+            }else{
+                // 修改审核状态
+                $isHas = Db::name('examine')->where('id',$id)->value('id');
+                if(!$isHas) return Json::successful('修改失败，数据不存在!');
+                ExamineModel::update(['id' => $id, 'is_audited' => $data['is_audited']]);
+                return Json::successful('审核成功!');
+            }
+        }
+
+        return Json::fail('数据不存在!');
+    }
 
     /**
      * 快速编辑
