@@ -36,10 +36,18 @@ class Report extends AuthController
         $reportNum =  ReportModel::where(['is_del'=>0])->count();
         // 本月待提交列表
         $curMonth = date('Y-m',strtotime("-1 month", time())); // 上月月份
-        $projectNum = ReportModel::where('month',$curMonth)->column('project_num');
-        $reportNotNum =  ExamineModel::where('project_num','not in',$projectNum)->count();
 
-        $this->assign(compact('type','reportNum','reportNotNum'));
+        // 查询科技园上月月报所有的项目编号
+        $scienceProjectNum = ReportModel::getSameAllValue(['month' => $curMonth , 'category_id' => 23],'project_num');
+        // 获取科技园上月未提交月报公司档案信息
+        $scienceReportNotNum =  ExamineModel::getUnReportCount(['is_audited' => 1 , 'category_id' => 23] , $scienceProjectNum);
+
+        // 查询众创空间上月月报所有的项目编号
+        $makerProjectNum = ReportModel::getSameAllValue(['month' => $curMonth , 'category_id' => 63],'project_num');
+        // 获取众创空间上月未提交月报公司档案信息
+        $makerProjectNotNum = ExamineModel::getUnReportCount(['is_audited' => 1 , 'category_id' => 63] , $makerProjectNum);
+
+        $this->assign(compact('type','reportNum','scienceReportNotNum','makerProjectNotNum'));
         return $this->fetch();
     }
 
