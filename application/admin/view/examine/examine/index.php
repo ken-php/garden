@@ -9,6 +9,9 @@
             <li lay-id="list" {eq name='type' value='2'}class="layui-this" {/eq}>
                 <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">已审核({$audited})</a>
             </li>
+            <li lay-id="list" {eq name='type' value='4'}class="layui-this" {/eq}>
+            <a href="{eq name='type' value='4'}javascript:;{else}{:Url('index',['type'=>4])}{/eq}">审核失败({$auditFailure})</a>
+            </li>
             <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq}>
                 <a href="{eq name='type' value='3'}javascript:;{else}{:Url('index',['type'=>3])}{/eq}">回收站({$recycle})</a>
             </li>
@@ -71,11 +74,37 @@
                     </div>
                     <table class="layui-hide" id="List" lay-filter="List"></table>
                     <!--上架|下架-->
+<!--                    <script type="text/html" id="checkboxstatus">-->
+<!--                        <input type='checkbox' name='id' lay-skin='switch' value="{{d.id}}" lay-filter='is_show' lay-text='已审核|未审核' {{d.is_audited == 1 ? 'checked' : ''}}>-->
+<!--                    </script>-->
+
                     <script type="text/html" id="checkboxstatus">
-                        <input type='checkbox' name='id' lay-skin='switch' value="{{d.id}}" lay-filter='is_show' lay-text='已审核|未审核'  {{ d.is_audited == 1 ? 'checked' : '' }}>
+                        {{#  if(d.is_audited == "0"){d.is_audited = '未审核' }}
+                        <span style="color: #A9A9A9">{{d.is_audited}}</span>
+                        {{# } else if (d.is_audited=="1"){d.is_audited = '已审核' }}
+                    <span style="color: #5FB878">{{d.is_audited}}</span>
+                        {{# } else if (d.is_audited=="3"){d.is_audited = '审核失败' }}
+                    <span style="color: #d81e06">{{d.is_audited}}</span>
+                        {{#  } else {d.is_audited = '已回收' }}
+                    <span style="color: dimgrey">{{d.is_audited}}</span>
+                        {{#  } }}
+
                     </script>
+
                     <!--操作-->
                     <script type="text/html" id="act">
+
+                            {if condition="$type eq '1' "}
+                            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_num}}-审核','{:Url('audit')}?id={{d.id}}',{h:700,w:1100})">
+                            审核
+                            </button>
+                            {elseif condition="$type eq '4' "/}
+                            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_num}}-重新审核','{:Url('audit')}?id={{d.id}}',{h:700,w:1100})">
+                            重新审核
+                            </button>
+                            {/if}
+
+
                         <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_num}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
                             编辑
                         </button>
@@ -122,7 +151,7 @@
                     {field: 'right', title: '操作',align:'center',toolbar:'#act',width:'14%'},
                 ];
                 break;
-            case 2:
+            case 2:case 4:
                 join=[
                     {type:'checkbox'},
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
@@ -138,6 +167,7 @@
         }
         return join;
     })
+
     //excel下载
     layList.search('export',function(where){
         location.href=layList.U({c:'examine.examine',a:'product_ist',q:{
@@ -147,21 +177,25 @@
                 excel:1
             }});
     })
+
     //下拉框
     $(document).click(function (e) {
         $('.layui-nav-child').hide();
     })
+
     function dropdown(that){
         var oEvent = arguments.callee.caller.arguments[0] || event;
         oEvent.stopPropagation();
         var offset = $(that).offset();
         var top=offset.top-$(window).scrollTop();
         var index = $(that).parents('tr').data('index');
+
         $('.layui-nav-child').each(function (key) {
             if (key != index) {
                 $(this).hide();
             }
         })
+
         if($(document).height() < top+$(that).next('ul').height()){
             $(that).next('ul').css({
                 'padding': 10,
@@ -178,6 +212,7 @@
             }).toggle();
         }
     }
+
     //快速编辑
     layList.edit(function (obj) {
         var id=obj.data.id,value=obj.value;
@@ -193,18 +228,20 @@
                 break;
         }
     });
+
     //审核状态
-    layList.switch('is_show',function (odj,value) {
-        if(odj.elem.checked==true){
-            layList.baseGet(layList.Url({c:'examine.examine',a:'set_show',p:{is_show:1,id:value}}),function (res) {
-                layList.msg(res.msg);
-            });
-        }else{
-            layList.baseGet(layList.Url({c:'examine.examine',a:'set_show',p:{is_show:0,id:value}}),function (res) {
-                layList.msg(res.msg);
-            });
-        }
-    });
+    // layList.switch('is_show',function (odj,value) {
+    //     if(odj.elem.checked==true){
+    //         layList.baseGet(layList.Url({c:'examine.examine',a:'set_show',p:{is_show:1,id:value}}),function (res) {
+    //             layList.msg(res.msg);
+    //         });
+    //     }else{
+    //         layList.baseGet(layList.Url({c:'examine.examine',a:'set_show',p:{is_show:0,id:value}}),function (res) {
+    //             layList.msg(res.msg);
+    //         });
+    //     }
+    // });
+
     //点击事件绑定
     layList.tool(function (event,data,obj) {
         switch (event) {
@@ -229,6 +266,7 @@
                 break;
         }
     })
+
     //排序
     layList.sort(function (obj) {
         var type = obj.type;
