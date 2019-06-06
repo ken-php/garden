@@ -98,6 +98,9 @@ class ExamineModel extends ModelBasic
             case 3:
                 $data = ['e.is_del'=>1];
                 break;
+            case 4:
+                $data = ['e.is_audited'=>3,'e.is_del'=>0];
+                break;
         };
         return isset($data) ? $data: [];
     }
@@ -121,5 +124,29 @@ class ExamineModel extends ModelBasic
     public static function getUnReportCount($where , $scienceProjectNum)
     {
        return self::where($where)->whereNotIn('project_num',$scienceProjectNum)->count();
+    }
+
+    /**
+     * 获取uid
+     * @param $id
+     * @return mixed
+     * @author ken
+     * @date 2019/6/5
+     */
+    public static function getUidByExamineId($id)
+    {
+        return Db::name('project_user')->where('project_id',$id)->value('uid');
+    }
+
+    /**
+     * 新增一条审核失败原因
+     * @param $data
+     * @return int|string
+     * @author ken
+     * @date 2019/6/5
+     */
+    public static function addNotice($data)
+    {
+        return Db::name('notice_user')->insert($data);
     }
 }
