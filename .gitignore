@@ -3,7 +3,7 @@
 /thinkphp
 /vendor
 /.idea
-/application/database.php/
+/application/database.php
 /public/uploads/
 /public/.user.ini
 .user.ini
