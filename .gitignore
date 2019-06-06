@@ -6,4 +6,9 @@
 /application/database.php
 /public/uploads/
 /public/.user.ini
+<<<<<<< HEAD
 .user.ini
+=======
+.user.ini
+
+>>>>>>> 2d61b958abe494124544b99d90f4b42c2c9f5ef1
