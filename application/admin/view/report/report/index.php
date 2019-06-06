@@ -184,7 +184,7 @@
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
                     {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
-                    {field: 'corporate_name', title: '企业或项目名', width: 250,fixed: 'left'},  // 企业或项目名
+                    {field: 'corporate_name', title: '企业或项目名', width: 280,fixed: 'left'},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
                     {field: 'address', title: '注册地址', width: 400},  // 注册地址
