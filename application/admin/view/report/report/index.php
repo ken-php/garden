@@ -88,8 +88,11 @@
                     <div class="layui-btn-container">
                         <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>
                     </div>
-<!--                    <table class="layui-hide" id="List" lay-filter="List"></table>-->
+
+                    <!--数据表格-->
                     <table class="layui-hide" id="List" lay-filter="List" ></table>
+
+
                     <!--操作-->
                     <script type="text/html" id="act">
                         {eq name="type" value="2"}
@@ -112,11 +115,66 @@
 <script src="{__ADMIN_PATH}js/layuiList.js"></script>
 <!--<script src="{__ADMIN_PATH}js/layui.js"></script>-->
 <script>
+    // 时间选择框
+    // layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
+    // layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
+    //
+    //var type=<?//=$type?>//;
+    //alert(type);
+    //switch (parseInt(type)) {
+    //    case 1:
+    //layui.use('table', function(){
+    //    var table = layui.table;
+    //
+    //               table.render({
+    //                   elem: '#List'
+    //                   , url: "{:Url('product_ist',['type'=>$type])}"
+    //                   , title: '月报数据表'
+    //                   , cols: [[
+    //                       {type: 'checkbox', fixed: 'left'}
+    //                       {field: 'id', title: 'ID', sort: true, event: 'id', width: 60, fixed: 'left'},  // id
+    //                       {field: 'sort', title: '排序', edit: 'sort', width: 60, fixed: 'left'},  // 排序
+    //                       {field: 'corporate_name', title: '企业或项目名', width: 160, fixed: 'left'},  // 企业或项目名
+    //                       {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
+    //                       {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
+    //                       {field: 'address', title: '注册地址', width: 110},  // 注册地址
+    //                       {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
+    //                       {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
+    //                       {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
+    //                       {field: 'is_high_tech', title: '是否高新技术企业', width: 140},  // 是否高新技术企业
+    //                       {field: 'enterprises_num', title: '与合作大学创办企业数', width: 160},  // 与合作大学创办企业数
+    //                       {field: 'interns_num', title: '接纳大学生/研究生实习人员数', width: 210},
+    //                       {field: 'is_sale', title: '是否上市挂牌', width: 110},  // 是否上市挂牌
+    //                       {field: 'add_jop_num', title: '新增从业人员', width: 110},  // 新增从业人员
+    //                       {field: 'add_entr_num', title: '新增应届毕业生就业人员数', width: 190},  // 新增应届毕业生就业人员数
+    //                       {field: 'turnover', title: '当前月营业额(千元)', width: 150},  // 当前月营业额
+    //                       {field: 'taxes', title: '当前月纳税额(千元)', width: 150},  // 当前月纳税额
+    //                       {field: 'funds', title: '研发经费投入(千元)', width: 150},  // 研发经费投入
+    //                       {field: 'financial', title: '享受财政支持金额', width: 140},  // 享受财政支持金额
+    //                       {field: 'activity_num', title: '参加的投融资对接活动次数', width: 190},  // 参加的投融资对接活动次数
+    //                       {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
+    //                       {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
+    //                       {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
+    //                       {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 140},  // 拥有有效知识产权数
+    //                       {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 140},  // 申请发明专利数量
+    //                       {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 140},  // 拥有有效知识产权数
+    //                       {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 140},  // 申请发明专利数量
+    //                       {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
+    //
+    //                       {field: 'month', title: '填报时间', width: 180},
+    //                       {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80, fixed: 'right'},
+    //                   ]]
+    //                   , page: true
+    //               });
+    //});
+    //
+    // break;
+    //}
+
     var type=<?=$type?>;
     //实例化form
     layList.form.render();
-    layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
-    layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
+
     //加载列表
     layList.tableList('List',"{:Url('product_ist',['type'=>$type])}",function (){
 
@@ -124,11 +182,12 @@
         switch (parseInt(type)){
             case 1:
                 join=[
-                    {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},  // id
-                    {field: 'corporate_name', title: '企业或项目名', width: 110},  // 企业或项目名
+                    {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
+                    {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
+                    {field: 'corporate_name', title: '企业或项目名', width: 280,fixed: 'left'},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
-                    {field: 'address', title: '注册地址', width: 110},  // 注册地址
+                    {field: 'address', title: '注册地址', width: 400},  // 注册地址
                     {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
                     {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
                     {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
@@ -146,17 +205,17 @@
                     {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
                     {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
                     {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
-                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 140},  // 拥有有效知识产权数
-                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 140},  // 申请发明专利数量
-                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 140},  // 拥有有效知识产权数
-                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 140},  // 申请发明专利数量
+                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 230},  // 拥有有效知识产权数
+                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 220},  // 申请发明专利数量
+                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 230},  // 拥有有效知识产权数
+                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 220},  // 申请发明专利数量
                     {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
 
-                    {field: 'month', title: '填报时间', width: 180},
+                    {field: 'month', title: '填报时间', width: 100},
                     {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
                 ];
                 break;
-            case 2:
+            case 2: case 3:
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},
                     {field: 'project_num', title: '项目编号', width: 90},
@@ -199,13 +258,12 @@
         location.href=layList.U({c:'report.report',a:'product_ist',q:{
                 cate_id:where.cate_id,
                 month:where.month,
-                start_time:where.start_time,
-                end_time:where.end_time,
                 search_name:where.search_name,
                 type:where.type,
                 excel:1
             }});
     })
+
     //下拉框
     $(document).click(function (e) {
         $('.layui-nav-child').hide();
@@ -237,6 +295,8 @@
             }).toggle();
         }
     }
+
+
     //快速编辑
     layList.edit(function (obj) {
         var id=obj.data.id,value=obj.value;
@@ -259,8 +319,12 @@
             case 'is_listed':
                 action.set_product('is_listed',id,value);
                 break;
+            case 'sort':
+                action.set_product('sort',id,value);
+                break;
         }
     });
+
     //排序
     layList.sort(function (obj) {
         var type = obj.type;
@@ -270,10 +334,33 @@
                 break;
         }
     });
+
+
     //查询
     layList.search('search',function(where){
         layList.reload(where);
     });
+
+    //自定义方法
+    var action={
+        set_product:function(field,id,value){
+            layList.baseGet(layList.Url({c:'report.report',a:'set_product',q:{field:field,id:id,value:value}}),function (res) {
+                layList.msg(res.msg);
+            });
+        },
+        show:function(){
+            var ids=layList.getCheckData().getIds('id');
+            if(ids.length){
+                layList.basePost(layList.Url({c:'report.report',a:'product_show'}),{ids:ids},function (res) {
+                    layList.msg(res.msg);
+                    layList.reload();
+                });
+            }else{
+                layList.msg('请选择要上架的产品');
+            }
+        }
+    };
+
     //多选事件绑定
     $('.layui-btn-container').find('button').each(function () {
         var type=$(this).data('type');
