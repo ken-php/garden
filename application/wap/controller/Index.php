@@ -91,13 +91,12 @@ class Index extends AuthController
         // 数据校验
         // if(!$data['project_num']) return Json::fail('请输入项目编号');
         $data['project_num'] = 'HS'.rand(1000000, 9999999);
-        if(!$data['category_id']) return Json::fail('请选择所属园区');
-        if(!$data['corporate_name']) return Json::fail('请输入公司名称');
-        if(!$data['org_code']) return Json::fail('请输入组织机构代码');
-        if($data['legal_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['legal_phone'])) return Json::fail('法人信息 - 手机格式有误');
-        if($data['team_phone'] && !preg_match("/^1[34578]\d{9}$/",$data['team_phone'])) return Json::fail('团队成员信息 - 手机格式有误');
-        if($data['residence_time'] && $data['back_time'] && strtotime($data['back_time']) < strtotime($data['residence_time'])) return Json::fail('入驻园区时间 要小于 退园时间');
-        if($data['start_time'] && $data['end_time'] && strtotime($data['end_time']) < strtotime($data['start_time'])) return Json::fail('入园协议起时间 要小于 止时间');
+
+        $validate = validate('ReportList');
+        if(!$validate->check($data)){
+            return Json::fail($validate->getError());
+        }
+
         // 唯一性验证
         $onlyT = ExamineModel::getUniqueness($data['project_num'],$data['category_id']);
         if($onlyT && (($id && $id!=$onlyT) || $id==0)){

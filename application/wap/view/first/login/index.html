@@ -1,16 +1,53 @@
-{extend name="public/container"}
-{block name="head_top"}
-{block name="title"}登陆{/block}
-{block name="content"}
-<div class="authenticate" style="margin-top: 30px;">
-    <section>
-        <form action="{:Url('check')}" method="post">
-            <div class="user-infos"><input type="text" required name="account" placeholder="请输入登陆手机号"/></div>
-            <div class="user-infos"><input type="password" required name="pwd" placeholder="请输入登陆密码"/></div>
-            <input type="hidden" name="ref" value="{$ref}" />
-            <div class="publish-btn" style="position: inherit;"><button type="submit">立即登陆</button></div>
-            <!-- <div style="float:right;margin-top:20px;"><a href="{:url('register')}">注册</a></div> -->
-        </form>
-    </section>
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta name="title" content="登录" /> 
+  <title>登录</title> 
+  <link rel="stylesheet" href="{__WAP_PATH}static/lib/diygw-mobile-all.min.css" /> 
+  <script charset="utf-8" type="text/javascript" src="{__WAP_PATH}static/lib/underscore.js"></script>
+  <script type="text/javascript" src="{__PLUG_PATH}jquery-1.10.2.min.js"></script>
+  <script charset="utf-8" type="text/javascript" src="{__WAP_PATH}static/lib/diygw-mobile-all.min.js"></script> 
+ </head>
+ <body data-ride="animatebox" style="background-color:#ffffff;" data-mpid="19955" data-homepage="" data-dashboardid="19955" data-page_id="30577" data-page_name="page998179"> 
+<div class="container"> 
+<div class="pagebg"></div>
+<div class="pagemain">
+    <form action="{:Url('check')}" enctype="multipart/form-data" method="post">
+        <div class="row-form clearfix">
+            <div class="">
+                <div class="weui-grids weui-grids-border" id="appmsg943242">
+                    <a data-index="9432420" id="datatemplate943242" page="empty" href="empty" style="" class="weui-media-box weui-media-box_appmsg    row">
+                        <div class="weui-media-box__hd   ">
+                            <img alt="园区WAP管理系统" data-src="/static/img/icon4.png" src="{__WAP_PATH}crmeb/images/login.png" class="weui-media-box__thumb lazyload" style=""> </div>
+                        <div class="weui-media-box__bd">
+                            <h4 class="weui-media-box__title" style="">华水众创管理</h4>
+                            <div class="weui-media-box__desc" style="">高效工作，由此开启</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="weui-cells__title">手机号</div>
+                <div class="weui-form">
+                    <div class="weui-form-item"> <input type="tel" placeholder="请输入手机号" value="" name="account" id="54977" class="weui-form-input" data-bv-regexp-pattern="/^1[34578]\d{9}$/" data-bv-regexp-message="请输入11位的手机号码"> </div>
+                </div>
+                <div class="weui-cells__title">密码</div>
+                <div class="weui-form">
+                    <div class="weui-form-item"> <input type="password" placeholder="请输入密码" value="" name="pwd" id="714363" class="weui-form-input"> </div>
+                </div>
+                <div class="weui-form">
+                    <div class="weui-form-item"> 
+                        <button data-index="9518330" style="border-radius: 30px;" class="weui-btn weui-btn_primary " type="submit">登录</button> 
+                    </div>
+                    <div style="float:right;margin-top:20px;margin-right: 10px;color: red;"><a href="{:url('register')}">注册</a></div>
+                </div>
+            </div>
+        </div> <input type="hidden" class="hide" name="dashboardId" value="19955"> <input type="hidden" class="hide" name="formId" value="791122"> <input type="hidden" class="hide" name="tableName" value="table_791122"> <input type="hidden" class="hide" name="id" value="">
+        <div id="errorsform791122" class="hide"></div>
+    </form>
 </div>
-{/block}
+
+</div>   
+</body>
+</html>
