@@ -25,7 +25,11 @@ class ReportModel extends ModelBasic
      *
      */
     public static function List($where){
-        $model=self::getModelObject($where)->field('e.*,s.cate_name');
+//        if (isset($where['type']) && $where['type'] == 1){
+//            $model=self::getModelObject($where)->field('e.*,b.corporate_name,s.cate_name');
+//        }else{
+            $model=self::getModelObject($where)->field('e.*,s.cate_name');
+
 
         if($where['excel']==0)$model=$model->page((int)$where['page'],(int)$where['limit']);
         $data = ($data=$model->select()) && count($data) ? $data->toArray():[];
@@ -143,6 +147,24 @@ class ReportModel extends ModelBasic
                 $model= $model->where('project_num','not in',$projectNum)->where('category_id',63);
             }
 
+            // 上月已提交月报列表
+            if (isset($where['type']) && $where['type'] == 4){
+                $curMonth = date('Y-m',strtotime("-1 month", time()));
+                $model = $model->where('e.month', $curMonth)->order('e.sort desc');
+
+            }
+
+            // 历史月报列表,默认显示上月的月报列表
+            if (isset($where['type']) && $where['type'] == 1){
+                $curMonth = date('Y-m',strtotime("-1 month", time()));
+                $model = $model->join('examine b','b.project_num=e.project_num')
+                               ->where('e.month', $curMonth)
+//                               ->where('b.project_num','not in','e.project_num')
+                               ->order('e.sort desc');
+
+            }
+
+            // 月份查询
             if (isset($where['month']) && $where['month'] != ''){
                 // 查询上月月报,最新月报数据
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
@@ -250,4 +272,16 @@ class ReportModel extends ModelBasic
         return self::where($where)->column($val);
     }
 
+    /**
+     * 查询上月已提交月报数
+     * @return int|string
+     * @throws \think\Exception
+     * @author ken
+     * @date 2019/6/6
+     */
+    public static function getSubmittedReportNum()
+    {
+        $curMonth = date('Y-m',strtotime("-1 month", time()));
+        return self::where('month',$curMonth)->count();
+    }
 }

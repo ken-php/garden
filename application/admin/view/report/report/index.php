@@ -4,11 +4,17 @@
     <div class="layui-tab layui-tab-brief" lay-filter="tab">
         <ul class="layui-tab-title">
             <li lay-id="list" {eq name='type' value='1'}class="layui-this" {/eq} >
-            <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">月报列表({$reportNum})</a>
+            <a href="{eq name='type' value='1'}javascript:;{else}{:Url('index',['type'=>1])}{/eq}">历史月报列表({$reportNum})</a>
             </li>
+
+            <li lay-id="list" {eq name='type' value='4'}class="layui-this" {/eq} >
+            <a href="{eq name='type' value='4'}javascript:;{else}{:Url('index',['type'=>4])}{/eq}">上月已提交月报({$submittedReportNum})</a>
+            </li>
+
             <li lay-id="list" {eq name='type' value='2'}class="layui-this" {/eq} >
             <a href="{eq name='type' value='2'}javascript:;{else}{:Url('index',['type'=>2])}{/eq}">科技园上月待提交月报({$scienceReportNotNum})</a>
             </li>
+
             <li lay-id="list" {eq name='type' value='3'}class="layui-this" {/eq} >
             <a href="{eq name='type' value='3'}javascript:;{else}{:Url('index',['type'=>3])}{/eq}">众创空间上月待提交月报({$makerProjectNotNum})</a>
             </li>
@@ -46,7 +52,7 @@
                                 <div class="layui-input-block">
 <!--                                    <input type="text" name="month" class="layui-input" placeholder="请输入">-->
                                     <select name="month" lay-verify="month">
-                                        <option value="">全部</option>
+                                        <option value="">(默认上月)</option>
                                         <option value="01">1月份</option>
                                         <option value="02">2月份</option>
                                         <option value="03">3月份</option>
@@ -68,6 +74,18 @@
                                     <input type="text" name="search_name" class="layui-input" placeholder="请输入">
                                 </div>
                             </div>
+<!--                            <div class="layui-inline">-->
+<!--                                <label class="layui-form-label">查看项目</label>-->
+<!--                                <div class="layui-input-block">-->
+<!--                                    <!--                                    <input type="text" name="month" class="layui-input" placeholder="请输入">-->
+<!--                                    <select name="report" lay-verify="report">-->
+<!--                                        <option value="">全部</option>-->
+<!--                                        <option value="1">上月所有项目</option>-->
+<!--                                        <option value="2">上月已提交月报项目</option>-->
+<!--                                        <option value="3">上月未提交月报项目</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
                                     <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="search" lay-filter="search">
@@ -118,58 +136,6 @@
     // 时间选择框
     // layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
     // layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
-    //
-    //var type=<?//=$type?>//;
-    //alert(type);
-    //switch (parseInt(type)) {
-    //    case 1:
-    //layui.use('table', function(){
-    //    var table = layui.table;
-    //
-    //               table.render({
-    //                   elem: '#List'
-    //                   , url: "{:Url('product_ist',['type'=>$type])}"
-    //                   , title: '月报数据表'
-    //                   , cols: [[
-    //                       {type: 'checkbox', fixed: 'left'}
-    //                       {field: 'id', title: 'ID', sort: true, event: 'id', width: 60, fixed: 'left'},  // id
-    //                       {field: 'sort', title: '排序', edit: 'sort', width: 60, fixed: 'left'},  // 排序
-    //                       {field: 'corporate_name', title: '企业或项目名', width: 160, fixed: 'left'},  // 企业或项目名
-    //                       {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
-    //                       {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
-    //                       {field: 'address', title: '注册地址', width: 110},  // 注册地址
-    //                       {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
-    //                       {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
-    //                       {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
-    //                       {field: 'is_high_tech', title: '是否高新技术企业', width: 140},  // 是否高新技术企业
-    //                       {field: 'enterprises_num', title: '与合作大学创办企业数', width: 160},  // 与合作大学创办企业数
-    //                       {field: 'interns_num', title: '接纳大学生/研究生实习人员数', width: 210},
-    //                       {field: 'is_sale', title: '是否上市挂牌', width: 110},  // 是否上市挂牌
-    //                       {field: 'add_jop_num', title: '新增从业人员', width: 110},  // 新增从业人员
-    //                       {field: 'add_entr_num', title: '新增应届毕业生就业人员数', width: 190},  // 新增应届毕业生就业人员数
-    //                       {field: 'turnover', title: '当前月营业额(千元)', width: 150},  // 当前月营业额
-    //                       {field: 'taxes', title: '当前月纳税额(千元)', width: 150},  // 当前月纳税额
-    //                       {field: 'funds', title: '研发经费投入(千元)', width: 150},  // 研发经费投入
-    //                       {field: 'financial', title: '享受财政支持金额', width: 140},  // 享受财政支持金额
-    //                       {field: 'activity_num', title: '参加的投融资对接活动次数', width: 190},  // 参加的投融资对接活动次数
-    //                       {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
-    //                       {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
-    //                       {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
-    //                       {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 140},  // 拥有有效知识产权数
-    //                       {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 140},  // 申请发明专利数量
-    //                       {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 140},  // 拥有有效知识产权数
-    //                       {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 140},  // 申请发明专利数量
-    //                       {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
-    //
-    //                       {field: 'month', title: '填报时间', width: 180},
-    //                       {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80, fixed: 'right'},
-    //                   ]]
-    //                   , page: true
-    //               });
-    //});
-    //
-    // break;
-    //}
 
     var type=<?=$type?>;
     //实例化form
@@ -180,14 +146,14 @@
 
         var join=new Array();
         switch (parseInt(type)){
-            case 1:
+            case 1:case 4:
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
                     {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
                     {field: 'corporate_name', title: '企业或项目名', width: 280,fixed: 'left'},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
-                    {field: 'address', title: '注册地址', width: 400},  // 注册地址
+                    {field: 'address', title: '注册地址', width: 620},  // 注册地址
                     {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
                     {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
                     {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
@@ -221,14 +187,14 @@
                     {field: 'project_num', title: '项目编号', width: 90},
                     {field: 'cate_name', title: '归属园区', width: 110},
                     {field: 'is_hatched', title: '是否入孵', width: 90},
-                    {field: 'corporate_name', title: '企业或项目名', width: 250},
+                    {field: 'corporate_name', title: '企业或项目名', width: 240},
                     {field: 'org_code', title: '组织机构代码', width: 200},
-                    {field: 'project_synopsis', title: '项目简介', width: 460},
+                    {field: 'project_synopsis', title: '项目简介', width: 560},
                     {field: 'is_register', title: '是否注册企业', width: 110},
-                    {field: 'project_type', title: '项目类别', width: 260},
+                    {field: 'project_type', title: '项目类别', width: 550},
                     {field: 'jop_num', title: '就业人数', width: 90},
                     {field: 'entr_num', title: '创业人数', width: 90},
-                    {field: 'legal_name', title: '法人姓名', width: 90},
+                    {field: 'legal_name', title: '法人姓名', width: 120},
                     {field: 'legal_id_card', title: '法人身份证', width: 170},
                     {field: 'legal_school', title: '毕业院校', width: 160},
                     {field: 'legal_time', title: '法人毕业时间', width: 110},
@@ -258,6 +224,7 @@
         location.href=layList.U({c:'report.report',a:'product_ist',q:{
                 cate_id:where.cate_id,
                 month:where.month,
+                report:where.report,
                 search_name:where.search_name,
                 type:where.type,
                 excel:1
