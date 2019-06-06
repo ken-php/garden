@@ -115,11 +115,66 @@
 <script src="{__ADMIN_PATH}js/layuiList.js"></script>
 <!--<script src="{__ADMIN_PATH}js/layui.js"></script>-->
 <script>
+    // 时间选择框
+    // layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
+    // layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
+    //
+    //var type=<?//=$type?>//;
+    //alert(type);
+    //switch (parseInt(type)) {
+    //    case 1:
+    //layui.use('table', function(){
+    //    var table = layui.table;
+    //
+    //               table.render({
+    //                   elem: '#List'
+    //                   , url: "{:Url('product_ist',['type'=>$type])}"
+    //                   , title: '月报数据表'
+    //                   , cols: [[
+    //                       {type: 'checkbox', fixed: 'left'}
+    //                       {field: 'id', title: 'ID', sort: true, event: 'id', width: 60, fixed: 'left'},  // id
+    //                       {field: 'sort', title: '排序', edit: 'sort', width: 60, fixed: 'left'},  // 排序
+    //                       {field: 'corporate_name', title: '企业或项目名', width: 160, fixed: 'left'},  // 企业或项目名
+    //                       {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
+    //                       {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
+    //                       {field: 'address', title: '注册地址', width: 110},  // 注册地址
+    //                       {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
+    //                       {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
+    //                       {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
+    //                       {field: 'is_high_tech', title: '是否高新技术企业', width: 140},  // 是否高新技术企业
+    //                       {field: 'enterprises_num', title: '与合作大学创办企业数', width: 160},  // 与合作大学创办企业数
+    //                       {field: 'interns_num', title: '接纳大学生/研究生实习人员数', width: 210},
+    //                       {field: 'is_sale', title: '是否上市挂牌', width: 110},  // 是否上市挂牌
+    //                       {field: 'add_jop_num', title: '新增从业人员', width: 110},  // 新增从业人员
+    //                       {field: 'add_entr_num', title: '新增应届毕业生就业人员数', width: 190},  // 新增应届毕业生就业人员数
+    //                       {field: 'turnover', title: '当前月营业额(千元)', width: 150},  // 当前月营业额
+    //                       {field: 'taxes', title: '当前月纳税额(千元)', width: 150},  // 当前月纳税额
+    //                       {field: 'funds', title: '研发经费投入(千元)', width: 150},  // 研发经费投入
+    //                       {field: 'financial', title: '享受财政支持金额', width: 140},  // 享受财政支持金额
+    //                       {field: 'activity_num', title: '参加的投融资对接活动次数', width: 190},  // 参加的投融资对接活动次数
+    //                       {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
+    //                       {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
+    //                       {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
+    //                       {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 140},  // 拥有有效知识产权数
+    //                       {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 140},  // 申请发明专利数量
+    //                       {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 140},  // 拥有有效知识产权数
+    //                       {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 140},  // 申请发明专利数量
+    //                       {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
+    //
+    //                       {field: 'month', title: '填报时间', width: 180},
+    //                       {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80, fixed: 'right'},
+    //                   ]]
+    //                   , page: true
+    //               });
+    //});
+    //
+    // break;
+    //}
+
     var type=<?=$type?>;
     //实例化form
     layList.form.render();
-    layList.date({elem:'#start_time',theme:'#393D49',type:'datetime'});
-    layList.date({elem:'#end_time',theme:'#393D49',type:'datetime'});
+
     //加载列表
     layList.tableList('List',"{:Url('product_ist',['type'=>$type])}",function (){
 
@@ -127,9 +182,9 @@
         switch (parseInt(type)){
             case 1:
                 join=[
-                    {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},  // id
-                    {field: 'sort', title: '排序',edit:'sort',width:60},  // 排序
-                    {field: 'corporate_name', title: '企业或项目名', width: 110},  // 企业或项目名
+                    {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
+                    {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
+                    {field: 'corporate_name', title: '企业或项目名', width: 200,fixed: 'left'},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
                     {field: 'address', title: '注册地址', width: 110},  // 注册地址
@@ -150,10 +205,10 @@
                     {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
                     {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
                     {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
-                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 140},  // 拥有有效知识产权数
-                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 140},  // 申请发明专利数量
-                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 140},  // 拥有有效知识产权数
-                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 140},  // 申请发明专利数量
+                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 230},  // 拥有有效知识产权数
+                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 230},  // 申请发明专利数量
+                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 230},  // 拥有有效知识产权数
+                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 230},  // 申请发明专利数量
                     {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
 
                     {field: 'month', title: '填报时间', width: 180},
