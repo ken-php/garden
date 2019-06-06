@@ -8,5 +8,3 @@
 /public/.user.ini
 .user.ini
 
-application/database.php
-*.ini

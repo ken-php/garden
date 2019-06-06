@@ -19,7 +19,6 @@ use think\Db;
 use think\Controller;
 
 class Login extends WapBasic
-// class Login extends Controller
 {
     public function index($ref = '')
     {
