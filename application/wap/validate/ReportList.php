@@ -9,7 +9,7 @@ class ReportList extends Validate
         'project_num'   => 'require',
         'category_id' => 'require|number',
         'corporate_name'  => 'require|max:35',
-        'org_code'  => 'require|max:35',
+        'org_code'  => 'max:35',
         'project_type'=>'max:60',
         'jop_num' => 'number|egt:0',
         'entr_num' => 'number|egt:0',
