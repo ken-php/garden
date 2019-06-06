@@ -184,10 +184,10 @@
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
                     {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
-                    {field: 'corporate_name', title: '企业或项目名', width: 200,fixed: 'left'},  // 企业或项目名
+                    {field: 'corporate_name', title: '企业或项目名', width: 260,fixed: 'left'},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
-                    {field: 'address', title: '注册地址', width: 110},  // 注册地址
+                    {field: 'address', title: '注册地址', width: 400},  // 注册地址
                     {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
                     {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
                     {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
@@ -211,7 +211,7 @@
                     {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 230},  // 申请发明专利数量
                     {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
 
-                    {field: 'month', title: '填报时间', width: 180},
+                    {field: 'month', title: '填报时间', width: 100},
                     {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
                 ];
                 break;
