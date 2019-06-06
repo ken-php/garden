@@ -148,7 +148,7 @@ class ReportModel extends ModelBasic
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
                 $month = date('Y-m',strtotime(date('Y-'.$where['month'],time())));
                 if ($curMonth == $month){
-                    $model = $model->where('e.month',$curMonth);
+                    $model = $model->where('e.month',$curMonth)->order('e.sort desc');
                 }else{
                     // 不是当前月
                     $model = $model->where('e.month',$month);

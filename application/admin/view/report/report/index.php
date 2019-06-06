@@ -88,8 +88,11 @@
                     <div class="layui-btn-container">
                         <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>
                     </div>
-<!--                    <table class="layui-hide" id="List" lay-filter="List"></table>-->
+
+                    <!--数据表格-->
                     <table class="layui-hide" id="List" lay-filter="List" ></table>
+
+
                     <!--操作-->
                     <script type="text/html" id="act">
                         {eq name="type" value="2"}
@@ -125,6 +128,7 @@
             case 1:
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},  // id
+                    {field: 'sort', title: '排序',edit:'sort',width:60},  // 排序
                     {field: 'corporate_name', title: '企业或项目名', width: 110},  // 企业或项目名
                     {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
                     {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
@@ -156,7 +160,7 @@
                     {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
                 ];
                 break;
-            case 2:
+            case 2: case 3:
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},
                     {field: 'project_num', title: '项目编号', width: 90},
@@ -199,13 +203,12 @@
         location.href=layList.U({c:'report.report',a:'product_ist',q:{
                 cate_id:where.cate_id,
                 month:where.month,
-                start_time:where.start_time,
-                end_time:where.end_time,
                 search_name:where.search_name,
                 type:where.type,
                 excel:1
             }});
     })
+
     //下拉框
     $(document).click(function (e) {
         $('.layui-nav-child').hide();
@@ -237,6 +240,8 @@
             }).toggle();
         }
     }
+
+
     //快速编辑
     layList.edit(function (obj) {
         var id=obj.data.id,value=obj.value;
@@ -259,8 +264,12 @@
             case 'is_listed':
                 action.set_product('is_listed',id,value);
                 break;
+            case 'sort':
+                action.set_product('sort',id,value);
+                break;
         }
     });
+
     //排序
     layList.sort(function (obj) {
         var type = obj.type;
@@ -270,10 +279,33 @@
                 break;
         }
     });
+
+
     //查询
     layList.search('search',function(where){
         layList.reload(where);
     });
+
+    //自定义方法
+    var action={
+        set_product:function(field,id,value){
+            layList.baseGet(layList.Url({c:'report.report',a:'set_product',q:{field:field,id:id,value:value}}),function (res) {
+                layList.msg(res.msg);
+            });
+        },
+        show:function(){
+            var ids=layList.getCheckData().getIds('id');
+            if(ids.length){
+                layList.basePost(layList.Url({c:'report.report',a:'product_show'}),{ids:ids},function (res) {
+                    layList.msg(res.msg);
+                    layList.reload();
+                });
+            }else{
+                layList.msg('请选择要上架的产品');
+            }
+        }
+    };
+
     //多选事件绑定
     $('.layui-btn-container').find('button').each(function () {
         var type=$(this).data('type');
