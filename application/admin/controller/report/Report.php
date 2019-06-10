@@ -47,7 +47,10 @@ class Report extends AuthController
         // 获取众创空间上月未提交月报公司档案信息
         $makerProjectNotNum = ExamineModel::getUnReportCount(['is_audited' => 1 , 'category_id' => 63] , $makerProjectNum);
 
-        $this->assign(compact('type','reportNum','scienceReportNotNum','makerProjectNotNum'));
+        // 上月已提交月报数
+        $submittedReportNum = ReportModel::getSubmittedReportNum();
+
+        $this->assign(compact('type','reportNum','scienceReportNotNum','makerProjectNotNum','submittedReportNum'));
         return $this->fetch();
     }
 
@@ -68,6 +71,7 @@ class Report extends AuthController
             ['cate_id',''],
             ['excel',0],
             ['order',''],
+            ['report',''],
             ['type',$this->request->param('type')]
         ]);
 
