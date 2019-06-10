@@ -115,7 +115,7 @@ class ReportList extends Validate
     }
 
     protected function mobile($value,$rule,$data) {
-        $chars = "/^1[34578]\d{9}$/";
+        $chars = "/^1[345789]\d{9}$/";
         if($rule==1){
             if (preg_match($chars, $data['legal_phone'])) {
                 return true;

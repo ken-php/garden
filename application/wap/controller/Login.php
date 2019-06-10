@@ -38,7 +38,7 @@ class Login extends WapBasic
     {
         list($account,$pwd,$ref) = UtilService::postMore(['account','pwd','ref'],$request,true);
         if(!$account) return $this->failed('请输入登陆手机号');
-        if(!preg_match("/^1[34578]\d{9}$/",$account)) return $this->failed('登陆手机号格式有误');
+        if(!preg_match("/^1[345789]\d{9}$/",$account)) return $this->failed('登陆手机号格式有误');
         if(!$pwd) return $this->failed('请输入登录密码');
         if(!User::be(['account'=>$account])) return $this->failed('登陆手机号不存在!');
         $userInfo = User::where('account',$account)->find();
@@ -86,7 +86,7 @@ class Login extends WapBasic
     {
         list($account,$pwd,$ref) = UtilService::postMore(['account','pwd','ref'],$request,true);
         if(!$account) return $this->failed('请输入注册手机号');
-        if(!preg_match("/^1[34578]\d{9}$/",$account)) return $this->failed('注册手机号格式有误');
+        if(!preg_match("/^1[345789]\d{9}$/",$account)) return $this->failed('注册手机号格式有误');
         if(!$pwd) return $this->failed('请输入注册密码');
         if(User::be(['account'=>$account])) return $this->failed('手机号已存在!');
 
