@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <meta name="title" content="公司/项目" /> 
+  <meta name="description" content="公司/项目" /> 
+  <meta name="keywords" content="公司/项目" /> 
+  <title>公司/项目</title> 
+  <!-- <meta name="author" content="DIY官网 http://www.diygw.com" />  -->
+  <link rel="stylesheet" href="{__WAP_PATH}static/lib/diygw-mobile-all.min.css" /> 
+  <script charset="utf-8" type="text/javascript" src="{__WAP_PATH}static/lib/underscore.js"></script>
+  <script type="text/javascript" src="{__PLUG_PATH}jquery-1.10.2.min.js"></script>
+  <script charset="utf-8" type="text/javascript">
+	_.templateSettings = {
+		interpolate : /[\$\{]\{(.+?)\}\}?/g,
+		evaluate : /<%([\s\S]+?)%>/g
+	};
+	window.GlobalConfig={
+		loginUrl:'/xcx/login/login.html',
+		registerUrl:'/xcx/login/register.html',
+		loginCheckUrl:'/xcx/login/loginCheck.html'
+	};
+	window.STATIC_URL = "";
+	window.UEDITOR_SERVER_URL = "/ueditor/index";
+	</script> 
+  <script charset="utf-8" type="text/javascript" src="{__WAP_PATH}static/lib/diygw-mobile-all.min.js"></script> 
+  <style type="text/css">
+	
+	.top{display:none}.page{top:0;}
+	</style> 
+ </head> 
+ <body data-ride="animatebox" style="background-color:#ffffff;" data-mpid="19955" data-homepage="" data-dashboardid="19955" data-page_id="30514" data-page_name="page931557"> 
+  <div class="container"> 
+   <div class="top">
+    <h1 class="page__title" style="background-color:#479de6">002未命名页面<span id="PageBack" class="back">返回</span><a class="home fa fa-home ajax-page" id="home" href=".html"></a></h1>
+   </div> 
+   <div class="page" id="page" style="background-color:#ffffff;margin-bottom:20px;">
+    <div class="pagebg"></div>
+    <div class="pagemain"> 
+     <div class="weui-tab" id="weui-tab255164"> 
+      <div class="weui-navbar nav-green"> 
+       <div class="weui-navbar__item weui-bar__item_on">
+        公司/项目列表
+       </div> 
+       <div class="weui-navbar__item">
+        申请项目
+       </div> 
+      </div> 
+      <div class="weui-tab__panel"> 
+       <div class="weui-tab__content_on" style=""> 
+
+          {empty name="projectlist"}
+          <div class="empty" style="text-align:center;">
+              <img style="width:150px;" src="{__WAP_PATH}crmeb/images/empty_detail.png">
+              <p>暂无</p>
+          </div>
+          {else/}
+          {volist name="projectlist" id="vo"}
+        <div class="weui-cell weui-cell_switch">
+         <div class="weui-cell__bd">
+          绑定项目
+         </div> 
+         <div class="weui-cell__ft"> 
+          <label class="weui-switch-cp" for="bind_project{$vo.id}"> <input type="checkbox" name="bind_project" class="weui-switch-cp__input weui-checkbox" id="bind_project{$vo.id}" project_id = "{$vo.id}"/> 
+           <div class="weui-switch-cp__box"></div> </label>
+         </div> 
+        </div> 
+        <div class="timeline">
+         <ul> 
+          <li class="timeline-item timeline-item-green" id="datatemplate905020"> 
+           <div class="timeline-item-head-first" style=""> 
+            <i class="weui_icon weui_icon_success_no_circle timeline-item-checked hide"></i> 
+           </div> 
+           <div class="timeline-item-tail" style=""></div> 
+           <div class="timeline-item-content"> 
+            <h4 style="">项目编号:</h4> 
+            <p class="recent" style="">{$vo.project_num}</p> 
+           </div> </li> 
+          <li class="timeline-item timeline-item-green"> 
+           <div class="timeline-item-head" style=""> 
+            <i class="weui_icon weui_icon_success_no_circle timeline-item-checked "></i> 
+           </div> 
+           <div class="timeline-item-tail" style=""></div> 
+           <div class="timeline-item-content"> 
+            <h4 style="">公司/项目:</h4> 
+            <p class="recent" style="">{$vo.corporate_name}</p> 
+           </div> </li> 
+          <li class="timeline-item timeline-item-green"> 
+           <div class="timeline-item-head" style=""> 
+            <i class="weui_icon weui_icon_success_no_circle timeline-item-checked "></i> 
+           </div> 
+           <div class="timeline-item-tail" style=""></div>
+           <div class="timeline-item-content">
+            <h4 style="">审核状态:</h4> 
+            <p class="recent" style="">{$vo.is_audited? '已审核' : '待审核'}</p> 
+           </div> </li> 
+         </ul> 
+        </div>
+        {/volist}
+        {/empty}
+
+       </div>
+
+       <script type="text/javascript">
+          $('.weui-checkbox').each(function() {
+              $(this).on('click',function(){
+                console.log('id=='+$(this).attr('project_id'));
+                window.location.href = "{:Url('wap/index/index')}?project_id="+$(this).attr('project_id')+'&type=1';
+              });
+            });
+      </script>
+
+
+
+
+
+       <div class="weui-tab__content" style="">
+        <form class="form-horizontal ui-sortable formtable_918474" data-listhref="" data-ride="form" role="form" id="form918474" name="table_918474" data-url="/data/data.html" action="" enctype="multipart/form-data" method="post" data-bv-group=".weui-cell" data-bv-container="#errorsform918474" data-bv-feedbackicons-valid="weui-icon-success" data-bv-feedbackicons-invalid="weui-icon-warn" data-bv-feedbackicons-validating="weui-icon-warn"> 
+         <div class="row-form clearfix"> 
+          <div class=""> 
+           <div class="weui-tab" id="weui-tab134115"> 
+            <div class="weui-navbar nav-green"> 
+             <div class="weui-navbar__item weui-bar__item_on" id="divwe1">
+              企业信息
+             </div> 
+             <div class="weui-navbar__item" id="divwe2">
+              法人信息
+             </div> 
+             <div class="weui-navbar__item" id="divwe3">
+              团队信息
+             </div>
+            </div>
+            <div class="weui-tab__panel">
+             <div class="weui-tab__content_on" style="" id="divwe11">
+              <div class="weui-cells__title">
+               所属园区
+              </div> 
+              <div class="weui-form ">
+               <div class="weui-form-item"> 
+                <select name="category_id" class="weui-form-input" data-load="1" data-ride="select" placeholder="请选择所属园区" id="58723" required="" data-bv-notempty="" data-bv-notempty-message="请选择所属园区">
+                  {volist name="list" id="vo"}
+                    <option data-value="{$vo.id}"  data-title="{$vo.cate_name}">{$vo.id}</option>
+                  {/volist}
+                  <!-- <option value="">请选择</option> <option data-value="1" selected="selected" data-checked="checked" data-title="选项一">选项一</option> 
+                  <option data-value="2" data-title="选项二">选项二</option> 
+                  <option data-value="3" data-title="选项三">选项三</option> -->
+                </select> 
+               </div> 
+              </div> 
+              <div class="weui-cells__title">
+               是否入孵项目
+              </div> 
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <div class="iblock"> 
+                 <input type="radio" id="4183860" name="is_hatched" value="1" checked="checked" class="weui-form-checkbox" /> 
+                 <label for="4183860" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   是
+                  </div> </label> 
+                </div> 
+                <div class="iblock"> 
+                 <input type="radio" id="4183861" name="is_hatched" value="０" class="weui-form-checkbox" /> 
+                 <label for="4183861" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   否
+                  </div> </label> 
+                </div> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">公司名称</div> 
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入公司名称" value="" name="corporate_name" id="868099" class="weui-form-input" required="" data-bv-notempty-message="公司名称不能为空哟" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">组织机构代码</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入组织机构代码" value="" name="org_code" id="895200" class="weui-form-input" required="" data-bv-notempty-message="组织机构代码不能为空哟" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">项目简介</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入项目简介" value="" name="project_synopsis" id="109633" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">项目类别</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入项目类别" value="" name="project_type" id="561662" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">就业人数</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入就业人数" value="" name="jop_num" id="152667" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">创业人数</div>
+              <div class="weui-form">
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入创业人数" value="" name="entr_num" id="744118" class="weui-form-input" data-bv-digits="true" data-bv-digits-message="请输入数字" /> 
+               </div> 
+              </div> 
+              <div class="weui-cells__title">
+               是否工商注册
+              </div> 
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <div class="iblock"> 
+                 <input type="radio" id="7057150" name="is_register" value="1" checked="checked" class="weui-form-checkbox" /> 
+                 <label for="7057150" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   是
+                  </div> </label> 
+                </div> 
+                <div class="iblock"> 
+                 <input type="radio" id="7057151" name="is_register" value="０" class="weui-form-checkbox" /> 
+                 <label for="7057151" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   否
+                  </div> </label> 
+                </div> 
+               </div> 
+              </div> 
+
+              <button type="button" class="weui-btn weui-btn_primary" id="nextbtn" style="border-radius: 30px;">下一步</button> 
+             </div> 
+             <div class="weui-tab__content" style="" id="divwe22">
+              <div class="weui-cells__title">姓名</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入姓名" value="" name="legal_name" id="948389" class="weui-form-input" required="" data-bv-notempty-message="姓名不能为空哟" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">身份证号</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入身份证号" value="" name="legal_id_card" id="514053" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">毕业院校</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入毕业院校" value="" name="legal_school" id="411347" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">毕业时间</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入毕业时间" value="" name="legal_time" id="713087" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">学历</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入学历" value="" name="legal_education" id="301902" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">联系电话</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入联系电话" value="" name="legal_phone" id="598862" class="weui-form-input" data-bv-regexp-pattern="/^1[34578]\d{9}$/" data-bv-regexp-message="请输入11位的手机号码" /> 
+               </div> 
+              </div> 
+              <div class="weui-cells__title">
+               是否毕业5年或在校
+              </div> 
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <div class="iblock"> 
+                 <input type="radio" id="4077230" name="is_graduate_school" value="1" checked="checked" class="weui-form-checkbox" /> 
+                 <label for="4077230" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   是
+                  </div> </label> 
+                </div> 
+                <div class="iblock"> 
+                 <input type="radio" id="4077231" name="is_graduate_school" value="０" class="weui-form-checkbox" /> 
+                 <label for="4077231" class="weui-form-label"> <i class="weui-icon-radio"></i> 
+                  <div class="weui-form-text">
+                   否
+                  </div> </label> 
+                </div> 
+               </div> 
+              </div> 
+
+              <button type="button" class="weui-btn weui-btn_primary" id="nextbtn2" style="border-radius: 30px;">下一步</button> 
+
+             </div> 
+             <div class="weui-tab__content" style="" id="divwe33">
+              <div class="weui-cells__title">姓名</div>
+              <div class="weui-form">
+               <div class="weui-form-item">
+                <input type="text" placeholder="请输入姓名" value="" name="team_name" id="209488" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">毕业院校</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入毕业院校" value="" name="team_school" id="913811" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">毕业时间</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入毕业时间" value="" name="team_time" id="438903" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">学历</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入学历" value="" name="team_education" id="587083" class="weui-form-input" /> 
+               </div> 
+              </div>
+              <div class="weui-cells__title">联系电话</div>
+              <div class="weui-form"> 
+               <div class="weui-form-item"> 
+                <input type="text" placeholder="请输入联系电话" value="" name="team_phone" id="243063" class="weui-form-input" data-bv-regexp-pattern="/^1[34578]\d{9}$/" data-bv-regexp-message="请输入11位的手机号码" /> 
+               </div> 
+              </div>
+              <button data-index="874540" type="button" class="weui-btn weui-btn_primary" id="subForm" style="border-radius: 30px;">提交</button> 
+             </div> 
+            </div> 
+           </div> 
+           <script type="text/javascript">
+                                $('#weui-tab134115').on('click', '.weui-navbar__item', function(e) {
+                                    e.preventDefault();
+                                    if ($(this).is('.weui-bar__item_on')) {
+                                        return;
+                                    }
+                                    $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+                                    $('#weui-tab134115>.weui-tab__panel').children('div.weui-tab__content_on').removeClass('weui-tab__content_on').addClass("weui-tab__content");
+                                    $('#weui-tab134115>.weui-tab__panel').children('div').eq($(this).index()).removeClass('weui-tab__content').addClass('weui-tab__content_on');
+                                });
+
+                                $('#nextbtn').on('click', function(e) {
+                                  //  console.log(111);
+                                   $('#divwe1').removeClass('weui-bar__item_on');
+                                   $('#divwe2').addClass('weui-bar__item_on');
+                                   $('#divwe3').removeClass('weui-bar__item_on');
+                                   $('#divwe11').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                                   $('#divwe22').addClass('weui-tab__content_on');
+                                   $('#divwe33').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                                });
+                                $('#nextbtn2').on('click', function(e) {
+                                  //  console.log(222);
+                                   $('#divwe1').removeClass('weui-bar__item_on');
+                                   $('#divwe2').removeClass('weui-bar__item_on');
+                                   $('#divwe3').addClass('weui-bar__item_on');
+                                   $('#divwe11').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                                   $('#divwe22').removeClass('weui-tab__content_on').addClass('weui-tab__content');
+                                   $('#divwe33').addClass('weui-tab__content_on');
+                                });
+                            </script>
+           <div class="weui-form"> 
+            <div class="weui-form-item"> 
+             <!-- <a data-index="874540" href="#" class="weui-btn weui-btn_primary  ">提交</a> -->
+             <div id='infox' style="color:red;"></div>
+             <!-- <button data-index="874540" type="button" class="weui-btn weui-btn_primary" id="subForm">提交</button>  -->
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <input type="hidden" class="hide" name="dashboardId" value="19955" /> 
+         <input type="hidden" class="hide" name="formId" value="918474" /> 
+         <input type="hidden" class="hide" name="tableName" value="table_918474" /> 
+         <input type="hidden" class="hide" name="id" value="" />
+         <div id="errorsform918474" class="hide"></div>
+        </form>
+       </div>
+      </div> 
+     </div> 
+     <script type="text/javascript">
+        $('#weui-tab255164').on('click', '.weui-navbar__item', function(e) {
+            e.preventDefault();
+            if ($(this).is('.weui-bar__item_on')) {
+                return;
+            }
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+            $('#weui-tab255164>.weui-tab__panel').children('div.weui-tab__content_on').removeClass('weui-tab__content_on').addClass("weui-tab__content");
+            $('#weui-tab255164>.weui-tab__panel').children('div').eq($(this).index()).removeClass('weui-tab__content').addClass('weui-tab__content_on');
+        });
+
+        $('#subForm').on('click',function(){
+            $.ajax({
+                url: "{:Url('save')}",
+                type: 'POST',
+                dataType: 'json',
+                data: $('form').serialize(),
+                success: function (res) {
+                  // console.log(res);
+                    if (res.code == 200) {
+                      location.reload();
+                    }else{
+                      $('#infox').html(res.msg);
+                      $('#infox').attr('display','block');
+                    }
+                }                
+            });
+        });
+    </script>
+    </div> 
+    <div class="diygw-com-footer">
+     <!-- <a href="http://www.diygw.com">由DIY官网设计器生成</a> -->
+    </div> 
+   </div> 
+  </div>
+ </body>
+</html>

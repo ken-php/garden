@@ -1,0 +1,16 @@
+{extend name="public/container"}
+{block name="head_top"}
+{block name="title"}注册{/block}
+{block name="content"}
+<div class="authenticate" style="margin-top: 30px;">
+    <section>
+        <form action="{:Url('checkReg')}" method="post">
+            <div class="user-infos"><input type="text" required name="account" placeholder="请输入注册手机号"/></div>
+            <div class="user-infos"><input type="password" required name="pwd" placeholder="请输入注册密码"/></div>
+            <input type="hidden" name="ref" value="{$ref}" />
+            <div class="publish-btn" style="position: inherit;"><button type="submit" style="background:darkgrey;">立即注册</button></div>
+            <div style="float:right;margin-top:20px;"><a href="{:url('index')}">登陆</a></div>
+        </form>
+    </section>
+</div>
+{/block}

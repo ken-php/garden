@@ -1,0 +1,94 @@
+{extend name="public/container"}
+{block name="title"}公司/项目{/block}
+{block name="head_top"}
+<style>
+td{padding-bottom: 10px;}
+.discount-list header {
+    position: inherit;
+    left: 0;
+    top: 200px;
+    width: 100%;
+    background-color: #fff;
+}
+.btnn {
+    display: block;
+    width: 30%;
+    height: .57rem;
+    background-color: #56ca59;
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+}
+</style>
+{/block}
+{block name="content"}
+<div class="authenticate" style="margin-top: 30px;">
+    <section>
+        <form action="{:Url('project')}">
+            <input type="hidden" name="type" value="1">
+            <div class="publish-btn" style="position: inherit;"><button type="submit">申请公司/项目</button></div>
+        </form>
+    </section>
+</div>
+
+<div class="discount-list" >
+    <section>
+        <header class="flex coupon-menu" style="z-index: 999;">
+            <a class="item <?php if($xt ==1){ echo ' on';}  ?>" data-type="new" href="<?php if($xt ==1){ echo 'javascript:void(0);';}else{ echo '/wap/index/project?xt=1';}  ?>">未审核</a>
+            <a class="item <?php if($xt ==2){ echo ' on';}  ?>" data-type="overdug" href="<?php if($xt ==2){ echo 'javascript:void(0);';}else{ echo '/wap/index/project?xt=2';}  ?>">已审核</a>
+            <a class="item <?php if($xt ==3){ echo ' on';}  ?>" data-type="use" href="<?php if($xt ==3){ echo 'javascript:void(0);';}else{ echo '/wap/index/project?xt=3';}  ?>">已作废</a>
+        </header>
+        <div class="list-box" style="margin-top: 0;">
+            {empty name="projectlist"}
+            <div class="empty">
+                <img src="{__WAP_PATH}crmeb/images/empty_detail.png">
+                <p>暂无</p>
+            </div>
+            {else/}
+            <table style="margin: 20px 10px;width:100%;font-size: 12px;" class="coupon-item new">
+                {volist name="projectlist" id="vo"}
+                    <tr>
+                        <td style="width:80px;">项目编号 :</td>
+                        <td>{$vo.project_num}</td>
+                    </tr>
+                    <tr>
+                        <td>公司/项目:</td>
+                        <td>{$vo.corporate_name}</td>
+                    </tr>
+                    <tr>
+                        <td>申请时间 :</td>
+                        <td>{$vo.create_time}</td>
+                    </tr>
+                    <tr style="border-bottom: lightgray 1px solid;">
+                        <td colspan="2">
+                            <?php if($xt == 1){ ?>
+                            <a href="{:Url('project')}?type=2&id={$vo.id}&xt={$xt}" >-------------- 编辑 -----------</a>
+                            <?php }?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {/volist}
+            </table>
+            {/empty}
+        </div>
+    </section>
+    {include file="public/store_menu"}
+</div>
+<script>
+    (function(){
+        $('.coupon-menu .item').on('click',function(){
+            var that = $(this),type = that.data('type');
+            $('.list-box .coupon-item').hide();
+            if(type){
+                $('.list-box .coupon-item.'+type).show();
+            }else{
+                $('.list-box .coupon-item').show();
+            }
+            that.addClass('on').siblings().removeClass('on');
+        });
+    })();
+</script>
+{/block}
