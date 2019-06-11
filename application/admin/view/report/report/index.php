@@ -47,12 +47,14 @@
 <!--                                    <input type="text" name="end_time" placeholder="结束时间" id="end_time" class="layui-input">-->
 <!--                                </div>-->
 <!--                            </div>-->
+
                             <div class="layui-inline">
                                 <label class="layui-form-label">上报月份</label>
                                 <div class="layui-input-block">
 <!--                                    <input type="text" name="month" class="layui-input" placeholder="请输入">-->
                                     <select name="month" lay-verify="month">
-                                        <option value="">(默认上月)</option>
+                                        <option value="">(默认上月) -全部</option>
+
                                         <option value="01">1月份</option>
                                         <option value="02">2月份</option>
                                         <option value="03">3月份</option>

@@ -24,12 +24,12 @@ class Login extends WapBasic
     {
         Cookie::set('is_bg',1);
         $ref && $ref=htmlspecialchars_decode(base64_decode($ref));
-        // if(UtilService::isWechatBrowser()){
-        //     $this->_logout();
-        //     $openid = $this->oauth();
-        //     Cookie::delete('_oen');
-        //     exit($this->redirect(empty($ref) ? Url::build('Index/index') : $ref));
-        // }
+         if(UtilService::isWechatBrowser()){
+             $this->_logout();
+             $openid = $this->oauth();
+             Cookie::delete('_oen');
+             exit($this->redirect(empty($ref) ? Url::build('Index/index') : $ref));
+         }
         $this->assign('ref',$ref);
         return $this->fetch();
     }

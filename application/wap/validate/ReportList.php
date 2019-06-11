@@ -9,7 +9,11 @@ class ReportList extends Validate
         'project_num'   => 'require',
         'category_id' => 'require|number',
         'corporate_name'  => 'require|max:35',
+<<<<<<< HEAD
         'org_code'  => 'max:35',
+=======
+        'org_code'  => 'require|max:35',
+>>>>>>> a9b760d36c091df36f11c875a8005184ab5227fd
         'project_type'=>'max:60',
         'jop_num' => 'number|egt:0',
         'entr_num' => 'number|egt:0',
@@ -115,7 +119,11 @@ class ReportList extends Validate
     }
 
     protected function mobile($value,$rule,$data) {
+<<<<<<< HEAD
         $chars = "/^1[345789]\d{9}$/";
+=======
+        $chars = "/^1[34578]\d{9}$/";
+>>>>>>> a9b760d36c091df36f11c875a8005184ab5227fd
         if($rule==1){
             if (preg_match($chars, $data['legal_phone'])) {
                 return true;
