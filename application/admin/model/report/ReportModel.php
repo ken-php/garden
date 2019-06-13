@@ -93,7 +93,7 @@ class ReportModel extends ModelBasic
                 $where['month'].'月新增申请发明专利数量',$where['month'].'月新增拥有有效知识产权数',
                 $where['month'].'月新增申请发明专利数量',$where['month'].'月新增科技成果转化数',
             ])
-                ->setExcelTile('月报导出','月报信息'.time(),' 生成时间：'.date('Y-m-d H:i:s',time()))
+//                ->setExcelTile('月报导出','月报信息'.time(),' 生成时间：'.date('Y-m-d H:i:s',time()))  // 标题
                 ->setExcelContent($export)
                 ->ExcelSave();
         }

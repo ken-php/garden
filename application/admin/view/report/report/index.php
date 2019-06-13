@@ -153,68 +153,68 @@
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60,fixed: 'left'},  // id
                     {field: 'sort', title: '排序',edit:'sort',width:60,fixed: 'left'},  // 排序
                     {field: 'corporate_name', title: '企业或项目名', width: 280,fixed: 'left'},  // 企业或项目名
-                    {field: 'cate_name', title: '归属园区', width: 100},  // 归属园区
-                    {field: 'is_register', title: '是否注册企业', width: 110},  // 是否注册企业
+                    {field: 'cate_name', title: '归属园区', width: 120},  // 归属园区
+                    {field: 'is_register', title: '是否注册企业', width: 130},  // 是否注册企业
                     {field: 'address', title: '注册地址', width: 620},  // 注册地址
-                    {field: 'area', title: ' 场地面积', width: 90},  // 场地面积
-                    {field: 'is_new_teams', title: '是否新增创客/团队', width: 140},  // 是否新增创客/团队
-                    {field: 'is_science', title: '是否科技型中小企业', width: 150},  // 是否科技型中小企业
-                    {field: 'is_high_tech', title: '是否高新技术企业', width: 140},  // 是否高新技术企业
-                    {field: 'enterprises_num', title: '与合作大学创办企业数', width: 160},  // 与合作大学创办企业数
-                    {field: 'interns_num', title: '接纳大学生/研究生实习人员数', width: 210},
-                    {field: 'is_sale', title: '是否上市挂牌', width: 110},  // 是否上市挂牌
-                    {field: 'add_jop_num', title: '新增从业人员', width: 110},  // 新增从业人员
-                    {field: 'add_entr_num', title: '新增应届毕业生就业人员数', width: 190},  // 新增应届毕业生就业人员数
-                    {field: 'turnover', title: '当前月营业额(千元)', width: 150},  // 当前月营业额
-                    {field: 'taxes', title: '当前月纳税额(千元)', width: 150},  // 当前月纳税额
-                    {field: 'funds', title: '研发经费投入(千元)', width: 150},  // 研发经费投入
-                    {field: 'financial', title: '享受财政支持金额', width: 140},  // 享受财政支持金额
-                    {field: 'activity_num', title: '参加的投融资对接活动次数', width: 190},  // 参加的投融资对接活动次数
-                    {field: 'is_investment', title: '是否获得投资', width: 110},  // 是否获得投资
-                    {field: 'investment_amount', title: '获得投资金额(千元)', width: 150},  // 获得投资金额
-                    {field: 'intellectual_num', title: '知识产权申请数', width: 140},  // 知识产权申请数
-                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 230},  // 拥有有效知识产权数
-                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 220},  // 申请发明专利数量
-                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 230},  // 拥有有效知识产权数
-                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 220},  // 申请发明专利数量
-                    {field: 'achievement_num', title: '科技成果转化数', width: 130},  //科技成果转化数
+                    {field: 'area', title: ' 场地面积', width: 110},  // 场地面积
+                    {field: 'is_new_teams', title: '是否新增创客/团队', width: 160},  // 是否新增创客/团队
+                    {field: 'is_science', title: '是否科技型中小企业', width: 170},  // 是否科技型中小企业
+                    {field: 'is_high_tech', title: '是否高新技术企业', width: 160},  // 是否高新技术企业
+                    {field: 'enterprises_num', title: '与合作大学创办企业数', width: 180},  // 与合作大学创办企业数
+                    {field: 'interns_num', title: '接纳大学生/研究生实习人员数', width: 230},
+                    {field: 'is_sale', title: '是否上市挂牌', width: 130},  // 是否上市挂牌
+                    {field: 'add_jop_num', title: '新增从业人员', width: 130},  // 新增从业人员
+                    {field: 'add_entr_num', title: '新增应届毕业生就业人员数', width: 210},  // 新增应届毕业生就业人员数
+                    {field: 'turnover', title: '当前月营业额(千元)', width: 170},  // 当前月营业额
+                    {field: 'taxes', title: '当前月纳税额(千元)', width: 170},  // 当前月纳税额
+                    {field: 'funds', title: '研发经费投入(千元)', width: 170},  // 研发经费投入
+                    {field: 'financial', title: '享受财政支持金额', width: 160},  // 享受财政支持金额
+                    {field: 'activity_num', title: '参加的投融资对接活动次数', width: 210},  // 参加的投融资对接活动次数
+                    {field: 'is_investment', title: '是否获得投资', width: 130},  // 是否获得投资
+                    {field: 'investment_amount', title: '获得投资金额(千元)', width: 170},  // 获得投资金额
+                    {field: 'intellectual_num', title: '知识产权申请数', width: 160},  // 知识产权申请数
+                    {field: 'has_intel_num', title: '拥有有效知识产权数(已注册公司)', width: 250},  // 拥有有效知识产权数
+                    {field: 'patents_num', title: '申请发明专利数量(已注册公司)', width: 240},  // 申请发明专利数量
+                    {field: 're_has_intel_num', title: '拥有有效知识产权数(未注册公司)', width: 250},  // 拥有有效知识产权数
+                    {field: 're_patents_num', title: '申请发明专利数量(未注册公司)', width: 240},  // 申请发明专利数量
+                    {field: 'achievement_num', title: '科技成果转化数', width: 150},  //科技成果转化数
 
-                    {field: 'month', title: '填报时间', width: 100},
-                    {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
+                    {field: 'month', title: '填报时间', width: 120},
+                    {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 100},
                 ];
                 break;
             case 2: case 3:
                 join=[
                     {field: 'id', title: 'ID', sort: true, event: 'id', width: 60},
                     {field: 'project_num', title: '项目编号', width: 90},
-                    {field: 'cate_name', title: '归属园区', width: 110},
-                    {field: 'is_hatched', title: '是否入孵', width: 90},
-                    {field: 'corporate_name', title: '企业或项目名', width: 240},
-                    {field: 'org_code', title: '组织机构代码', width: 200},
+                    {field: 'cate_name', title: '归属园区', width: 130},
+                    {field: 'is_hatched', title: '是否入孵', width: 110},
+                    {field: 'corporate_name', title: '企业或项目名', width: 260},
+                    {field: 'org_code', title: '组织机构代码', width: 220},
                     {field: 'project_synopsis', title: '项目简介', width: 560},
-                    {field: 'is_register', title: '是否注册企业', width: 110},
-                    {field: 'project_type', title: '项目类别', width: 550},
-                    {field: 'jop_num', title: '就业人数', width: 90},
-                    {field: 'entr_num', title: '创业人数', width: 90},
-                    {field: 'legal_name', title: '法人姓名', width: 120},
-                    {field: 'legal_id_card', title: '法人身份证', width: 170},
-                    {field: 'legal_school', title: '毕业院校', width: 160},
-                    {field: 'legal_time', title: '法人毕业时间', width: 110},
-                    {field: 'legal_education', title: '法人学历', width: 90},
-                    {field: 'legal_phone', title: '法人电话', width: 120},
-                    {field: 'is_graduate_school', title: '法人是否毕业或在校5年', width: 170},
-                    {field: 'team_name', title: '团队成员姓名', width: 110},
-                    {field: 'team_school', title: '团队成员毕业院校', width: 140},
-                    {field: 'team_time', title: '团队成员毕业时间', width: 140},
-                    {field: 'team_education', title: '团队成员学历', width: 120},
-                    {field: 'team_phone', title: '团队成员电话', width: 120},
-                    {field: 'residence_time', title: '入住园区时间', width: 120},
-                    {field: 'start_time', title: '入园协议起时间', width: 130},
-                    {field: 'end_time', title: '入园协议止时间', width: 130},
-                    {field: 'room_number', title: ' 入驻房间编号', width: 120},
-                    {field: 'site_area', title: ' 入驻场地面积', width: 120},
+                    {field: 'is_register', title: '是否注册企业', width: 130},
+                    {field: 'project_type', title: '项目类别', width: 570},
+                    {field: 'jop_num', title: '就业人数', width: 110},
+                    {field: 'entr_num', title: '创业人数', width: 110},
+                    {field: 'legal_name', title: '法人姓名', width: 140},
+                    {field: 'legal_id_card', title: '法人身份证', width: 190},
+                    {field: 'legal_school', title: '毕业院校', width: 170},
+                    {field: 'legal_time', title: '法人毕业时间', width: 130},
+                    {field: 'legal_education', title: '法人学历', width: 110},
+                    {field: 'legal_phone', title: '法人电话', width: 140},
+                    {field: 'is_graduate_school', title: '法人是否毕业或在校5年', width: 190},
+                    {field: 'team_name', title: '团队成员姓名', width: 130},
+                    {field: 'team_school', title: '团队成员毕业院校', width: 160},
+                    {field: 'team_time', title: '团队成员毕业时间', width: 160},
+                    {field: 'team_education', title: '团队成员学历', width: 140},
+                    {field: 'team_phone', title: '团队成员电话', width: 140},
+                    {field: 'residence_time', title: '入住园区时间', width: 140},
+                    {field: 'start_time', title: '入园协议起时间', width: 150},
+                    {field: 'end_time', title: '入园协议止时间', width: 150},
+                    {field: 'room_number', title: ' 入驻房间编号', width: 140},
+                    {field: 'site_area', title: ' 入驻场地面积', width: 140},
 
-                    {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 80},
+                    {field: 'right', title: '操作', align: 'center', toolbar: '#act', width: 100},
                 ];
                 break;
         }

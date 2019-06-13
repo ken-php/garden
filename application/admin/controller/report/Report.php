@@ -63,7 +63,7 @@ class Report extends AuthController
     {
         $where = Util::getMore([
             ['page',1],
-            ['limit',20],
+            ['limit',10],
             ['month',''],
             ['start_time',''],
             ['end_time',''],
