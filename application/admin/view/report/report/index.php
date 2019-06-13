@@ -219,7 +219,7 @@
                 break;
         }
         return join;
-    })
+    },10)
 
     //excel下载
     layList.search('export',function(where){
