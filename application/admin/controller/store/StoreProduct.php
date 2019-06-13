@@ -351,7 +351,7 @@ class StoreProduct extends AuthController
         // 唯一性验证
         $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
         if($onlyT && $onlyT != $id) return Json::fail('同一栋楼里房间名称不能重复');
-        if(count($data['image'])<1) return Json::fail('请上传房间图片');
+//        if(count($data['image'])<1) return Json::fail('请上传房间图片');
 //        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
 //        if(count($data['slider_image'])>5) return Json::fail('轮播图最多5张图');
 //        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
