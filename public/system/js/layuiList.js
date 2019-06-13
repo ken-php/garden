@@ -96,7 +96,7 @@
     };
     //初始化 layui table
     layList.tableList = function (odj, url, data, limit, size,boxids,is_tables) {
-        var limit = limit || 20, size = size || 'sm', $data = [], that = this,boxids=boxids || this.boxids;
+        var limit = limit || 10, size = size || 'sm', $data = [], that = this,boxids=boxids || this.boxids;
         switch (typeof data) {
             case 'object':
                 $data = data;
