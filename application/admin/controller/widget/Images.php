@@ -62,12 +62,12 @@ class Images extends AuthController
         }
         SystemAttachmentModel::attachmentAdd($res->fileInfo->getSaveName(),$fileInfo['size'],$fileInfo['type'],$res->dir,$thumbPath,$pid);
         $info = array(
-//            "originalName" => $fileInfo['name'],
-//            "name" => $res->fileInfo->getSaveName(),
-//            "url" => '.'.$res->dir,
-//            "size" => $fileInfo['size'],
-//            "type" => $fileInfo['type'],
-//            "state" => "SUCCESS"
+            "originalName" => $fileInfo['name'],
+            "name" => $res->fileInfo->getSaveName(),
+            "url" => '.'.$res->dir,
+            "size" => $fileInfo['size'],
+            "type" => $fileInfo['type'],
+            "state" => "SUCCESS",
             'code' =>200,
             'msg'  =>'上传成功',
             'src'  =>$res->dir
