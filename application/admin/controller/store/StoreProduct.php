@@ -143,9 +143,9 @@ class StoreProduct extends AuthController
             Form::input('store_info','房间简介')->type('textarea'),
             // Form::input('keyword','产品关键字')->placeholder('多个用英文状态下的逗号隔开'),
             // Form::input('unit_name','产品单位','件'),
-            Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image')->width('100%')->height('500px'),
-            Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')))->maxLength(5)->icon('images')->width('100%')->height('500px')->spin(0),
-            Form::number('price','房间售价')->min(0)->col(8),
+            //Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image')->width('100%')->height('500px'),
+            //Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')))->maxLength(5)->icon('images')->width('100%')->height('500px')->spin(0),
+            //Form::number('price','房间售价')->min(0)->col(8),
             // Form::number('ot_price','产品市场价')->min(0)->col(8),
             // Form::number('give_integral','赠送积分')->min(0)->precision(0)->col(8),
             // Form::number('postage','邮费')->min(0)->col(Form::col(8)),
@@ -229,13 +229,13 @@ class StoreProduct extends AuthController
         // 唯一性验证
         $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
         if($onlyT) return Json::fail('同一栋楼里房间名称不能重复');
-        if(count($data['image'])<1) return Json::fail('请上传房间图片');
-        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
-        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
+//        if(count($data['image'])<1) return Json::fail('请上传房间图片');
+//        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
+//        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
         // if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
         // if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
-        $data['image'] = $data['image'][0];
-        $data['slider_image'] = json_encode($data['slider_image']);
+//        $data['image'] = $data['image'][0];
+//        $data['slider_image'] = json_encode($data['slider_image']);
         $data['add_time'] = time();
         $data['description'] = '';
         $res=ProductModel::set($data);
@@ -282,9 +282,9 @@ class StoreProduct extends AuthController
             Form::input('store_info','房间简介',$product->getData('store_info'))->type('textarea'),
             // Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
             // Form::input('unit_name','产品单位',$product->getData('unit_name')),
-            Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image')->width('100%')->height('500px'),
-            Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')),json_decode($product->getData('slider_image'),1) ? : [])->maxLength(5)->icon('images')->width('100%')->height('500px'),
-            Form::number('price','房间售价',$product->getData('price'))->min(0)->precision(2)->col(8),
+            //Form::frameImageOne('image','房间主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image')->width('100%')->height('500px'),
+            //Form::frameImages('slider_image','房间轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'slider_image')),json_decode($product->getData('slider_image'),1) ? : [])->maxLength(5)->icon('images')->width('100%')->height('500px'),
+            //Form::number('price','房间售价',$product->getData('price'))->min(0)->precision(2)->col(8),
             // Form::number('ot_price','产品市场价',$product->getData('ot_price'))->min(0)->col(8),
             // Form::number('give_integral','赠送积分',$product->getData('give_integral'))->min(0)->precision(0)->col(8),
             // Form::number('postage','邮费',$product->getData('postage'))->min(0)->col(8),
@@ -352,9 +352,9 @@ class StoreProduct extends AuthController
         $onlyT = ProductModel::getUniqueness($data['cate_id'],$data['store_name']);
         if($onlyT && $onlyT != $id) return Json::fail('同一栋楼里房间名称不能重复');
         if(count($data['image'])<1) return Json::fail('请上传房间图片');
-        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
-        if(count($data['slider_image'])>5) return Json::fail('轮播图最多5张图');
-        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
+//        if(count($data['slider_image'])<1) return Json::fail('请上传房间轮播图');
+//        if(count($data['slider_image'])>5) return Json::fail('轮播图最多5张图');
+//        if($data['price'] == '' || $data['price'] < 0) return Json::fail('请输入房间售价');
         // if($data['ot_price'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品市场价');
         // if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
         if($data['is_show_qing']){
@@ -362,8 +362,8 @@ class StoreProduct extends AuthController
         }else{
             $data['stock'] = 0;
         }
-        $data['image'] = $data['image'][0];
-        $data['slider_image'] = json_encode($data['slider_image']);
+//        $data['image'] = $data['image'][0];
+//        $data['slider_image'] = json_encode($data['slider_image']);
         ProductModel::edit($data,$id);
         Db::name('store_product_cate')->where('product_id',$id)->delete();
         foreach ($cate_id as $cid){
