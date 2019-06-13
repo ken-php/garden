@@ -97,13 +97,13 @@
                     </script>
                     <!--房间名称-->
                     <script type="text/html" id="store_name">
-                        <h4>{{d.store_name}}</h4>
-                        <p>价格:<font color="red">{{d.price}}</font> </p>
-                        {{# if(d.cate_name!=''){ }}
-                        <p>分类:{{d.cate_name}}</p>
-                        {{# } }}
-                        <p>访客量:{{d.visitor}}</p>
-                        <p>浏览量:{{d.browse}}</p>
+                        <h4>{{d.store_name}}  号</h4>
+<!--                        <p>价格:<font color="red">{{d.price}}</font> </p>-->
+<!--                        {{# if(d.cate_name!=''){ }}-->
+<!--                        <p>分类:{{d.cate_name}}</p>-->
+<!--                        {{# } }}-->
+<!--                        <p>访客量:{{d.visitor}}</p>-->
+<!--                        <p>浏览量:{{d.browse}}</p>-->
                     </script>
                     <!--操作-->
                     <script type="text/html" id="act">
@@ -168,9 +168,9 @@
             case 1:case 3:case 4:case 5:
                 join=[
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
-                    {field: 'image', title: '房间图片',templet:'#image',width:'10%'},
+                    {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    // {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
+                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
                     // {field: 'stock', title: '库存',edit:'stock',width:'8%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
                     // {field: 'sales', title: '销量',sort: true,event:'sales',width:'8%'},
@@ -184,9 +184,9 @@
                 join=[
                     {type:'checkbox'},
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
-                    {field: 'image', title: '房间图片',templet:'#image',width:'10%'},
+                    {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    {field: 'price', title: '价格',edit:'price',width:'8%'},
+                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
                     // {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
                     // {field: 'stock', title: '库存',edit:'stock',width:'6%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
@@ -198,9 +198,9 @@
             case 6:
                 join=[
                     {field: 'id', title: '房间ID', sort: true,event:'id'},
-                    {field: 'image', title: '房间图片',templet:'#image'},
+                    {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    {field: 'price', title: '房间价格',edit:'price'},
+                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
                     // {field: 'ficti', title: '虚拟销量',edit:'ficti'},
                     // {field: 'stock', title: '库存',edit:'stock'},
                     {field: 'sort', title: '排序',edit:'sort'},
