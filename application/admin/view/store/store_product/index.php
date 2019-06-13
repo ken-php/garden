@@ -170,7 +170,7 @@
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
                     {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
+                    {field: 'store_info', title: '房间简介',edit:'store_info',width:'36%'},
                     // {field: 'stock', title: '库存',edit:'stock',width:'8%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
                     // {field: 'sales', title: '销量',sort: true,event:'sales',width:'8%'},
@@ -186,7 +186,7 @@
                     {field: 'id', title: 'ID', sort: true,event:'id',width:'6%'},
                     {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
+                    {field: 'store_info', title: '房间简介',edit:'store_info',width:'36%'},
                     // {field: 'ficti', title: '虚拟销量',edit:'ficti',width:'8%'},
                     // {field: 'stock', title: '库存',edit:'stock',width:'6%'},
                     {field: 'sort', title: '排序',edit:'sort',width:'6%'},
@@ -200,7 +200,7 @@
                     {field: 'id', title: '房间ID', sort: true,event:'id'},
                     {field: 'cate_name', title: '所属楼层',width:'10%'},
                     {field: 'store_name', title: '房间名称',templet:'#store_name'},
-                    {field: 'store_info', title: '房间简介',edit:'description',width:'36%'},
+                    {field: 'store_info', title: '房间简介',edit:'store_info',width:'36%'},
                     // {field: 'ficti', title: '虚拟销量',edit:'ficti'},
                     // {field: 'stock', title: '库存',edit:'stock'},
                     {field: 'sort', title: '排序',edit:'sort'},
@@ -265,8 +265,8 @@
             case 'sort':
                 action.set_product('sort',id,value);
                 break;
-            case 'ficti':
-                action.set_product('ficti',id,value);
+            case 'store_info':
+                action.set_product('store_info',id,value);
                 break;
         }
     });
