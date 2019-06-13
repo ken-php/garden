@@ -11,13 +11,13 @@ class PHPExcelService
     //表头计数
     protected static $count;
     //表头占行数
-    protected static $topNumber = 3;
+    protected static $topNumber = 1;
     //表能占据表行的字母对应self::$cellkey
     protected static $cells;
     //表头数据
     protected static $data=[];
     //文件名
-    protected static $title='订单导出';
+    protected static $title='月报导出';
     //行宽
     protected static $where=20;
     //行高
@@ -110,7 +110,7 @@ class PHPExcelService
             //设置边框
             $sheet->getStyle('A1:'.self::$cells.(count($list)+self::$topNumber))->applyFromArray(self::$styleArray);
             //设置自动换行
-            $sheet->getStyle('A3:'.self::$cells.(count($list)+self::$topNumber))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('A2:'.self::$cells.(count($list)+self::$topNumber))->getAlignment()->setWrapText(true);
         }else if($list!==null && is_callable($list)){
             $list($sheet,self::$topNumber,$cellkey,self::$cells)->applyFromArray(self::$styleArray);
         }
@@ -124,7 +124,7 @@ class PHPExcelService
      */
     public function ExcelSave(){
         $objWriter=\PHPExcel_IOFactory::createWriter(self::$PHPExcel,'Excel2007');
-        $filename=self::$title.'--'.time().'.xlsx';
+        $filename=self::$title.'--'.date('y-m-d',time()).'.xlsx';
         ob_end_clean();
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Type: application/octet-stream');
