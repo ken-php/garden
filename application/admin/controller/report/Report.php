@@ -295,5 +295,36 @@ class Report extends AuthController
         return $this->fetch('public/form-builder');
     }
 
+    /**
+     * 通知用户提交月报信息
+     * @param $id
+     * @author ken
+     * @date 2019/6/14
+     */
+    public function sendNotify($id)
+    {
+        if (!$id){
+            return $this->failed('数据不存在');
+        }
+
+        // 获取uid
+        $uid = ExamineModel::getUidByExamineId($id);
+        if ($uid){
+            $data = [
+                'content' => '请尽快提交上月月报',
+                'uid' => $uid,
+                'create_time' => time(),
+                'status' => 1
+            ];
+
+            $res = ExamineModel::addNotice($data);
+            if ($res){
+                return Json::successful('通知成功!');
+            }
+        }
+
+        return Json::fail('通知失败!');
+
+    }
 
 }

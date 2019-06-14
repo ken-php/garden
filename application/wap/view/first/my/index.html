@@ -55,6 +55,15 @@
                     <span>会议室</span>
                     <a class="flex" href="{:Url('appointment/index')}">预约</a>
             </div>
+
+            <div class="title flex">
+                <i class="iconfont icon-dingdanxiangqingicon"></i>
+                <span>消息中心</span>
+                <a class="flex" href="{:Url('my/message')}">
+                    {$notice_user}条消息
+                </a>
+            </div>
+
         </div>
     </section>
     {include file="public/store_menu"}

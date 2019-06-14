@@ -116,7 +116,7 @@
                     <!--操作-->
                     <script type="text/html" id="act">
                         {eq name="type" value="2"}
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('edit')}?id={{d.id}}',{h:700,w:1100})">
+                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('sendNotify')}?id={{d.id}}',{h:700,w:1100})">
                             通知
                         </button>
                         {else/}

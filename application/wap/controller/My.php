@@ -57,7 +57,8 @@ class My extends AuthController
             'statu' =>(int)SystemConfig::getValue('store_brokerage_statu'),
             'userInfo'=> Db::name('user')->where('uid',$uid)->field('uid,avatar,nickname,add_time,integral')->find(),
             'num'=>Db::name('project_user')->where(['uid'=>$uid,'status'=>1])->count(),
-            'num2'=>Db::name('report')->where(['uid'=>$uid])->count()
+            'num2'=>Db::name('report')->where(['uid'=>$uid])->count(),
+            'notice_user'=>Db::name('notice_user')->where(['uid' => $uid,'status' => 1])->count()
         ]);
         return $this->fetch();
     }
@@ -95,10 +96,19 @@ class My extends AuthController
         return $this->fetch();
     }
 
-    public function address()
+    /**
+     * 消息列表
+     * @return mixed
+     */
+    public function message()
     {
+        $uid = $this->userInfo['uid'];
+
+        // 修改消息状态
+        Db::name('notice_user')->where('uid', $uid)->update(['status' => 0]);
+
         $this->assign([
-            'address'=>UserAddress::getUserValidAddressList($this->userInfo['uid'],'id,real_name,phone,province,city,district,detail,is_default')
+            'notice_user'=>Db::name('notice_user')->where(['uid' => $uid])->order('id desc')->select()?:[]
         ]);
         return $this->fetch();
     }
