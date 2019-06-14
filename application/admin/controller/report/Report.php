@@ -295,5 +295,4 @@ class Report extends AuthController
         return $this->fetch('public/form-builder');
     }
 
-
 }
