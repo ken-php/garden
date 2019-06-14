@@ -5,29 +5,21 @@
     <section>
         <form action="" method="post">
             <?php $isDefault = ''; ?>
-        {volist name="address" id="vo"}
+        {volist name="notice_user" id="vo"}
         <div class="address-item">
             <div class="user-info">
-                <p>收货人：{$vo.real_name} <span> {$vo.phone}</span></p>
-                <p>收货地址：{$vo.province} {$vo.city} {$vo.district} {$vo.detail}</p>
+                <p>通知人： <span>管理员</span></p>
+                <p>通知信息：{$vo.content} </p>
+                <p>通知时间：{$vo.create_time|date = "Y-m-d H:i:s",###} </p>
             </div>
             <div class="address-btn flex">
-                <div class="switch-btn">
-                    <label class="well-check">
-                        <input class="ckecks" v-model="isDefault" type="radio" {eq name="vo.is_default" value="1"}checked="checked" <?php $isDefault = $vo['id']; ?>{/eq} value="{$vo.id}"><i class="icon"></i>
-                        设为默认地址
-                    </label>
-                </div>
-                <div class="action-btn">
-                    <span class="edit" @click="redirect('{$vo.id}')">编辑</span>
-                    <span class="delete" @click="remove('{$vo.id}',$event)">删除</span>
-                </div>
+
             </div>
         </div>
         {/volist}
         </form>
-        <a class="address-add" href="{:Url('edit_address')}">
-            新增地址
+        <a class="address-add" href="{:Url('index')}">
+            返回个人中心
         </a>
     </section>
 </div>
