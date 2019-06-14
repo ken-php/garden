@@ -150,7 +150,7 @@ class ReportModel extends ModelBasic
             // 上月已提交月报列表
             if (isset($where['type']) && $where['type'] == 4){
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
-                $model = $model->where('e.month', $curMonth)->order('e.sort desc');
+                $model = $model->where('e.month', $curMonth)->order('e.sort asc');
 
             }
 
@@ -160,7 +160,7 @@ class ReportModel extends ModelBasic
                 $model = $model->join('examine b','b.project_num=e.project_num')
                                ->where('e.month', $curMonth)
 //                               ->where('b.project_num','not in','e.project_num')
-                               ->order('e.sort desc');
+                               ->order('e.sort asc');
 
             }
 
@@ -170,7 +170,7 @@ class ReportModel extends ModelBasic
                 $curMonth = date('Y-m',strtotime("-1 month", time()));
                 $month = date('Y-m',strtotime(date('Y-'.$where['month'],time())));
                 if ($curMonth == $month){
-                    $model = $model->where('e.month',$curMonth)->order('e.sort desc');
+                    $model = $model->where('e.month',$curMonth)->order('e.sort asc');
                 }else{
                     // 不是当前月
                     $model = $model->where('e.month',$month);
