@@ -106,7 +106,23 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">添加月报</button>
+                        {if condition="$type == 2" }
+                        <!-- 一键通知 -->
+                        <button class="layui-btn layui-btn-sm" onclick="ksendNotifyAll(this)">
+                            一键通知
+                        </button>
+
+                        {elseif condition="$type == 3"/}
+                        <!--                        <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">-->
+                        <button class="layui-btn layui-btn-sm" onclick="zsendNotifyAll(this)">
+                            一键通知
+                        </button>
+                        {else/}
+
+                        <button class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}',{h:700,w:1100})">
+                            添加月报
+                        </button>
+                        {/if}
                     </div>
 
                     <!--数据表格-->
@@ -116,7 +132,7 @@
                     <!--操作-->
                     <script type="text/html" id="act">
                         {eq name="type" value="2"}
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="$eb.createModalFrame('{{d.project_name}}-编辑','{:Url('sendNotify')}?id={{d.id}}',{h:700,w:1100})">
+                        <button type="button" id="notify" class="layui-btn layui-btn-xs layui-btn-normal" onclick="sendNotify(this)" data-ids="{{d.id}}">
                             通知
                         </button>
                         {else/}
@@ -337,5 +353,56 @@
             action[type] && action[type]();
         })
     });
+
+    // 通知消息
+    function sendNotify(o) {
+        var id = $(o).attr('data-ids')
+
+        $.ajax({
+            type: 'get',
+            url: "{:Url('sendNotify')}",
+            data: {id:id},
+            success:function (data) {
+                var data = JSON.parse(data);
+
+                if (data.code == 200){
+                    layList.msg(data.msg);
+                    $(o).text('已通知')
+
+                }else {
+                    layList.msg(data.msg);
+                    $(o).text('已通知')
+                }
+            }
+        });
+    };
+
+    // 科技园一键通知
+    function ksendNotifyAll(o) {
+        $.ajax({
+            type: 'post',
+            url: "{:url('ksendNotifyAll')}",
+            success:function (res) {
+                var data = JSON.parse(res);
+                if (data.code == 200){
+                    layList.msg(data.msg);
+                }
+            }
+        });
+    };
+
+    // 众创空间一键通知
+    function zsendNotifyAll(o) {
+        $.ajax({
+            type: 'post',
+            url: "{:url('zsendNotifyAll')}",
+            success:function (res) {
+                var data = JSON.parse(res);
+                if (data.code == 200){
+                    layList.msg(data.msg);
+                }
+            }
+        });
+    };
 </script>
 {/block}

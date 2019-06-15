@@ -327,4 +327,55 @@ class Report extends AuthController
 
     }
 
+    /**
+     * 科技月未提交月报一键通知
+     */
+    public function ksendNotifyAll()
+    {
+        $curMonth = date('Y-m',strtotime("-1 month", time())); // 上月月份
+        // 查询出所有的上月已提交的项目编号
+        $project_nums = ReportModel::getSameAllValue(['month' => $curMonth , 'category_id' => 23],'project_num');
+        // 获取上月为提交月报的项目id
+        $project_ids = ExamineModel::getSameAllValue(['category_id' => 23],$project_nums,'id');
+
+        foreach ($project_ids as $key => $val){
+            $data = [
+                'content' => '请尽快提交上月月报',
+                'uid' => $val,
+                'create_time' => time(),
+                'status' => 1
+            ];
+
+            ExamineModel::addNotice($data);
+
+        }
+        return Json::successful('通知成功!');
+    }
+
+    /**
+     * 众创空间一键通知
+     */
+    public function zsendNotifyAll()
+    {
+        $curMonth = date('Y-m',strtotime("-1 month", time())); // 上月月份
+        // 查询出所有的上月已提交的项目编号
+        $project_nums = ReportModel::getSameAllValue(['month' => $curMonth , 'category_id' => 63],'project_num');
+        // 获取上月为提交月报的项目id
+        $project_ids = ExamineModel::getSameAllValue(['category_id' => 63],$project_nums,'id');
+
+        $data = [];
+        foreach ($project_ids as $key => $val){
+            $data[] = [
+                'content' => '请尽快提交上月月报',
+                'uid' => $val,
+                'create_time' => time(),
+                'status' => 1
+            ];
+
+            ExamineModel::addNotice($data);
+
+        }
+        return Json::successful('通知成功!');
+    }
+
 }

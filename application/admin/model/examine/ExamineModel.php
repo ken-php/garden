@@ -149,4 +149,17 @@ class ExamineModel extends ModelBasic
     {
         return Db::name('notice_user')->insert($data);
     }
+
+    /**
+     * 查询某个字段的所有的值
+     * @param string $where
+     * @param $val
+     * @return array
+     * @author ken
+     * @date 2019/6/15
+     */
+    public static function getSameAllValue($where = '' , $scienceProjectNum, $val)
+    {
+        return self::where($where)->whereNotIn('project_num',$scienceProjectNum)->column($val);
+    }
 }
